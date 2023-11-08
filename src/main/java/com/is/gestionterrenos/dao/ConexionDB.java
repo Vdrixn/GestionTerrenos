@@ -4,11 +4,12 @@ import java.sql.*;
 public class ConexionDB {
     public static void main(String[] args) {
         try {
-            Connection miConexion=DriverManager.getConnection("jdbc:mysql://localhost:3306/balonmano", "root", "password");
+            //CAMBIAR "password" por vuestra contraseña en mySql
+            Connection miConexion=DriverManager.getConnection("jdbc:mysql://localhost:3306/gestionterrenos", "root", "password");
 			
-			/*PreparedStatement miStatement=miConexion.prepareStatement("SELECT DISTINCTROW nombre_club from equipo");
-			ResultSet rs=miStatement.executeQuery();
-			int n=0;
+			PreparedStatement miStatement=miConexion.prepareStatement("INSERT INTO parcelas VALUES (1,null,'treinta', 'limite')");
+			miStatement.executeUpdate();
+			/*int n=0;
 			while(rs.next()){
 				n++;
 			}*/
