@@ -70,13 +70,21 @@ public class Terreno {
         this.tipo = tipo;
     }
 
-    // Getter para el campo 'limites'
-    public double[] getLimites() {
-        return limites;
+    // Getter para el campo 'limiteBase'
+    public int getLimiteBase() {
+        return limiteBase;
     }
-
-    // Setter para el campo 'limites'
-    public void setLimites(double[] limites) {
-        this.limites = limites;
+    // Setter para el campo 'limiteBase'
+    public void setLimiteBase(int limiteBase) {
+        this.limiteBase = limiteBase;
     }
+    // Getter para el campo 'limiteAltura'
+    public int getLimiteAltura() {
+        return limiteAltura;
+    }
+    // Setter para el campo 'limiteAltura'
+    public void setLimiteAltura(int limiteAltura) {
+        this.limiteAltura = limiteAltura;
+    }
+    
 }
