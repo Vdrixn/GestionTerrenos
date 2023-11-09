@@ -54,6 +54,7 @@ public class ArrendatarioDAO {
             pS.setInt(3, edad);   
             pS.setString(4,sexo);
             pS.setDate(5, fechaRegistro);
+            pS.setInt(6, id);
 
             pS.executeUpdate();
             pS.close();
@@ -83,7 +84,7 @@ public class ArrendatarioDAO {
     
     }
     public static ArrayList<Arrendatario>  listarTodos(){
-        ArrayList<Arrendatario> arrendatarios=new ArrayList<Arrendatario>();
+        ArrayList<Arrendatario> arrendatarios=new ArrayList<Arrendatario>();    
         try{
             conn=ConexionDB.getConn();
             PreparedStatement pS=conn.prepareStatement("SELECT * FROM Arrendatarios");
@@ -106,7 +107,10 @@ public class ArrendatarioDAO {
     // eliminar(5);
     // eliminar(7);
     //tests actualizar
-    // actualizar(2,"12388338Z","Jano",21,"H",new Date(System.currentTimeMillis()));
-
+    //  actualizar(10,"12389338Z","Jorge",21,"H",new Date(System.currentTimeMillis()));
+    //tests buscar por id
+    //System.out.println(buscarPorId(3));
+        //tests listar todos
+        System.out.println(listarTodos());
    }
 }

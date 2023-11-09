@@ -82,7 +82,7 @@ public class Arrendatario {
     //toString para imprimir los valores de los campos
     @Override
     public String toString() {
-        return "Arrendatario [id=" + id + ", dni=" + dni + ", nombre=" + nombre + ", edad=" + edad + ", sexo=" + sexo + ", fechaRegistro=" + fechaRegistro + "]";
+        return "\nArrendatario [id=" + id + ", dni=" + dni + ", nombre=" + nombre + ", edad=" + edad + ", sexo=" + sexo + ", fechaRegistro=" + fechaRegistro + "]";
     }
     
 }
