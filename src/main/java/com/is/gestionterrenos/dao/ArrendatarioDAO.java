@@ -10,16 +10,15 @@ public class ArrendatarioDAO {
     public static Connection conn;
 
 
-    public static void insertar(int id, String dni, String nombre, int edad, char sexo, Date fechaRegistro){
+    public static void insertar(String dni, String nombre, int edad, String sexo, Date fechaRegistro){
         try{
             conn=ConexionDB.getConn();
-            PreparedStatement pS=conn.prepareStatement("INSERT INTO Arrendatarios (id,dni,nombre,edad,sexo,fechaRegistro) VALUES (?,?,?,?,?,?)");
-            pS.setInt(1, id);
-            pS.setString(2, dni);
-            pS.setString(3, nombre); 
-            pS.setInt(4, edad);   
-            pS.setChar(5,sexo);
-            pS.setDate(6, fechaRegistro);
+            PreparedStatement pS=conn.prepareStatement("INSERT INTO Arrendatarios (dni,nombre,edad,sexo,fechaRegistro) VALUES (?,?,?,?,?)");
+            pS.setString(1, dni);
+            pS.setString(2, nombre); 
+            pS.setInt(3, edad);   
+            pS.setString(4,sexo);
+            pS.setDate(5, fechaRegistro);
 
             pS.executeUpdate();
             pS.close();
@@ -31,7 +30,7 @@ public class ArrendatarioDAO {
     
     }
 
-    public void eliminar(int id){
+    public static void eliminar(int id){
      try{
             conn=ConexionDB.getConn();
             PreparedStatement pS=conn.prepareStatement("DELETE FROM Arrendatarios WHERE id=?");
@@ -45,7 +44,7 @@ public class ArrendatarioDAO {
     }
 
 
-    public void actualizar(int id, String dni, String nombre, int edad, char sexo, Date fechaRegistro){
+    public static void actualizar(int id, String dni, String nombre, int edad, String sexo, Date fechaRegistro){
         try{
             conn=ConexionDB.getConn();
             PreparedStatement pS=conn.prepareStatement("UPDATE Arrendatarios SET dni=?, nombre=?, edad=?, sexo=?, fechaRegistro=? WHERE id=?");
@@ -53,7 +52,7 @@ public class ArrendatarioDAO {
             pS.setString(1, dni);
             pS.setString(2, nombre); 
             pS.setInt(3, edad);   
-            pS.setChar(4,sexo);
+            pS.setString(4,sexo);
             pS.setDate(5, fechaRegistro);
 
             pS.executeUpdate();
@@ -65,22 +64,22 @@ public class ArrendatarioDAO {
 
     }
 
-    public Terreno buscarPorId(int idArrendatario){
+    public static  Arrendatario buscarPorId(int idArrendatario){
         Arrendatario arrendatario = null;
         try{
             conn=ConexionDB.getConn();
-            PreparedStatement pS=conn.prepareStatement("SELECT * FROM terrenos WHERE id=?");
+            PreparedStatement pS=conn.prepareStatement("SELECT * FROM arrendatarios WHERE id=?");
             pS.setInt(1, idArrendatario);
             ResultSet rs=pS.executeQuery();
             if(rs.next()){
-                arrendatario = new Arrendatario(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getChar(5),rs.getDate(6));
+                arrendatario = new Arrendatario(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getDate(6));
             }
             pS.close();
             conn.close();
         }catch(SQLException e){
             e.printStackTrace();
         }
-        return terreno;        
+        return arrendatario;        
     
     }
     public static ArrayList<Arrendatario>  listarTodos(){
@@ -90,20 +89,24 @@ public class ArrendatarioDAO {
             PreparedStatement pS=conn.prepareStatement("SELECT * FROM Arrendatarios");
             ResultSet rs=pS.executeQuery();
             while(rs.next()){
-                arrendatarios.add(new Arrendatario(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getChar(5),rs.getDate(6)));
+                arrendatarios.add(new Arrendatario(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getDate(6)));
             }
             pS.close();
             conn.close();
         }catch(SQLException e){
             e.printStackTrace();
         }
-        return terrenos;                
+        return arrendatarios;                
     }
 
-   public static void main(String[] args) {
-    //tests
-    insertar(1,"12345678A","Juan",30,'H',null);
-    insertar(2,"87654321B","Maria",25,'M',null);
-    insertar(3,"23456789C","Pedro",40,'H',null);
+    public static void main(String[] args) {
+    //tests insertar
+    //insertar("12388338Z","Jano",21,"H",new Date(System.currentTimeMillis()));
+    //tests eliminar
+    // eliminar(5);
+    // eliminar(7);
+    //tests actualizar
+    // actualizar(2,"12388338Z","Jano",21,"H",new Date(System.currentTimeMillis()));
+
    }
 }

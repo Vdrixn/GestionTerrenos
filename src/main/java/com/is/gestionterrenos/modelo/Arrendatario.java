@@ -1,15 +1,16 @@
 package com.is.gestionterrenos.modelo;
+import java.sql.Date;
 //TODO:Ciclo 1
 public class Arrendatario {
     private int id;
     private String dni;
     private String nombre;
     private int edad;
-    private char sexo;
+    private String sexo;
     private Date fechaRegistro;
 
     //Constructor que inicializa todos los campos con newX para cada parametro
-    public Arrendatario(int newId, String newDni, String newNombre, int newEdad, char newSexo, Date newFechaRegistro) {
+    public Arrendatario(int newId, String newDni, String newNombre, int newEdad, String newSexo, Date newFechaRegistro) {
         this.id = newId;
         this.dni = newDni;
         this.nombre = newNombre;
@@ -59,14 +60,17 @@ public class Arrendatario {
     }
 
     // Getter para el campo 'sexo'
-    public int getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
     // Setter para el campo 'sexo'
-    public void setSexo(int sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
-    
+    //Imprime los datos del arrendatario
+    public String toString(){
+        return "ID: " + id + " DNI: " + dni + " Nombre: " + nombre + " Edad: " + edad + " Sexo: " + sexo + " Fecha Registro: " + fechaRegistro;        
+    }
 }
