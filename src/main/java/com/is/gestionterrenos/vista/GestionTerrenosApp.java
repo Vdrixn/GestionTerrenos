@@ -36,11 +36,7 @@ public class GestionTerrenosApp {
         // Agregar las vistas específicas al panel
         panel.add(vistaArrendatarios.getPanel(), BorderLayout.CENTER);
 
-        final Map<String, String[]> listados = new HashMap<>();
-        listados.put("Arrendatarios", new String[]{"Arrendatario 1", "Arrendatario 2", "Arrendatario 3"});
-        listados.put("Terrenos", new String[]{"Terreno 1", "Terreno 2", "Terreno 3"});
-        listados.put("Parcelas", new String[]{"Parcela 1", "Parcela 2", "Parcela 3"});
-        listados.put("Recibos", new String[]{"Recibo 1", "Recibo 2", "Recibo 3"});
+        
 
         comboBox.addActionListener(new ActionListener() {
             @Override
