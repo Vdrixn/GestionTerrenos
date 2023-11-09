@@ -92,4 +92,10 @@ public class Recibo {
     public void setIrpf(double irpf) {
         this.irpf = irpf;
     }
+
+    //toString para imprimir los valores de los campos
+    @Override
+    public String toString() {
+        return "\nRecibo [id=" + id + ", idArren=" + idArren + ", idParcela=" + idParcela + ", fechaEmision=" + fechaEmision + ", importe=" + importe + ", iva=" + iva + ", irpf=" + irpf + "]";
+    }
 }
