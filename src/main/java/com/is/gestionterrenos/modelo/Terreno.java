@@ -1,5 +1,5 @@
 package com.is.gestionterrenos.modelo;
-
+//TODO:Ciclo 1
 public class Terreno {
     private int id;
     private String nombre;

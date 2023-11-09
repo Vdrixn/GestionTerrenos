@@ -1,5 +1,5 @@
 package com.is.gestionterrenos.modelo;
-
+//TODO:Ciclo 1
 public class Arrendatario {
     private int id;
     private String dni;
