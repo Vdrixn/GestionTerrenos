@@ -75,5 +75,8 @@ public class Parcela {
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
-    
+
+    public String toString() {
+        return "Parcela [id=" + id + ", idTerreno=" + idTerreno + ", limiteBase=" + limiteBase + ", limiteAltura=" + limiteAltura + ", ubicacion=" + ubicacion + ", fechaRegistro=" + fechaRegistro + "]";
+    }
 }
