@@ -5,11 +5,17 @@ public class Arrendatario {
     private String dni;
     private String nombre;
     private int edad;
-    private int sexo;
+    private char sexo;
+    private Date fechaRegistro;
 
     //Constructor que inicializa todos los campos con newX para cada parametro
-    public Arrendatario(int newId, String newDni, String newNombre, int newEdad, int newSexo) {
-        
+    public Arrendatario(int newId, String newDni, String newNombre, int newEdad, char newSexo, Date newFechaRegistro) {
+        this.id = newId;
+        this.dni = newDni;
+        this.nombre = newNombre;
+        this.edad = newEdad;
+        this.sexo = newSexo;
+        this.fechaRegistro = newFechaRegistro;        
     }
 
     // Getter para el campo 'id'

@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS Arrendatarios (
     dni VARCHAR(9) NOT NULL UNIQUE,
     nombre VARCHAR(100) NOT NULL,
     edad INT NOT NULL CHECK (edad >= 18),
-    sexo ENUM('M', 'F', 'O') NOT NULL -- 'O' para otro, asumiendo que 'sexo' es un enumerado
+    sexo ENUM('M', 'F', 'O') NOT NULL, -- 'O' para otro, asumiendo que 'sexo' es un enumerado
+    fechaRegistro DATE NOT NULL
 );
 
 -- Creación de la tabla 'Terrenos'

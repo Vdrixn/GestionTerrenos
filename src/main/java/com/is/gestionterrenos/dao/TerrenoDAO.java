@@ -1,7 +1,6 @@
 package com.is.gestionterrenos.dao;
 
 import java.sql.*;
-import com.is.gestionterrenos.modelo.Arrendatario;
 import com.is.gestionterrenos.modelo.Terreno;
 import java.util.ArrayList;
 
