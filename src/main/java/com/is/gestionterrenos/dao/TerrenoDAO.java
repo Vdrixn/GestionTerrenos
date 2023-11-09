@@ -105,7 +105,7 @@ public class TerrenoDAO {
     }
 
    public static void main(String[] args) {
-    //insertar("Terreno 2", "Calle 2", 10, "Finca", 10, 10, new Date(System.currentTimeMillis()));
+    insertar("Terreno 2", "Calle 2", 10, "Finca", 10, 10, new Date(System.currentTimeMillis()));
     //System.out.println(listarTodos());
 
    }

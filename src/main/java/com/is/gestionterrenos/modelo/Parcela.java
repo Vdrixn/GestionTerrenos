@@ -1,16 +1,22 @@
 package com.is.gestionterrenos.modelo;
+
+import java.sql.Date;
+
 //TODO:Ciclo 1
 public class Parcela {
     private int id;
     private int idTerreno;
-    private double[] limites;
+    private int limiteBase,limiteAltura;
     private String ubicacion; 
+    private Date fechaRegistro;
 
-    public Parcela(int newId, int newIdTerreno, double[] newLimites, String newUbicacion) {
+    public Parcela(int newId, int newIdTerreno, String newUbicacion, int limiteBase,int limiteAltura,Date fechaReg) {
         id = newId;
         idTerreno = newIdTerreno;
-        limites = newLimites;
+        limiteBase = limiteBase;
+        limiteAltura = limiteAltura;
         ubicacion = newUbicacion;
+        fechaRegistro = fechaReg;
     }
 
     // Getter para el campo 'id'
@@ -33,14 +39,31 @@ public class Parcela {
         this.idTerreno = idTerreno;
     }
 
-    // Getter para el campo 'limites'
-    public double[] getLimites() {
-        return limites;
+    // Getter para el campo 'limiteBase'
+    public int getLimiteBase() {
+        return limiteBase;
+    }
+    // Setter para el campo 'limiteBase'
+    public void setLimiteBase(int limiteBase) {
+        this.limiteBase = limiteBase;
+    }
+    // Getter para el campo 'limiteAltura'
+    public int getLimiteAltura() {
+        return limiteAltura;
+    }
+    // Setter para el campo 'limiteAltura'
+    public void setLimiteAltura(int limiteAltura) {
+        this.limiteAltura = limiteAltura;
     }
 
-    // Setter para el campo 'limites'
-    public void setLimites(double[] limites) {
-        this.limites = limites;
+    // Setter para el campo 'fechaRegistro'
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+    
+    // Getter para el campo 'fechaRegistro'
+    public Date getFechaRegistro() {
+        return fechaRegistro;
     }
 
     // Getter para el campo 'ubicacion'
@@ -52,4 +75,5 @@ public class Parcela {
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
+    
 }

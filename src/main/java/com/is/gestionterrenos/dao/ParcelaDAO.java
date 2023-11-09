@@ -1,33 +1,29 @@
 package com.is.gestionterrenos.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.*;
 
+import com.is.gestionterrenos.modelo.Parcela;
 import com.is.gestionterrenos.modelo.Terreno;
+import java.util.ArrayList;
 
 //TODO:Ciclo 1
 public class ParcelaDAO {
     public static Connection conn;
 
 
-    public static void insertar(String nombre, String ubicacion, int tamHectareas , String tipo, int limiteBase, int limiteAltura, Date fechaRegistro){
+    public static void insertar(int idTerreno, String ubicacion, int limiteBase, int limiteAltura, Date fechaRegistro){
         try{
             conn=ConexionDB.getConn();
-            PreparedStatement pS=conn.prepareStatement("INSERT INTO terrenos (nombre, ubicacion, tamHectareas, tipo, limiteBase, limiteAltura, fechaRegistro) VALUES (?,?,?,?,?,?,?)");
-            pS.setString(1, nombre);    
+            PreparedStatement pS=conn.prepareStatement("INSERT INTO parcelas (idTerreno, ubicacion, limiteBase, limiteAltura, fechaRegistro) VALUES (?,?,?,?,?)");
+            pS.setInt(1, idTerreno);
             pS.setString(2, ubicacion);
-            pS.setInt(3, tamHectareas);
-            pS.setString(4, tipo);
-            pS.setInt(5, limiteBase);
-            pS.setInt(6, limiteAltura);
-            pS.setDate(7, fechaRegistro);
-
+            pS.setInt(3, limiteBase);
+            pS.setInt(4, limiteAltura);
+            pS.setDate(5, fechaRegistro);
             pS.executeUpdate();
             pS.close();
             conn.close();
+
         }catch(SQLException e){
             e.printStackTrace();
         }        
@@ -35,34 +31,30 @@ public class ParcelaDAO {
     
     }
 
-    public void eliminar(int idTerreno){
-     try{
+    public void eliminar(int idParcela){
+        try{
             conn=ConexionDB.getConn();
-            PreparedStatement pS=conn.prepareStatement("DELETE FROM terrenos WHERE id=?");
-            pS.setInt(1, idTerreno);
+            PreparedStatement pS=conn.prepareStatement("DELETE FROM parcelas WHERE id=?");
+            pS.setInt(1, idParcela);
             pS.executeUpdate();
             pS.close();
             conn.close();
         }catch(SQLException e){
             e.printStackTrace();
-        }    
+        }        
     }
 
 
-    public void actualizar(int id,String nombre, String ubicacion, int tamHectareas , String tipo, int limiteBase, int limiteAltura, Date fechaRegistro){
+    public void actualizar(int id,int idTerreno, String ubicacion, int limiteBase, int limiteAltura, Date fechaRegistro){
         try{
             conn=ConexionDB.getConn();
-            PreparedStatement pS=conn.prepareStatement("UPDATE terrenos SET nombre=?, ubicacion=?,tamHectareas=?,tipo=?, limiteBase=?,limiteAltura=?,fechaRegistro=? WHERE id=?");
-
-            pS.setString(1, nombre);    
+            PreparedStatement pS=conn.prepareStatement("UPDATE parcelas SET id=?, ubicacion=?, limiteBase=?, limiteAltura=?, fechaRegistro=? WHERE id=?");
+            pS.setInt(1, idTerreno);
             pS.setString(2, ubicacion);
-            pS.setInt(3, tamHectareas);
-            pS.setString(4, tipo);
-            pS.setInt(5, limiteBase);
-            pS.setInt(6, limiteAltura);
-            pS.setDate(7, fechaRegistro);
-            pS.setInt(8, id);
-
+            pS.setInt(3, limiteBase);
+            pS.setInt(4, limiteAltura);
+            pS.setDate(5, fechaRegistro);
+            pS.setInt(6, id);
             pS.executeUpdate();
             pS.close();
             conn.close();
@@ -72,42 +64,46 @@ public class ParcelaDAO {
 
     }
 
-    public Terreno buscarPorId(int idTerreno){
-        Terreno terreno=null;
+    public Parcela buscarPorId(int idParcela){
+        Parcela parcela=null;
         try{
             conn=ConexionDB.getConn();
-            PreparedStatement pS=conn.prepareStatement("SELECT * FROM terrenos WHERE id=?");
-            pS.setInt(1, idTerreno);
+            PreparedStatement pS=conn.prepareStatement("SELECT * FROM parcelas WHERE id=?");
+            pS.setInt(1, idParcela);
             ResultSet rs=pS.executeQuery();
             if(rs.next()){
-                terreno=new Terreno(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getInt(7));
+                parcela=new Parcela(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4),rs.getInt(5),rs.getDate(6));
             }
             pS.close();
             conn.close();
         }catch(SQLException e){
             e.printStackTrace();
         }
-        return terreno;        
+        return parcela;                
+    
+
     
     }
-    public ArrayList<Terreno>  listarTodos(){
-        ArrayList<Terreno> terrenos=new ArrayList<Terreno>();
+    public ArrayList<Parcela>  listarTodos(){
+        ArrayList<Parcela> parcelas=new ArrayList<>();
         try{
             conn=ConexionDB.getConn();
-            PreparedStatement pS=conn.prepareStatement("SELECT * FROM terrenos");
+            PreparedStatement pS=conn.prepareStatement("SELECT * FROM parcelas");
             ResultSet rs=pS.executeQuery();
             while(rs.next()){
-                terrenos.add(new Terreno(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getInt(7)));
+                Parcela parcela=new Parcela(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4),rs.getInt(5),rs.getDate(6));
+                parcelas.add(parcela);
             }
             pS.close();
             conn.close();
         }catch(SQLException e){
             e.printStackTrace();
         }
-        return terrenos;                
+        return parcelas;                  
     }
 
    public static void main(String[] args) {
-    insertar("Terreno 1", "Calle 1", 10, "Terreno", 10, 10, new Date(System.currentTimeMillis()));
-   }
+    //Prueba de inserción
+    insertar(1,"Calle 1",10,20,new Date(System.currentTimeMillis()));
+    }
 }

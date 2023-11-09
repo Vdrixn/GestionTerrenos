@@ -27,8 +27,10 @@ CREATE TABLE IF NOT EXISTS Terrenos (
 CREATE TABLE IF NOT EXISTS Parcelas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idTerreno INT NOT NULL,
-    limites POLYGON NOT NULL, -- MySQL utiliza el tipo POLYGON para almacenar coordenadas de límites
     ubicacion VARCHAR(255) NOT NULL,
+    limiteBase INT NOT NULL,
+    limiteAltura INT NOT NULL, 
+    fechaRegistro DATE NOT NULL,
     FOREIGN KEY (idTerreno) REFERENCES Terrenos(id)
 );
 
