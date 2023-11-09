@@ -31,7 +31,7 @@ public class ParcelaDAO {
     
     }
 
-    public void eliminar(int idParcela){
+    public static void eliminar(int idParcela){
         try{
             conn=ConexionDB.getConn();
             PreparedStatement pS=conn.prepareStatement("DELETE FROM parcelas WHERE id=?");
@@ -45,7 +45,7 @@ public class ParcelaDAO {
     }
 
 
-    public void actualizar(int id,int idTerreno, String ubicacion, int limiteBase, int limiteAltura, Date fechaRegistro){
+    public static void actualizar(int id,int idTerreno, String ubicacion, int limiteBase, int limiteAltura, Date fechaRegistro){
         try{
             conn=ConexionDB.getConn();
             PreparedStatement pS=conn.prepareStatement("UPDATE parcelas SET id=?, ubicacion=?, limiteBase=?, limiteAltura=?, fechaRegistro=? WHERE id=?");
@@ -64,7 +64,7 @@ public class ParcelaDAO {
 
     }
 
-    public Parcela buscarPorId(int idParcela){
+    public static Parcela buscarPorId(int idParcela){
         Parcela parcela=null;
         try{
             conn=ConexionDB.getConn();
@@ -84,7 +84,7 @@ public class ParcelaDAO {
 
     
     }
-    public ArrayList<Parcela>  listarTodos(){
+    public static ArrayList<Parcela>  listarTodos(){
         ArrayList<Parcela> parcelas=new ArrayList<>();
         try{
             conn=ConexionDB.getConn();
@@ -104,6 +104,19 @@ public class ParcelaDAO {
 
    public static void main(String[] args) {
     //Prueba de inserción
-    insertar(1,"Calle 1",10,20,new Date(System.currentTimeMillis()));
+     insertar(1,"Calle 1",10,20,new Date(System.currentTimeMillis()));
+    //Prueba de eliminación
+     eliminar(2);
+    //Prueba de actualización
+     actualizar(3,1,"Calle 4",20,30,new Date(System.currentTimeMillis()));
+    //Prueba de búsqueda por id
+    Parcela parcela=buscarPorId(1);
+    System.out.println(parcela);
+    //Prueba de listado de todos
+    ArrayList<Parcela> parcelas=listarTodos();
+    for(Parcela p:parcelas){
+        System.out.println(p);
+    
     }
+}
 }

@@ -101,4 +101,8 @@ public class Terreno {
         return fechaRegistro;
     }
     
+    //Imprime los datos del terreno
+    public String toString() {
+        return "ID: " + id + " Nombre: " + nombre + " Ubicacion: " + ubicacion + " Tamano: " + tamHectareas + " Tipo: " + tipo + " Limite Base: " + limiteBase + " Limite Altura: " + limiteAltura;
+    }
 }
