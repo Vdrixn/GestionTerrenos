@@ -68,5 +68,20 @@ public class Arrendatario {
         this.sexo = sexo;
     }
 
+    // Getter para el campo 'fechaRegistro'
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    // Setter para el campo 'fechaRegistro'
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    //toString para imprimir los valores de los campos
+    @Override
+    public String toString() {
+        return "Arrendatario [id=" + id + ", dni=" + dni + ", nombre=" + nombre + ", edad=" + edad + ", sexo=" + sexo + ", fechaRegistro=" + fechaRegistro + "]";
+    }
     
 }
