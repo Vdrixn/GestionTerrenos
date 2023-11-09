@@ -4,10 +4,10 @@ import java.sql.*;
 //TODO: Terminar conexionDB
 public class ConexionDB {
 
-    public Connection getConn() {
+    public static Connection getConn() {
         try {
             //CAMBIAR "password" por vuestra contraseña en mySql
-            Connection miConexion=DriverManager.getConnection("jdbc:mysql://localhost:3306/gestionterrenos", "root", "password");
+            Connection miConexion=DriverManager.getConnection("jdbc:mysql://localhost:3306/gestionterrenos", "root", "SQLMiguel");
 			
             return miConexion;
 			//PreparedStatement miStatement=miConexion.prepareStatement("INSERT INTO parcelas VALUES (1,null,'treinta', 'limite')");
@@ -21,6 +21,9 @@ public class ConexionDB {
             e.printStackTrace();
         }
         return null;
+    }
+    public static void main(String[] args) {
+        getConn();
     }
     
 }
