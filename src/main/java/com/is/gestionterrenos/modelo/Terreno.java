@@ -6,7 +6,17 @@ public class Terreno {
     private String ubicacion;
     private int tamHectareas;
     private String tipo;
-    private double[] limites;
+    private int limites;
+
+    //Constructor que inicializa todos los campos con newX para cada parametro
+    public Terreno(int newId, String newNombre, String newUbicacion, int newTamHectareas, String newTipo, double[] newLimites) {
+        id = newId;
+        nombre = newNombre;
+        ubicacion = newUbicacion;
+        tamHectareas = newTamHectareas;
+        tipo = newTipo;
+        limites = newLimites;
+    }
 
     // Getter para el campo 'id'
     public int getId() {

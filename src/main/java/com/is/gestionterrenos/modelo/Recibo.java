@@ -11,6 +11,18 @@ public class Recibo {
     private double iva;
     private double irpf;
 
+    //Constructor que inicializa todos los campos con newX para cada parametro
+    public Recibo(int newId, int newIdArren, int newIdParcela, Date newFechaEmision, double newImporte, double newIva, double newIrpf) {
+        id = newId;
+        idArren = newIdArren;
+        idParcela = newIdParcela;
+        fechaEmision = newFechaEmision;
+        importe = newImporte;
+        iva = newIva;
+        irpf = newIrpf;    
+    }
+
+
     // Getter para el campo 'id'
     public int getId() {
         return id;

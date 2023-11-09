@@ -7,8 +7,9 @@ public class Arrendatario {
     private int edad;
     private int sexo;
 
-    public Arrendatario() {
-
+    //Constructor que inicializa todos los campos con newX para cada parametro
+    public Arrendatario(int newId, String newDni, String newNombre, int newEdad, int newSexo) {
+        
     }
 
     // Getter para el campo 'id'

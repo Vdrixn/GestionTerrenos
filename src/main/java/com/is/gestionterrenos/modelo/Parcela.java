@@ -4,7 +4,14 @@ public class Parcela {
     private int id;
     private int idTerreno;
     private double[] limites;
-    private String ubicacion;
+    private String ubicacion; 
+
+    public Parcela(int newId, int newIdTerreno, double[] newLimites, String newUbicacion) {
+        id = newId;
+        idTerreno = newIdTerreno;
+        limites = newLimites;
+        ubicacion = newUbicacion;
+    }
 
     // Getter para el campo 'id'
     public int getId() {
