@@ -1,4 +1,7 @@
 package com.is.gestionterrenos.modelo;
+
+import java.sql.Date;
+
 //TODO:Ciclo 1
 public class Terreno {
     private int id;
@@ -8,6 +11,7 @@ public class Terreno {
     private String tipo;
     private int limiteBase;
     private int limiteAltura;
+    private Date fechaRegistro;
 
     //Constructor que inicializa todos los campos con newX para cada parametro
     public Terreno(int newId, String newNombre, String newUbicacion, int newTamHectareas, String newTipo, int newLimiteBase, int newLimiteAltura) {
@@ -85,6 +89,16 @@ public class Terreno {
     // Setter para el campo 'limiteAltura'
     public void setLimiteAltura(int limiteAltura) {
         this.limiteAltura = limiteAltura;
+    }
+
+    //Setter para el campo 'fechaRegistro'
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+    
+    //Getter para el campo 'fechaRegistro'
+    public Date getFechaRegistro() {
+        return fechaRegistro;
     }
     
 }

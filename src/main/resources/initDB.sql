@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS Terrenos (
     tamHectareas INT NOT NULL,
     tipo VARCHAR(50) NOT NULL,
     limiteBase INT NOT NULL,
-    limiteAltura INT NOT NULL
+    limiteAltura INT NOT NULL, 
+    fechaRegistro DATE NOT NULL
 );
 
 -- Creación de la tabla 'Parcelas'
