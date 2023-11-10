@@ -1,6 +1,8 @@
 package com.is.gestionterrenos.vista;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import com.is.gestionterrenos.controlador.ControladorArrendatarios;
 import com.is.gestionterrenos.modelo.Arrendatario;
@@ -23,7 +25,7 @@ public class VistaArrendatarios {
     public static String edadActual;
     public static String sexoActual;
 
-    public static String arrendatarioActual;
+    private static String arrendatarioActual;
 
 
     public  VistaArrendatarios() {
@@ -33,6 +35,8 @@ public class VistaArrendatarios {
         jList = new JList<>(listModel);
         JScrollPane scrollPane = new JScrollPane(jList);
         panel.add(scrollPane, BorderLayout.CENTER);
+
+        
 
         JPanel botonesPanel = new JPanel(new GridLayout(2, 1));
         JButton addButton = new JButton("Añadir");
@@ -51,13 +55,22 @@ public class VistaArrendatarios {
             
          });
 
-
          actButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(jList.getSelectedValue()!=null){
-                    arrendatarioActual=jList.getSelectedValue(); 
+                    arrendatarioActual=jList.getSelectedValue();
                     abrirVentanaActualizar();
+                }
+            }
+        });
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(jList.getSelectedValue()!=null){
+                    arrendatarioActual=jList.getSelectedValue();
+                    ejecutarBorrado();
                 }
             }
         });
@@ -125,7 +138,7 @@ public class VistaArrendatarios {
                 ventanaAñadir.dispose();
                 actualizar();
             }
-        });
+        }); 
 
         panelAñadir.add(guardarButton);
 
@@ -162,7 +175,7 @@ public class VistaArrendatarios {
             public void actionPerformed(ActionEvent e) {
                 // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
                  dniActual = dniField.getText();
-                 if (!dniActual.matches("\\d{8}[a-zA-Z]")) {
+                 if (!dniActual.matches("\\d{8}[a-zA-Z]") && !dniActual.equals("")) { //O el campo está vacío, o esta en formato correcto
 
                     JOptionPane.showMessageDialog(ventanaAñadir, "DNI inválido. Debe ser un string de 8 letras.", "Error", JOptionPane.ERROR_MESSAGE);
                     return; // Detener el proceso si el DNI no es válido
@@ -184,5 +197,10 @@ public class VistaArrendatarios {
         ventanaAñadir.setVisible(true);
     }
 
+
+    public  void ejecutarBorrado(){
+        ControladorArrendatarios.borrar(arrendatarioActual);
+        actualizar();
+    }
  
 }

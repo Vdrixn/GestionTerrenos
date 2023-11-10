@@ -20,7 +20,7 @@ public class ControladorArrendatarios {
         int idArrend;
         idArrend=Integer.parseInt(""+oldArrendatario.charAt(18));
         int i=19;
-        while(oldArrendatario.charAt(i)>=0 && oldArrendatario.charAt(i)<=9){
+        while(Character.isDigit(oldArrendatario.charAt(i))){
             idArrend=idArrend*10+Integer.parseInt(""+oldArrendatario.charAt(i));
             i++;
         }
@@ -31,7 +31,7 @@ public class ControladorArrendatarios {
             arrendatario=ArrendatarioDAO.buscarPorId(idArrend);
             dni=arrendatario.getDni();
         }
-        
+
         if(nombre.equals("")){
             if(arrendatario==null)
                 arrendatario=ArrendatarioDAO.buscarPorId(idArrend);
@@ -51,10 +51,20 @@ public class ControladorArrendatarios {
             sexo=arrendatario.getSexo();
         }
         ArrendatarioDAO.actualizar(idArrend,dni,nombre,Integer.parseInt(edad),sexo,new Date(System.currentTimeMillis()));
-    
+    }
 
+    public static void borrar(String strArrendatario){
+        //Sacamos el id del arrendatario, como todos tienen el mismo formato, podemos sacar el id en la misma posición. EMPIEZA EN POS 17
+        int idArrend;
+        idArrend=Integer.parseInt(""+strArrendatario.charAt(18));
+        int i=19;
+        while(Character.isDigit(strArrendatario.charAt(i))){
+            idArrend=idArrend*10+Integer.parseInt(""+strArrendatario.charAt(i));
+            i++;
+        }
 
-        
+        //Procedemos con el borrado
+        ArrendatarioDAO.eliminar(idArrend);
     }
     
     public static ArrayList<Arrendatario> listar(){

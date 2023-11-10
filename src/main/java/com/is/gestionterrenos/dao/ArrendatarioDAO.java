@@ -83,6 +83,8 @@ public class ArrendatarioDAO {
         return arrendatario;        
     
     }
+
+    
     public static ArrayList<Arrendatario>  listarTodos(){
         ArrayList<Arrendatario> arrendatarios=new ArrayList<Arrendatario>();    
         try{

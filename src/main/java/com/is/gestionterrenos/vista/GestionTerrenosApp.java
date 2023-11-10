@@ -45,7 +45,7 @@ public class GestionTerrenosApp {
 
                 // Verificar la selección y actualizar la vista correspondiente
                 if ("Arrendatarios".equals(seleccion)) {
-                    vistaArrendatarios.actualizar(/*listados.get(seleccion)*/);
+                    vistaArrendatarios.actualizar();
                 } else {
                     // Limpiar la vista si no es la opción de arrendatarios
                     // vistaArrendatarios.limpiar();
