@@ -23,6 +23,8 @@ public class VistaArrendatarios {
     public static String edadActual;
     public static String sexoActual;
 
+    public static String arrendatarioActual;
+
 
     public  VistaArrendatarios() {
         panel = new JPanel(new BorderLayout());
@@ -48,6 +50,17 @@ public class VistaArrendatarios {
 
             
          });
+
+
+         actButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(jList.getSelectedValue()!=null){
+                    arrendatarioActual=jList.getSelectedValue(); 
+                    abrirVentanaActualizar();
+                }
+            }
+        });
 
         botonesPanel.add(addButton);
         botonesPanel.add(actButton);
@@ -108,6 +121,57 @@ public class VistaArrendatarios {
                 sexoActual = sexoField.getText();
 
                 ControladorArrendatarios.insertar();
+                // Cerrar la ventana después de guardar
+                ventanaAñadir.dispose();
+                actualizar();
+            }
+        });
+
+        panelAñadir.add(guardarButton);
+
+        ventanaAñadir.getContentPane().add(panelAñadir);
+        ventanaAñadir.setVisible(true);
+    }
+
+    private void abrirVentanaActualizar() {
+        final JFrame ventanaAñadir = new JFrame("Actualizar Arrendatario");
+        ventanaAñadir.setSize(300, 200);
+        ventanaAñadir.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        final JPanel panelAñadir = new JPanel(new GridLayout(8, 4));
+
+        panelAñadir.add(new JLabel("DNI:"));
+        final JTextField dniField = new JTextField();
+        panelAñadir.add(dniField);
+
+        panelAñadir.add(new JLabel("Nombre:"));
+        final JTextField nombreField = new JTextField();
+        panelAñadir.add(nombreField);
+
+        panelAñadir.add(new JLabel("Edad:"));
+        final JTextField edadField = new JTextField();
+        panelAñadir.add(edadField);
+
+        panelAñadir.add(new JLabel("Sexo:"));
+        final JTextField sexoField = new JTextField();
+        panelAñadir.add(sexoField);
+
+        JButton guardarButton = new JButton("Guardar");
+        guardarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
+                 dniActual = dniField.getText();
+                 if (!dniActual.matches("\\d{8}[a-zA-Z]")) {
+
+                    JOptionPane.showMessageDialog(ventanaAñadir, "DNI inválido. Debe ser un string de 8 letras.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Detener el proceso si el DNI no es válido
+                }
+                nombreActual = nombreField.getText();
+                edadActual = edadField.getText();
+                sexoActual = sexoField.getText();
+
+                ControladorArrendatarios.actualizar(arrendatarioActual,dniActual,nombreActual,edadActual,sexoActual);
                 // Cerrar la ventana después de guardar
                 ventanaAñadir.dispose();
                 actualizar();
