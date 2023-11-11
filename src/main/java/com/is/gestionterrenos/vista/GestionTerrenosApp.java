@@ -20,14 +20,14 @@ public class GestionTerrenosApp {
     }
 
     private static void createAndShowGUI() {
-        JFrame frame = new JFrame("Gestión de Terrenos");
+        final JFrame frame = new JFrame("Gestión de Terrenos");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 300);
 
-        JPanel panel = new JPanel(new BorderLayout());
+        final JPanel panel = new JPanel(new BorderLayout());
         frame.getContentPane().add(panel);
 
-        String[] opciones = {"Arrendatarios", "Terrenos", "Parcelas", "Recibos"};
+        String[] opciones = {"Seleccione una opción","Arrendatarios", "Terrenos", "Parcelas", "Recibos"};
 
         final JComboBox<String> comboBox = new JComboBox<>(opciones);
         panel.add(comboBox, BorderLayout.NORTH);
@@ -35,8 +35,7 @@ public class GestionTerrenosApp {
         // Crear instancias de las vistas específicas
         final VistaArrendatarios vistaArrendatarios = new VistaArrendatarios();
 
-        // Agregar las vistas específicas al panel
-        panel.add(vistaArrendatarios.getPanel(), BorderLayout.CENTER);
+        
 
         
 
@@ -47,7 +46,10 @@ public class GestionTerrenosApp {
 
                 // Verificar la selección y actualizar la vista correspondiente
                 if ("Arrendatarios".equals(seleccion)) {
+                    // Agregar las vistas específicas al panel
+                    panel.add(vistaArrendatarios.getPanel(), BorderLayout.CENTER);
                     vistaArrendatarios.actualizar(null);
+                    frame.revalidate();
                 } else {
                     // Limpiar la vista si no es la opción de arrendatarios
                     // vistaArrendatarios.limpiar();
