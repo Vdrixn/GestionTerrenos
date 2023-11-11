@@ -1,10 +1,15 @@
 package com.is.gestionterrenos.vista;
 import javax.swing.*;
+
+import com.is.gestionterrenos.dao.ArrendatarioDAO;
+import com.is.gestionterrenos.dao.ConexionDB;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.SwingUtilities;
 
 // Clase principal que contiene el JFrame principal
 public class GestionTerrenosApp {
@@ -19,6 +24,9 @@ public class GestionTerrenosApp {
             @Override
             public void run() {
                 icono = new ImageIcon("src/main/resources/icono.png");
+                //Esta línea inicializa la conexión a la base de datos y evita un retardo que se producía
+                //una vez iniciada la aplicación, al seleccionar una de las bases de datos.
+                ArrendatarioDAO.conn=ConexionDB.getConn();
                 createAndShowGUI();
             }
         });
