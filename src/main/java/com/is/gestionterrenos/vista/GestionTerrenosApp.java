@@ -48,13 +48,13 @@ public class GestionTerrenosApp {
                     // Mostrar la vista de arrendatarios
                     panel.remove(vistaTerrenos.getPanel());
                     panel.add(vistaArrendatarios.getPanel(), BorderLayout.CENTER);
-                    vistaArrendatarios.actualizar();
+                    vistaArrendatarios.actualizar(null);
                     frame.revalidate();
                 } else if ("Terrenos".equals(seleccion)) {
                     // Mostrar la vista de terrenos
                     panel.remove(vistaArrendatarios.getPanel());
                     panel.add(vistaTerrenos.getPanel(), BorderLayout.CENTER);
-                    vistaTerrenos.actualizar();
+                    vistaTerrenos.actualizar(null);
                     frame.revalidate();
                 } else {
                     // Limpiar la vista si no es la opción de arrendatarios o terrenos
