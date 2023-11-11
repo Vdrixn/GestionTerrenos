@@ -9,6 +9,11 @@ import java.util.Map;
 // Clase principal que contiene el JFrame principal
 public class GestionTerrenosApp {
     public static ImageIcon icono;
+    public static boolean vistaArrenActiva = false;
+    public static boolean vistaTerrenActiva = false;
+    public static boolean vistaParcelaActiva = false;
+    public static boolean vistaReciboActiva = false;
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -35,7 +40,8 @@ public class GestionTerrenosApp {
         // Crear instancias de las vistas específicas
         final VistaArrendatarios vistaArrendatarios = new VistaArrendatarios();
         final VistaTerrenos vistaTerrenos = new VistaTerrenos();
-
+        final VistaParcelas vistaParcelas = new VistaParcelas();
+        final VistaRecibos vistaRecibos = new VistaRecibos();
         
 
         comboBox.addActionListener(new ActionListener() {
@@ -46,16 +52,44 @@ public class GestionTerrenosApp {
                 // Verificar la selección y actualizar la vista correspondiente
                 if ("Arrendatarios".equals(seleccion)) {
                     // Mostrar la vista de arrendatarios
-                    panel.remove(vistaTerrenos.getPanel());
+                    //Comprobamos que vista está activa para borrarla y actualizar la interfaz
+                    if(vistaTerrenActiva){
+                        panel.remove(vistaTerrenos.getPanel());
+                        vistaArrenActiva = false;
+                    }
+                    else if(vistaReciboActiva){
+                        panel.remove(vistaRecibos.getPanel());
+                        vistaReciboActiva = false;
+                    }
+                    else if(vistaParcelaActiva){
+                        panel.remove(vistaParcelas.getPanel());
+                        vistaParcelaActiva = false;
+                    }
+
                     panel.add(vistaArrendatarios.getPanel(), BorderLayout.CENTER);
                     vistaArrendatarios.actualizar(null);
                     frame.revalidate();
+                    vistaArrenActiva = true;
                 } else if ("Terrenos".equals(seleccion)) {
                     // Mostrar la vista de terrenos
-                    panel.remove(vistaArrendatarios.getPanel());
+
+                    //Comprobamos que vista está activa para borrarla y actualizar la interfaz
+                    if(vistaArrenActiva){
+                        panel.remove(vistaArrendatarios.getPanel());
+                        vistaArrenActiva = false;
+                    }
+                    else if(vistaReciboActiva){
+                        panel.remove(vistaRecibos.getPanel());
+                        vistaReciboActiva = false;
+                    }
+                    else if(vistaParcelaActiva){
+                        panel.remove(vistaParcelas.getPanel());
+                        vistaParcelaActiva = false;
+                    }
                     panel.add(vistaTerrenos.getPanel(), BorderLayout.CENTER);
                     vistaTerrenos.actualizar(null);
                     frame.revalidate();
+                    vistaTerrenActiva = true;
                 } else {
                     // Limpiar la vista si no es la opción de arrendatarios o terrenos
                     // vistaArrendatarios.limpiar();
