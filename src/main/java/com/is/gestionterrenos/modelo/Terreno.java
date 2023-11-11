@@ -103,6 +103,7 @@ public class Terreno {
     
     //Imprime los datos del terreno
     public String toString() {
-        return "ID: " + id + " Nombre: " + nombre + " Ubicacion: " + ubicacion + " Tamano: " + tamHectareas + " Tipo: " + tipo + " Limite Base: " + limiteBase + " Limite Altura: " + limiteAltura;
-    }
+        return "\nTerreno [ID: " + id + ", Nombre: " + nombre + ", Ubicacion: " + ubicacion +
+        ", Tamano: " + tamHectareas + ", Tipo: " + tipo + ", Limite Base: " + limiteBase + ", Limite Altura: " 
+        + limiteAltura + "]";    }
 }
