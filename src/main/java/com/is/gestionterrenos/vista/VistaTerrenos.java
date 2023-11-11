@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,6 +27,7 @@ public class VistaTerrenos {
     private JPanel panel;
     private DefaultListModel<String> listModel;
     private JList<String> jList;
+    ImageIcon icono;
 
     public static String nombreTerreno;
     public static String ubicacionTerreno;
@@ -33,7 +35,6 @@ public class VistaTerrenos {
     public static String tipoTerreno;
     public static String limiteBaseTerreno;
     public static String limiteAlturaTerreno;
-    public static String fechaTerreno;
 
     public static String terrenoActual;
 
@@ -46,6 +47,7 @@ public class VistaTerrenos {
         JScrollPane scrollPane = new JScrollPane(jList);
         panel.add(scrollPane, BorderLayout.CENTER);
 
+        icono = new ImageIcon("src/main/resources/icono.png");
         
 
         JPanel botonesPanel = new JPanel(new GridLayout(2, 1));
@@ -140,10 +142,6 @@ public class VistaTerrenos {
         final JTextField limiteAlturaField = new JTextField();
         panelAñadir.add(limiteAlturaField);
 
-        panelAñadir.add(new JLabel("Fecha:"));
-        final JTextField fechaField = new JTextField();
-        panelAñadir.add(fechaField);
-
         JButton guardarButton = new JButton("Guardar");
         guardarButton.addActionListener(new ActionListener() {
             @Override
@@ -154,7 +152,6 @@ public class VistaTerrenos {
                 tipoTerreno = tipoTerrenoField.getText();
                 limiteBaseTerreno = limiteBaseField.getText();
                 limiteAlturaTerreno = limiteAlturaField.getText();
-                fechaTerreno = fechaField.getText();
                 
                 // TODO Auto-generated method stub
                 ControladorTerrenos.insertar();
@@ -162,11 +159,15 @@ public class VistaTerrenos {
                 actualizar(null);
             }
         });
-        panelAñadir.add(guardarButton);
+        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
+        panelBoton.add(guardarButton);
+        
 
         ventanaAñadir.getContentPane().add(panelAñadir);
-        ventanaAñadir.setVisible(true);
-        
+        ventanaAñadir.getContentPane().add(panelBoton,BorderLayout.SOUTH);
+        ventanaAñadir.setLocationRelativeTo(null); 
+        ventanaAñadir.setIconImage(icono.getImage());
+        ventanaAñadir.setVisible(true);        
     }
 
     public void abrirVentanaActualizar() {
@@ -200,9 +201,6 @@ public class VistaTerrenos {
         final JTextField limiteAlturaField = new JTextField();
         panelAñadir.add(limiteAlturaField);
 
-        panelAñadir.add(new JLabel("Fecha:"));
-        final JTextField fechaField = new JTextField();
-        panelAñadir.add(fechaField);
 
         JButton guardarButton = new JButton("Guardar");
         guardarButton.addActionListener(new ActionListener() {
@@ -215,21 +213,24 @@ public class VistaTerrenos {
                 tipoTerreno = tipoTerrenoField.getText();
                 limiteBaseTerreno = limiteBaseField.getText();
                 limiteAlturaTerreno = limiteAlturaField.getText();
-                fechaTerreno = fechaField.getText();
 
                 ControladorTerrenos.actualizarTerreno(terrenoActual, nombreTerreno, ubicacionTerreno, tamHectareasTerreno, tipoTerreno, 
-                                                limiteBaseTerreno, limiteAlturaTerreno, fechaTerreno);
+                                                limiteBaseTerreno, limiteAlturaTerreno);
                 // Cerrar la ventana después de guardar
                 ventanaAñadir.dispose();
                 actualizar(null);
             }
         });
 
-        panelAñadir.add(guardarButton);
+        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
+        panelBoton.add(guardarButton);
+        
 
         ventanaAñadir.getContentPane().add(panelAñadir);
-        ventanaAñadir.setVisible(true);
-    }
+        ventanaAñadir.getContentPane().add(panelBoton,BorderLayout.SOUTH);
+        ventanaAñadir.setLocationRelativeTo(null); 
+        ventanaAñadir.setIconImage(icono.getImage());
+        ventanaAñadir.setVisible(true);    }
 
 }
 
