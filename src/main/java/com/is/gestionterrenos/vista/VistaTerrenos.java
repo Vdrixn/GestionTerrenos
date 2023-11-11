@@ -1,46 +1,37 @@
 package com.is.gestionterrenos.vista;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import com.is.gestionterrenos.controlador.ControladorArrendatarios;
-import com.is.gestionterrenos.controlador.ControladorTerrenos;
-import com.is.gestionterrenos.dao.TerrenoDAO;
 import com.is.gestionterrenos.modelo.Arrendatario;
-import com.is.gestionterrenos.modelo.Terreno;
 
-public class VistaTerrenos {
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.Date;
 
+public class VistaArrendatarios {
     private JPanel panel;
     private DefaultListModel<String> listModel;
     private JList<String> jList;
+    ImageIcon icono;
 
-    public static String nombreTerreno;
-    public static String ubicacionTerreno;
-    public static String tamHectareasTerreno;
-    public static String tipoTerreno;
-    public static String limiteBaseTerreno;
-    public static String limiteAlturaTerreno;
-    public static String fechaTerreno;
+    public static String dniActual;
+    public static String nombreActual;
+    public static String edadActual;
+    public static String sexoActual;
 
-    public static String terrenoActual;
+    private static String arrendatarioActual;
 
 
-    public VistaTerrenos() {
+    public  VistaArrendatarios() {
         panel = new JPanel(new BorderLayout());
-
+        icono = new ImageIcon("src/main/resources/icono.png");
         listModel = new DefaultListModel<>();
         jList = new JList<>(listModel);
         JScrollPane scrollPane = new JScrollPane(jList);
@@ -69,12 +60,29 @@ public class VistaTerrenos {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(jList.getSelectedValue()!=null){
-                    terrenoActual=jList.getSelectedValue();
+                    arrendatarioActual=jList.getSelectedValue();
                     abrirVentanaActualizar();
                 }
             }
         });
 
+        buscarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abrirVentanaBuscar();
+                
+            }
+        });
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(jList.getSelectedValue()!=null){
+                    arrendatarioActual=jList.getSelectedValue();
+                    ejecutarBorrado();
+                }
+            }
+        });
 
         botonesPanel.add(addButton);
         botonesPanel.add(actButton);
@@ -87,144 +95,191 @@ public class VistaTerrenos {
         return panel;
     }
 
-
-    public void actualizar() {
+    public void actualizar(ArrayList<Arrendatario> givenArrens) {
         // Limpiar la lista actual
         listModel.clear();
 
         // SE LLAMA AL CONTROLADOR PARA OBTENER LOS ARRENDATARIOS
-        ArrayList<Terreno> terrenos=ControladorTerrenos.listar();
+        ArrayList<Arrendatario> arrendatarios;
+        if(givenArrens==null)
+            arrendatarios=ControladorArrendatarios.listar();
+        else
+            arrendatarios=givenArrens;
+        
         //arrendatarios=...
-        if (terrenos != null) {
-            for (Terreno terreno : terrenos) {
-                listModel.addElement(terreno.toString());
+        if (arrendatarios != null) {
+            for (Arrendatario arrendatario : arrendatarios) {
+                listModel.addElement(arrendatario.toString());
             }
         }
     }
-        
 
-    public void abrirVentanaAñadir(){
-
-        final JFrame ventanaAñadir = new JFrame("Añadir Terreno");
+    private void abrirVentanaAñadir() {
+        final JFrame ventanaAñadir = new JFrame("Añadir Arrendatario");
         ventanaAñadir.setSize(300, 200);
         ventanaAñadir.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        final JPanel panelAñadir = new JPanel(new GridLayout(7, 2));
+        final JPanel panelAñadir = new JPanel(new GridLayout(8, 4));
+
+        panelAñadir.add(new JLabel("DNI:"));
+        final JTextField dniField = new JTextField();
+        panelAñadir.add(dniField);
 
         panelAñadir.add(new JLabel("Nombre:"));
         final JTextField nombreField = new JTextField();
         panelAñadir.add(nombreField);
 
-        panelAñadir.add(new JLabel("Ubicación:"));
-        final JTextField ubicacionField = new JTextField();
-        panelAñadir.add(ubicacionField);
+        panelAñadir.add(new JLabel("Edad:"));
+        final JTextField edadField = new JTextField();
+        panelAñadir.add(edadField);
 
-        panelAñadir.add(new JLabel("Tam Hectáreas:"));
-        final JTextField tamHectareasField = new JTextField();
-        panelAñadir.add(tamHectareasField);
-
-        panelAñadir.add(new JLabel("Tipo de Terreno:"));
-        final JTextField tipoTerrenoField = new JTextField();
-        panelAñadir.add(tipoTerrenoField);
-
-        panelAñadir.add(new JLabel("Límite Base:"));
-        final JTextField limiteBaseField = new JTextField();
-        panelAñadir.add(limiteBaseField);
-
-        panelAñadir.add(new JLabel("Límite Altura:"));
-        final JTextField limiteAlturaField = new JTextField();
-        panelAñadir.add(limiteAlturaField);
-
-        panelAñadir.add(new JLabel("Fecha:"));
-        final JTextField fechaField = new JTextField();
-        panelAñadir.add(fechaField);
-
-        JButton guardarButton = new JButton("Guardar");
-        guardarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                nombreTerreno = nombreField.getText();
-                ubicacionTerreno = ubicacionField.getText();
-                tamHectareasTerreno = tamHectareasField.getText();
-                tipoTerreno = tipoTerrenoField.getText();
-                limiteBaseTerreno = limiteBaseField.getText();
-                limiteAlturaTerreno = limiteAlturaField.getText();
-                fechaTerreno = fechaField.getText();
-                
-                // TODO Auto-generated method stub
-                ControladorTerrenos.insertar();
-                ventanaAñadir.dispose();
-                actualizar();
-            }
-        });
-        panelAñadir.add(guardarButton);
-
-        ventanaAñadir.getContentPane().add(panelAñadir);
-        ventanaAñadir.setVisible(true);
-        
-    }
-
-    public void abrirVentanaActualizar() {
-        final JFrame ventanaAñadir = new JFrame("Actualizar Terrenos");
-        ventanaAñadir.setSize(300, 200);
-        ventanaAñadir.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        final JPanel panelAñadir = new JPanel(new GridLayout(7, 2));
-
-        panelAñadir.add(new JLabel("Nombre:"));
-        final JTextField nombreField = new JTextField();
-        panelAñadir.add(nombreField);
-
-        panelAñadir.add(new JLabel("Ubicación:"));
-        final JTextField ubicacionField = new JTextField();
-        panelAñadir.add(ubicacionField);
-
-        panelAñadir.add(new JLabel("Tam Hectáreas:"));
-        final JTextField tamHectareasField = new JTextField();
-        panelAñadir.add(tamHectareasField);
-
-        panelAñadir.add(new JLabel("Tipo de Terreno:"));
-        final JTextField tipoTerrenoField = new JTextField();
-        panelAñadir.add(tipoTerrenoField);
-
-        panelAñadir.add(new JLabel("Límite Base:"));
-        final JTextField limiteBaseField = new JTextField();
-        panelAñadir.add(limiteBaseField);
-
-        panelAñadir.add(new JLabel("Límite Altura:"));
-        final JTextField limiteAlturaField = new JTextField();
-        panelAñadir.add(limiteAlturaField);
-
-        panelAñadir.add(new JLabel("Fecha:"));
-        final JTextField fechaField = new JTextField();
-        panelAñadir.add(fechaField);
+        panelAñadir.add(new JLabel("Sexo:"));
+        final JTextField sexoField = new JTextField();
+        panelAñadir.add(sexoField);
 
         JButton guardarButton = new JButton("Guardar");
         guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
-                nombreTerreno = nombreField.getText();
-                ubicacionTerreno = ubicacionField.getText();
-                tamHectareasTerreno = tamHectareasField.getText();
-                tipoTerreno = tipoTerrenoField.getText();
-                limiteBaseTerreno = limiteBaseField.getText();
-                limiteAlturaTerreno = limiteAlturaField.getText();
-                fechaTerreno = fechaField.getText();
+                 dniActual = dniField.getText();
+                nombreActual = nombreField.getText();
+                edadActual = edadField.getText();
+                sexoActual = sexoField.getText();
 
-                ControladorTerrenos.actualizarTerreno(terrenoActual, nombreTerreno, ubicacionTerreno, tamHectareasTerreno, tipoTerreno, 
-                                                limiteBaseTerreno, limiteAlturaTerreno, fechaTerreno);
+                ControladorArrendatarios.insertar();
                 // Cerrar la ventana después de guardar
                 ventanaAñadir.dispose();
-                actualizar();
+                actualizar(null);
             }
-        });
+        }); 
 
-        panelAñadir.add(guardarButton);
+        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
+        panelBoton.add(guardarButton);
+        
 
         ventanaAñadir.getContentPane().add(panelAñadir);
+        ventanaAñadir.getContentPane().add(panelBoton,BorderLayout.SOUTH);
+        ventanaAñadir.setLocationRelativeTo(null); 
+        ventanaAñadir.setIconImage(icono.getImage());
         ventanaAñadir.setVisible(true);
     }
 
-}
+    private void abrirVentanaActualizar() {
+        final JFrame ventanaActualizar = new JFrame("Actualizar Arrendatario");
+        ventanaActualizar.setSize(300, 200);
+        ventanaActualizar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        final JPanel panelAñadir = new JPanel(new GridLayout(8, 4));
+
+        panelAñadir.add(new JLabel("DNI:"));
+        final JTextField dniField = new JTextField();
+        panelAñadir.add(dniField);
+
+        panelAñadir.add(new JLabel("Nombre:"));
+        final JTextField nombreField = new JTextField();
+        panelAñadir.add(nombreField);
+
+        panelAñadir.add(new JLabel("Edad:"));
+        final JTextField edadField = new JTextField();
+        panelAñadir.add(edadField);
+
+        panelAñadir.add(new JLabel("Sexo:"));
+        final JTextField sexoField = new JTextField();
+        panelAñadir.add(sexoField);
+
+        JButton guardarButton = new JButton("Guardar");
+        guardarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
+                 dniActual = dniField.getText();
+                 if (!dniActual.matches("\\d{8}[a-zA-Z]") && !dniActual.equals("")) { //O el campo está vacío, o esta en formato correcto
+
+                    JOptionPane.showMessageDialog(ventanaActualizar, "DNI inválido. Debe ser un string de 8 letras.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Detener el proceso si el DNI no es válido
+                }
+                nombreActual = nombreField.getText();
+                edadActual = edadField.getText();
+                sexoActual = sexoField.getText();
+
+                ControladorArrendatarios.actualizar(arrendatarioActual,dniActual,nombreActual,edadActual,sexoActual);
+                // Cerrar la ventana después de guardar
+                ventanaActualizar.dispose();
+                actualizar(null);
+            }
+        });
+
+        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
+        panelBoton.add(guardarButton);
+        
+
+        ventanaActualizar.getContentPane().add(panelAñadir);
+        ventanaActualizar.getContentPane().add(panelBoton,BorderLayout.SOUTH);
+        ventanaActualizar.setLocationRelativeTo(null); 
+        ventanaActualizar.setIconImage(icono.getImage());
+        ventanaActualizar.setVisible(true);
+    }
+
+    public void abrirVentanaBuscar(){
+        final JFrame ventanaBuscar = new JFrame("Buscar Arrendatarios");
+        ventanaBuscar.setSize(300, 200);
+        ventanaBuscar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        final JPanel panelAñadir = new JPanel(new GridLayout(8, 4));
+
+        panelAñadir.add(new JLabel("DNI:"));
+        final JTextField dniField = new JTextField();
+        panelAñadir.add(dniField);
+
+        panelAñadir.add(new JLabel("Nombre:"));
+        final JTextField nombreField = new JTextField();
+        panelAñadir.add(nombreField);
+
+        panelAñadir.add(new JLabel("Edad:"));
+        final JTextField edadField = new JTextField();
+        panelAñadir.add(edadField);
+
+        panelAñadir.add(new JLabel("Sexo:"));
+        final JTextField sexoField = new JTextField();
+        panelAñadir.add(sexoField);
+
+        JButton guardarButton = new JButton("Buscar");
+        guardarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
+                 dniActual = dniField.getText();
+                 if (!dniActual.matches("\\d{8}[a-zA-Z]") && !dniActual.equals("")) { //O el campo está vacío, o esta en formato correcto
+
+                    JOptionPane.showMessageDialog(ventanaBuscar, "DNI inválido. Debe ser un string de 8 letras.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Detener el proceso si el DNI no es válido
+                }
+                nombreActual = nombreField.getText();
+                edadActual = edadField.getText();
+                sexoActual = sexoField.getText();
+
+                ArrayList<Arrendatario> arrens=ControladorArrendatarios.buscar(dniActual,nombreActual,edadActual,sexoActual);
+                // Cerrar la ventana después de guardar
+                ventanaBuscar.dispose();
+                actualizar(arrens);
+            }
+        });
+
+        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
+        panelBoton.add(guardarButton);
+        
+
+        ventanaBuscar.getContentPane().add(panelAñadir);
+        ventanaBuscar.getContentPane().add(panelBoton,BorderLayout.SOUTH);
+        ventanaBuscar.setLocationRelativeTo(null); 
+        ventanaBuscar.setIconImage(icono.getImage());
+        ventanaBuscar.setVisible(true);
+    }
+
+    public  void ejecutarBorrado(){
+        ControladorArrendatarios.borrar(arrendatarioActual);
+        actualizar(null);
+    }
+ 
+}
