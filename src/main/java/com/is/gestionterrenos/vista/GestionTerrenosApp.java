@@ -34,8 +34,7 @@ public class GestionTerrenosApp {
 
         // Crear instancias de las vistas específicas
         final VistaArrendatarios vistaArrendatarios = new VistaArrendatarios();
-
-        
+        final VistaTerrenos vistaTerrenos = new VistaTerrenos();
 
         
 
@@ -46,16 +45,27 @@ public class GestionTerrenosApp {
 
                 // Verificar la selección y actualizar la vista correspondiente
                 if ("Arrendatarios".equals(seleccion)) {
-                    // Agregar las vistas específicas al panel
+                    // Mostrar la vista de arrendatarios
+                    panel.remove(vistaTerrenos.getPanel());
                     panel.add(vistaArrendatarios.getPanel(), BorderLayout.CENTER);
-                    vistaArrendatarios.actualizar(null);
+                    vistaArrendatarios.actualizar();
+                    frame.revalidate();
+                } else if ("Terrenos".equals(seleccion)) {
+                    // Mostrar la vista de terrenos
+                    panel.remove(vistaArrendatarios.getPanel());
+                    panel.add(vistaTerrenos.getPanel(), BorderLayout.CENTER);
+                    vistaTerrenos.actualizar();
                     frame.revalidate();
                 } else {
-                    // Limpiar la vista si no es la opción de arrendatarios
+                    // Limpiar la vista si no es la opción de arrendatarios o terrenos
                     // vistaArrendatarios.limpiar();
+                    panel.remove(vistaArrendatarios.getPanel());
+                    panel.remove(vistaTerrenos.getPanel());
                 }
+
             }
         });
+
         frame.setLocationRelativeTo(null);
         frame.setIconImage(icono.getImage());
         frame.setVisible(true);
