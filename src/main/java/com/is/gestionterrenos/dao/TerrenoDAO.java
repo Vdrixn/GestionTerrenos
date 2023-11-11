@@ -31,7 +31,7 @@ public class TerrenoDAO {
     
     }
 
-    public void eliminar(int idTerreno){
+    public static void eliminar(int idTerreno){
      try{
             conn=ConexionDB.getConn();
             PreparedStatement pS=conn.prepareStatement("DELETE FROM terrenos WHERE id=?");
@@ -45,7 +45,7 @@ public class TerrenoDAO {
     }
 
 
-    public void actualizar(int id,String nombre, String ubicacion, int tamHectareas , String tipo, int limiteBase, int limiteAltura, Date fechaRegistro){
+    public static void actualizar(int id,String nombre, String ubicacion, int tamHectareas , String tipo, int limiteBase, int limiteAltura, Date fechaRegistro){
         try{
             conn=ConexionDB.getConn();
             PreparedStatement pS=conn.prepareStatement("UPDATE terrenos SET nombre=?, ubicacion=?,tamHectareas=?,tipo=?, limiteBase=?,limiteAltura=?,fechaRegistro=? WHERE id=?");
@@ -68,7 +68,7 @@ public class TerrenoDAO {
 
     }
 
-    public Terreno buscarPorId(int idTerreno){
+    public static Terreno buscarPorId(int idTerreno){
         Terreno terreno=null;
         try{
             conn=ConexionDB.getConn();
