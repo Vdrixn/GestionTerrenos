@@ -53,6 +53,12 @@ public class ControladorArrendatarios {
         ArrendatarioDAO.actualizar(idArrend,dni,nombre,Integer.parseInt(edad),sexo,new Date(System.currentTimeMillis()));
     }
 
+    public static ArrayList<Arrendatario> buscar(String dni, String nombre, String edad, String sexo){
+        if(edad.equals("") || edad==null)
+            edad="0";
+        return ArrendatarioDAO.buscarArrendatarios(dni,nombre,Integer.parseInt(edad),sexo);
+    }
+
     public static void borrar(String strArrendatario){
         //Sacamos el id del arrendatario, como todos tienen el mismo formato, podemos sacar el id en la misma posición. EMPIEZA EN POS 17
         int idArrend;

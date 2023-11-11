@@ -84,6 +84,60 @@ public class ArrendatarioDAO {
     
     }
 
+    public static ArrayList<Arrendatario> buscarArrendatarios(String dni, String nombre, int edad, String sexo) {
+        ArrayList<Arrendatario> arrendatarios = new ArrayList<Arrendatario>();
+        try {
+            conn=ConexionDB.getConn();
+            String consulta = "SELECT * FROM Arrendatarios WHERE TRUE";
+            boolean hayDNI=false;
+            boolean hayNombre=false;
+            boolean hayEdad=false;
+            boolean haySexo=false;
+            // Agregar condiciones según los parámetros proporcionados
+            if (dni != null && !dni.isEmpty()) {
+                consulta += " AND dni = ?";
+                hayDNI=true;
+            }
+            if (nombre != null && !nombre.isEmpty()) {
+                consulta += " AND nombre = ?";
+                hayNombre=true;
+            }
+            if (edad != 0) {
+                consulta += " AND edad = ?";
+                hayEdad=true;
+            }
+            if (sexo != null && !sexo.isEmpty()) {
+                consulta += " AND sexo = ?";
+                haySexo=true;
+            }
+            PreparedStatement pS=conn.prepareStatement(consulta);
+            int i=1;
+            if(hayDNI){
+                pS.setString(i, dni);
+                i++;
+            }
+            if(hayNombre){
+                pS.setString(i, nombre);
+                i++;
+            }
+            if(hayEdad){
+                pS.setInt(i, edad);
+                i++;
+            }
+            if(haySexo){
+                pS.setString(i, sexo);
+                i++;
+            }
+            ResultSet rs=pS.executeQuery();
+            while(rs.next()){
+                arrendatarios.add(new Arrendatario(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getDate(6)));
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return arrendatarios;
+    }
     
     public static ArrayList<Arrendatario>  listarTodos(){
         ArrayList<Arrendatario> arrendatarios=new ArrayList<Arrendatario>();    

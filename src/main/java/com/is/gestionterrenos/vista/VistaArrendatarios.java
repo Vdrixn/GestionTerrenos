@@ -65,6 +65,14 @@ public class VistaArrendatarios {
             }
         });
 
+        buscarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abrirVentanaBuscar();
+                
+            }
+        });
+
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,12 +94,17 @@ public class VistaArrendatarios {
         return panel;
     }
 
-    public void actualizar() {
+    public void actualizar(ArrayList<Arrendatario> givenArrens) {
         // Limpiar la lista actual
         listModel.clear();
 
         // SE LLAMA AL CONTROLADOR PARA OBTENER LOS ARRENDATARIOS
-        ArrayList<Arrendatario> arrendatarios=ControladorArrendatarios.listar();
+        ArrayList<Arrendatario> arrendatarios;
+        if(givenArrens==null)
+            arrendatarios=ControladorArrendatarios.listar();
+        else
+            arrendatarios=givenArrens;
+        
         //arrendatarios=...
         if (arrendatarios != null) {
             for (Arrendatario arrendatario : arrendatarios) {
@@ -136,7 +149,7 @@ public class VistaArrendatarios {
                 ControladorArrendatarios.insertar();
                 // Cerrar la ventana después de guardar
                 ventanaAñadir.dispose();
-                actualizar();
+                actualizar(null);
             }
         }); 
 
@@ -187,7 +200,7 @@ public class VistaArrendatarios {
                 ControladorArrendatarios.actualizar(arrendatarioActual,dniActual,nombreActual,edadActual,sexoActual);
                 // Cerrar la ventana después de guardar
                 ventanaAñadir.dispose();
-                actualizar();
+                actualizar(null);
             }
         });
 
@@ -197,10 +210,60 @@ public class VistaArrendatarios {
         ventanaAñadir.setVisible(true);
     }
 
+    public void abrirVentanaBuscar(){
+        final JFrame ventanaAñadir = new JFrame("Buscar Arrendatarios");
+        ventanaAñadir.setSize(300, 200);
+        ventanaAñadir.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        final JPanel panelAñadir = new JPanel(new GridLayout(8, 4));
+
+        panelAñadir.add(new JLabel("DNI:"));
+        final JTextField dniField = new JTextField();
+        panelAñadir.add(dniField);
+
+        panelAñadir.add(new JLabel("Nombre:"));
+        final JTextField nombreField = new JTextField();
+        panelAñadir.add(nombreField);
+
+        panelAñadir.add(new JLabel("Edad:"));
+        final JTextField edadField = new JTextField();
+        panelAñadir.add(edadField);
+
+        panelAñadir.add(new JLabel("Sexo:"));
+        final JTextField sexoField = new JTextField();
+        panelAñadir.add(sexoField);
+
+        JButton guardarButton = new JButton("Buscar");
+        guardarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
+                 dniActual = dniField.getText();
+                 if (!dniActual.matches("\\d{8}[a-zA-Z]") && !dniActual.equals("")) { //O el campo está vacío, o esta en formato correcto
+
+                    JOptionPane.showMessageDialog(ventanaAñadir, "DNI inválido. Debe ser un string de 8 letras.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Detener el proceso si el DNI no es válido
+                }
+                nombreActual = nombreField.getText();
+                edadActual = edadField.getText();
+                sexoActual = sexoField.getText();
+
+                ArrayList<Arrendatario> arrens=ControladorArrendatarios.buscar(dniActual,nombreActual,edadActual,sexoActual);
+                // Cerrar la ventana después de guardar
+                ventanaAñadir.dispose();
+                actualizar(arrens);
+            }
+        });
+
+        panelAñadir.add(guardarButton);
+
+        ventanaAñadir.getContentPane().add(panelAñadir);
+        ventanaAñadir.setVisible(true);
+    }
 
     public  void ejecutarBorrado(){
         ControladorArrendatarios.borrar(arrendatarioActual);
-        actualizar();
+        actualizar(null);
     }
  
 }
