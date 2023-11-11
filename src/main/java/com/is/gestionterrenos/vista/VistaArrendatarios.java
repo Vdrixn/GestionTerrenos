@@ -19,6 +19,7 @@ public class VistaArrendatarios {
     private JPanel panel;
     private DefaultListModel<String> listModel;
     private JList<String> jList;
+    ImageIcon icono;
 
     public static String dniActual;
     public static String nombreActual;
@@ -30,7 +31,7 @@ public class VistaArrendatarios {
 
     public  VistaArrendatarios() {
         panel = new JPanel(new BorderLayout());
-
+        icono = new ImageIcon("src/main/resources/icono.png");
         listModel = new DefaultListModel<>();
         jList = new JList<>(listModel);
         JScrollPane scrollPane = new JScrollPane(jList);
@@ -153,16 +154,21 @@ public class VistaArrendatarios {
             }
         }); 
 
-        panelAñadir.add(guardarButton);
+        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
+        panelBoton.add(guardarButton);
+        
 
         ventanaAñadir.getContentPane().add(panelAñadir);
+        ventanaAñadir.getContentPane().add(panelBoton,BorderLayout.SOUTH);
+        ventanaAñadir.setLocationRelativeTo(null); 
+        ventanaAñadir.setIconImage(icono.getImage());
         ventanaAñadir.setVisible(true);
     }
 
     private void abrirVentanaActualizar() {
-        final JFrame ventanaAñadir = new JFrame("Actualizar Arrendatario");
-        ventanaAñadir.setSize(300, 200);
-        ventanaAñadir.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        final JFrame ventanaActualizar = new JFrame("Actualizar Arrendatario");
+        ventanaActualizar.setSize(300, 200);
+        ventanaActualizar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         final JPanel panelAñadir = new JPanel(new GridLayout(8, 4));
 
@@ -190,7 +196,7 @@ public class VistaArrendatarios {
                  dniActual = dniField.getText();
                  if (!dniActual.matches("\\d{8}[a-zA-Z]") && !dniActual.equals("")) { //O el campo está vacío, o esta en formato correcto
 
-                    JOptionPane.showMessageDialog(ventanaAñadir, "DNI inválido. Debe ser un string de 8 letras.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(ventanaActualizar, "DNI inválido. Debe ser un string de 8 letras.", "Error", JOptionPane.ERROR_MESSAGE);
                     return; // Detener el proceso si el DNI no es válido
                 }
                 nombreActual = nombreField.getText();
@@ -199,21 +205,26 @@ public class VistaArrendatarios {
 
                 ControladorArrendatarios.actualizar(arrendatarioActual,dniActual,nombreActual,edadActual,sexoActual);
                 // Cerrar la ventana después de guardar
-                ventanaAñadir.dispose();
+                ventanaActualizar.dispose();
                 actualizar(null);
             }
         });
 
-        panelAñadir.add(guardarButton);
+        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
+        panelBoton.add(guardarButton);
+        
 
-        ventanaAñadir.getContentPane().add(panelAñadir);
-        ventanaAñadir.setVisible(true);
+        ventanaActualizar.getContentPane().add(panelAñadir);
+        ventanaActualizar.getContentPane().add(panelBoton,BorderLayout.SOUTH);
+        ventanaActualizar.setLocationRelativeTo(null); 
+        ventanaActualizar.setIconImage(icono.getImage());
+        ventanaActualizar.setVisible(true);
     }
 
     public void abrirVentanaBuscar(){
-        final JFrame ventanaAñadir = new JFrame("Buscar Arrendatarios");
-        ventanaAñadir.setSize(300, 200);
-        ventanaAñadir.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        final JFrame ventanaBuscar = new JFrame("Buscar Arrendatarios");
+        ventanaBuscar.setSize(300, 200);
+        ventanaBuscar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         final JPanel panelAñadir = new JPanel(new GridLayout(8, 4));
 
@@ -241,7 +252,7 @@ public class VistaArrendatarios {
                  dniActual = dniField.getText();
                  if (!dniActual.matches("\\d{8}[a-zA-Z]") && !dniActual.equals("")) { //O el campo está vacío, o esta en formato correcto
 
-                    JOptionPane.showMessageDialog(ventanaAñadir, "DNI inválido. Debe ser un string de 8 letras.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(ventanaBuscar, "DNI inválido. Debe ser un string de 8 letras.", "Error", JOptionPane.ERROR_MESSAGE);
                     return; // Detener el proceso si el DNI no es válido
                 }
                 nombreActual = nombreField.getText();
@@ -250,15 +261,20 @@ public class VistaArrendatarios {
 
                 ArrayList<Arrendatario> arrens=ControladorArrendatarios.buscar(dniActual,nombreActual,edadActual,sexoActual);
                 // Cerrar la ventana después de guardar
-                ventanaAñadir.dispose();
+                ventanaBuscar.dispose();
                 actualizar(arrens);
             }
         });
 
-        panelAñadir.add(guardarButton);
+        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
+        panelBoton.add(guardarButton);
+        
 
-        ventanaAñadir.getContentPane().add(panelAñadir);
-        ventanaAñadir.setVisible(true);
+        ventanaBuscar.getContentPane().add(panelAñadir);
+        ventanaBuscar.getContentPane().add(panelBoton,BorderLayout.SOUTH);
+        ventanaBuscar.setLocationRelativeTo(null); 
+        ventanaBuscar.setIconImage(icono.getImage());
+        ventanaBuscar.setVisible(true);
     }
 
     public  void ejecutarBorrado(){

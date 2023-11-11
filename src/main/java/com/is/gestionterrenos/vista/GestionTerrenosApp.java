@@ -8,10 +8,12 @@ import java.util.Map;
 
 // Clase principal que contiene el JFrame principal
 public class GestionTerrenosApp {
+    public static ImageIcon icono;
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                icono = new ImageIcon("src/main/resources/icono.png");
                 createAndShowGUI();
             }
         });
@@ -20,7 +22,7 @@ public class GestionTerrenosApp {
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("Gestión de Terrenos");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 300);
+        frame.setSize(800, 300);
 
         JPanel panel = new JPanel(new BorderLayout());
         frame.getContentPane().add(panel);
@@ -52,7 +54,8 @@ public class GestionTerrenosApp {
                 }
             }
         });
-
+        frame.setLocationRelativeTo(null);
+        frame.setIconImage(icono.getImage());
         frame.setVisible(true);
     }
 }
