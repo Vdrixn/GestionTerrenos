@@ -78,14 +78,14 @@ public class ReciboDAO {
         return recibo;
     }
 
-    public static ArrayList<Recibo> buscarRecibos(int idArren, int idParcela, Date fechaEmision, double importe, double iva, double irpf) {
+    public static ArrayList<Recibo> buscarRecibos(int idArren, int idParcela, double importe, double iva, double irpf) {
         ArrayList<Recibo> recibos = new ArrayList<Recibo>();
         try {
             conn = ConexionDB.getConn();
             String consulta = "SELECT * FROM Recibos WHERE TRUE";
             boolean hayIdArren = idArren != 0;
             boolean hayIdParcela = idParcela != 0;
-            boolean hayFecha = fechaEmision != null;
+            // boolean hayFecha = fechaEmision != null;
             boolean hayImporte = importe != 0.0;
             boolean hayIva = iva != 0.0;
             boolean hayIrpf = irpf != 0.0;
@@ -96,9 +96,9 @@ public class ReciboDAO {
             if (hayIdParcela) {
                 consulta += " AND idParcela = ?";
             }
-            if (hayFecha) {
-                consulta += " AND fechaEmision = ?";
-            }
+            // if (hayFecha) {
+            //     consulta += " AND fechaEmision = ?";
+            // }
             if (hayImporte) {
                 consulta += " AND importe = ?";
             }
@@ -118,9 +118,9 @@ public class ReciboDAO {
             if (hayIdParcela) {
                 pS.setInt(i++, idParcela);
             }
-            if (hayFecha) {
-                pS.setDate(i++, fechaEmision);
-            }
+            // if (hayFecha) {
+            //     pS.setDate(i++, fechaEmision);
+            // }
             if (hayImporte) {
                 pS.setDouble(i++, importe);
             }

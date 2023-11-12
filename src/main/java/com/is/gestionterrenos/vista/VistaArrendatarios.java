@@ -1,19 +1,13 @@
 package com.is.gestionterrenos.vista;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import com.is.gestionterrenos.controlador.ControladorArrendatarios;
 import com.is.gestionterrenos.modelo.Arrendatario;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class VistaArrendatarios {
     private JPanel panel;

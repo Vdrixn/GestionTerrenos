@@ -7,8 +7,6 @@ import com.is.gestionterrenos.dao.ConexionDB;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.SwingUtilities;
 
 // Clase principal que contiene el JFrame principal

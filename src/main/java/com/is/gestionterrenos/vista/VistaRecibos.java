@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.sql.Date;
 
 import com.is.gestionterrenos.controlador.ControladorRecibos;
+import com.is.gestionterrenos.modelo.Arrendatario;
 import com.is.gestionterrenos.modelo.Recibo;
 
 public class VistaRecibos {
@@ -17,8 +18,8 @@ public class VistaRecibos {
     ImageIcon icono;
 
     // Variables para manejar los datos actuales
-    public static int idArrendatarioActual;
-    public static int idArrendatarioActual;
+    public static int idReciboActual;
+    public static int idParcelaActual;
     public static double importeActual;
     public static double ivaActual;
     public static double irpfActual;
@@ -136,11 +137,10 @@ public class VistaRecibos {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
-                idArrendatarioActual = Integer.parseInt(idArrenField.getText());
+                idReciboActual = Integer.parseInt(idArrenField.getText());
                 idParcelaActual = Integer.parseInt(idParcelaField.getText());
-                importeActual = importeField.getText();
-                ivaActual = ivaField.getText();
-                irpfActual = irpfField.getText();
+                importeActual = Double.parseDouble(importeField.getText());
+                irpfActual = Double.parseDouble(irpfField.getText());
 
                 ControladorRecibos.insertar();
                 // Cerrar la ventana después de guardar
@@ -192,15 +192,16 @@ public class VistaRecibos {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
-                idArrendatarioActual = Integer.parseInt(idArrenField.getText());
+                idReciboActual = Integer.parseInt(idArrenField.getText());
                 idParcelaActual = Integer.parseInt(idParcelaField.getText());
-                importeActual = importeField.getText();
-                ivaActual = ivaField.getText();
-                irpfActual = irpfField.getText();
+                importeActual = Double.parseDouble(importeField.getText());
+                ivaActual = Double.parseDouble(ivaField.getText());
+                irpfActual = Double.parseDouble(irpfField.getText());
+                
 
-                ControladorRecibos.actualizar(idArrendatarioActual,idParcelaActual,importeActual,ivaActual,irpfActual);
+                ControladorRecibos.actualizar(reciboActual, idReciboActual,idParcelaActual,importeActual,ivaActual,irpfActual);
                 // Cerrar la ventana después de guardar
-                ventanaAñadir.dispose();
+                ventanaActualizar.dispose();
                 actualizar(null);
             }
         });
@@ -248,16 +249,16 @@ public class VistaRecibos {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
-                idArrendatarioActual = Integer.parseInt(idArrenField.getText());
+                idReciboActual = Integer.parseInt(idArrenField.getText());
                 idParcelaActual = Integer.parseInt(idParcelaField.getText());
-                importeActual = importeField.getText();
-                ivaActual = ivaField.getText();
-                irpfActual = irpfField.getText();
+                importeActual = Double.parseDouble(importeField.getText());
+                ivaActual = Double.parseDouble(ivaField.getText());
+                irpfActual = Double.parseDouble(irpfField.getText());
 
-                ArrayList<Arrendatario> arrens=ControladorRecibos.buscar(idArrendatarioActual,idParcelaActual,importeActual,ivaActual,irpfActual);
+                ArrayList<Recibo> recibos = ControladorRecibos.buscar(idReciboActual,idParcelaActual, importeActual,ivaActual,irpfActual);
                 // Cerrar la ventana después de guardar
                 ventanaBuscar.dispose();
-                actualizar(arrens);
+                actualizar(recibos);
             }
         });
 
@@ -273,7 +274,7 @@ public class VistaRecibos {
     }
 
     public  void ejecutarBorrado(){
-        ControladorRecibos.borrar(arrendatarioActual);
+        ControladorRecibos.borrar(reciboActual);
         actualizar(null);
     }
 }
