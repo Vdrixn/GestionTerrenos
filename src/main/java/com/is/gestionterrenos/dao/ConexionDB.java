@@ -1,7 +1,6 @@
 package com.is.gestionterrenos.dao;
 import java.sql.*;
 
-//TODO: Terminar conexionDB
 public class ConexionDB {
 
     public static Connection getConn() {
@@ -17,7 +16,6 @@ public class ConexionDB {
 				n++;
 			}*/
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;

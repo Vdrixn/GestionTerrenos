@@ -4,7 +4,6 @@ import java.sql.*;
 import com.is.gestionterrenos.modelo.Terreno;
 import java.util.ArrayList;
 
-//TODO:Ciclo 1
 public class TerrenoDAO {
     public static Connection conn;
 
