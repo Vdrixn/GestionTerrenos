@@ -98,6 +98,25 @@ public class GestionTerrenosApp {
                     vistaTerrenos.actualizar(null);
                     frame.revalidate();
                     vistaTerrenActiva = true;
+                } else if("Parcelas".equals(seleccion)){
+                    //mostrar vista parcelas 
+                     if(vistaArrenActiva){
+                        panel.remove(vistaArrendatarios.getPanel());
+                        vistaArrenActiva = false;
+                    }
+                    else if(vistaTerrenActiva){
+                        panel.remove(vistaTerrenos.getPanel());
+                        vistaArrenActiva = false;
+                    }
+                    else if(vistaReciboActiva){
+                        panel.remove(vistaRecibos.getPanel());
+                        vistaReciboActiva = false;
+                    }
+                    panel.add(vistaParcelas.getPanel(), BorderLayout.CENTER);
+                    vistaParcelas.actualizar(null);
+                    frame.revalidate();
+                    vistaParcelaActiva= false;
+
                 } else {
                     // Limpiar la vista si no es la opción de arrendatarios o terrenos
                     // vistaArrendatarios.limpiar();
