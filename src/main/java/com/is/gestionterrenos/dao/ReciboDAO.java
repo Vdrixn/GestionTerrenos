@@ -46,10 +46,10 @@ public class ReciboDAO {
             PreparedStatement pS = conn.prepareStatement("UPDATE Recibos SET idArren = ?, idParcela = ?, importe = ?, iva = ?, irpf = ? WHERE id = ?");
             pS.setInt(1, idArren);
             pS.setInt(2, idParcela);
-            pS.setDouble(4, importe);
-            pS.setDouble(5, iva);
-            pS.setDouble(6, irpf);
-            pS.setInt(7, id);
+            pS.setDouble(3, importe);
+            pS.setDouble(4, iva);
+            pS.setDouble(5, irpf);
+            pS.setInt(6, id);
 
             pS.executeUpdate();
             pS.close();

@@ -22,8 +22,8 @@ public class ControladorParcelas {
      public static void borrar(String strParecela){
         //Sacamos el id del arrendatario, como todos tienen el mismo formato, podemos sacar el id en la misma posición. EMPIEZA EN POS 17
         int idParcela;
-        idParcela=Integer.parseInt(""+strParecela.charAt(18));
-        int i=19;
+        idParcela=Integer.parseInt(""+strParecela.charAt(12));
+        int i=13;
         while(Character.isDigit(strParecela.charAt(i))){
             idParcela=idParcela*10+Integer.parseInt(""+strParecela.charAt(i));
             i++;
@@ -34,8 +34,8 @@ public class ControladorParcelas {
     }
     public static void actualizar(String strParcela, String Idterreno,String Ubi, String Limitebase, String limiteAltura){
         int idParcela;
-        idParcela=Integer.parseInt(""+strParcela.charAt(18));
-        int i=19;
+        idParcela=Integer.parseInt(""+strParcela.charAt(12));
+        int i=13;
              while(Character.isDigit(strParcela.charAt(i))){
                 idParcela=idParcela*10+Integer.parseInt(""+strParcela.charAt(i));
                     i++;

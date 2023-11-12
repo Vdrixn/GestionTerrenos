@@ -12,8 +12,8 @@ public class Parcela {
     public Parcela(int newId, int newIdTerreno, String newUbicacion, int limiteBase,int limiteAltura,Date fechaReg) {
         id = newId;
         idTerreno = newIdTerreno;
-        limiteBase = limiteBase;
-        limiteAltura = limiteAltura;
+        this.limiteBase = limiteBase;
+        this.limiteAltura = limiteAltura;
         ubicacion = newUbicacion;
         fechaRegistro = fechaReg;
     }

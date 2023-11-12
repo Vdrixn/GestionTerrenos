@@ -137,10 +137,26 @@ public class VistaRecibos {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
-                idReciboActual = Integer.parseInt(idArrenField.getText());
-                idParcelaActual = Integer.parseInt(idParcelaField.getText());
-                importeActual = Double.parseDouble(importeField.getText());
-                irpfActual = Double.parseDouble(irpfField.getText());
+
+                idReciboActual=0;
+                idParcelaActual=0;
+                importeActual=0;
+                ivaActual=0;
+                irpfActual=0;
+
+                if(!idArrenField.getText().equals(""))
+                    idReciboActual = Integer.parseInt(idArrenField.getText());
+                
+                if(!idParcelaField.getText().equals(""))
+                    idParcelaActual = Integer.parseInt(idParcelaField.getText());
+                if(!importeField.getText().equals(""))
+                    importeActual = Double.parseDouble(importeField.getText());
+                    
+                if(!ivaField.getText().equals(""))
+                    ivaActual = Double.parseDouble(ivaField.getText());
+                    
+                if(!irpfField.getText().equals(""))
+                    irpfActual = Double.parseDouble(irpfField.getText());
 
                 ControladorRecibos.insertar();
                 // Cerrar la ventana después de guardar
@@ -192,11 +208,25 @@ public class VistaRecibos {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
-                idReciboActual = Integer.parseInt(idArrenField.getText());
-                idParcelaActual = Integer.parseInt(idParcelaField.getText());
-                importeActual = Double.parseDouble(importeField.getText());
-                ivaActual = Double.parseDouble(ivaField.getText());
-                irpfActual = Double.parseDouble(irpfField.getText());
+                idReciboActual=0;
+                idParcelaActual=0;
+                importeActual=0;
+                ivaActual=0;
+                irpfActual=0;
+
+                if(!idArrenField.getText().equals(""))
+                    idReciboActual = Integer.parseInt(idArrenField.getText());
+                
+                if(!idParcelaField.getText().equals(""))
+                    idParcelaActual = Integer.parseInt(idParcelaField.getText());
+                if(!importeField.getText().equals(""))
+                    importeActual = Double.parseDouble(importeField.getText());
+                    
+                if(!ivaField.getText().equals(""))
+                    ivaActual = Double.parseDouble(ivaField.getText());
+                    
+                if(!irpfField.getText().equals(""))
+                    irpfActual = Double.parseDouble(irpfField.getText());
                 
 
                 ControladorRecibos.actualizar(reciboActual, idReciboActual,idParcelaActual,importeActual,ivaActual,irpfActual);
@@ -249,11 +279,25 @@ public class VistaRecibos {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
-                idReciboActual = Integer.parseInt(idArrenField.getText());
-                idParcelaActual = Integer.parseInt(idParcelaField.getText());
-                importeActual = Double.parseDouble(importeField.getText());
-                ivaActual = Double.parseDouble(ivaField.getText());
-                irpfActual = Double.parseDouble(irpfField.getText());
+                idReciboActual=0;
+                idParcelaActual=0;
+                importeActual=0;
+                ivaActual=0;
+                irpfActual=0;
+
+                if(!idArrenField.getText().equals(""))
+                    idReciboActual = Integer.parseInt(idArrenField.getText());
+                
+                if(!idParcelaField.getText().equals(""))
+                    idParcelaActual = Integer.parseInt(idParcelaField.getText());
+                if(!importeField.getText().equals(""))
+                    importeActual = Double.parseDouble(importeField.getText());
+                    
+                if(!ivaField.getText().equals(""))
+                    ivaActual = Double.parseDouble(ivaField.getText());
+                    
+                if(!irpfField.getText().equals(""))
+                    irpfActual = Double.parseDouble(irpfField.getText());
 
                 ArrayList<Recibo> recibos = ControladorRecibos.buscar(idReciboActual,idParcelaActual, importeActual,ivaActual,irpfActual);
                 // Cerrar la ventana después de guardar

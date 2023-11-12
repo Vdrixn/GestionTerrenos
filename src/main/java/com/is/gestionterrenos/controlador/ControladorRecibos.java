@@ -9,11 +9,13 @@ import java.util.ArrayList;
 
 public class ControladorRecibos {
 
-    public static void insertar() {
+    public static void insertar() { //TODO: gestionar mysql excepcion cuando se intenta añadir con un id no existente de arrendatario o de parcela
         ReciboDAO.insertar(VistaRecibos.idReciboActual,VistaRecibos.idParcelaActual,new Date(System.currentTimeMillis()),VistaRecibos.importeActual,VistaRecibos.ivaActual,VistaRecibos.irpfActual);
     }
 
     public static void actualizar(String oldRecibo, int idArren, int idParcela, double importe, double iva, double irpf){
+        //TODO: gestionar mysql excepcion cuando se intenta añadir con un id no existente de arrendatario o de parcela
+        
         //Cuando un campo no ha sido rellenado, será un string vacio ""
         
         //Primero vamos a sacar el id del recibo, como todos tienen el mismo formato, podemos sacar el id en la misma posición. EMPIEZA EN POS 17
@@ -56,9 +58,8 @@ public class ControladorRecibos {
     }
 
     private static int getIdRecibo(String strRecibo){
-        //TODO: Cambiar index para sacar id
-        int idRecibo=Integer.parseInt(""+strRecibo.charAt(18));
-        int i=19;
+        int idRecibo=Integer.parseInt(""+strRecibo.charAt(12));
+        int i=13;
         while(Character.isDigit(strRecibo.charAt(i))){
             idRecibo=idRecibo*10+Integer.parseInt(""+strRecibo.charAt(i));
             i++;
