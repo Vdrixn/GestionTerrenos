@@ -40,13 +40,12 @@ public class ReciboDAO {
         }
     }
 
-    public static void actualizar(int id, int idArren, int idParcela, Date fechaEmision, double importe, double iva, double irpf){
+    public static void actualizar(int id, int idArren, int idParcela, double importe, double iva, double irpf){
         try {
             conn = ConexionDB.getConn();
-            PreparedStatement pS = conn.prepareStatement("UPDATE Recibos SET idArren = ?, idParcela = ?, fechaEmision = ?, importe = ?, iva = ?, irpf = ? WHERE id = ?");
+            PreparedStatement pS = conn.prepareStatement("UPDATE Recibos SET idArren = ?, idParcela = ?, importe = ?, iva = ?, irpf = ? WHERE id = ?");
             pS.setInt(1, idArren);
             pS.setInt(2, idParcela);
-            pS.setDate(3, fechaEmision);
             pS.setDouble(4, importe);
             pS.setDouble(5, iva);
             pS.setDouble(6, irpf);
@@ -159,5 +158,6 @@ public class ReciboDAO {
         return recibos;
     }
 
-    // Aquí se pueden incluir métodos de prueba para verificar la funcionalidad
+    // Pruebas -----
+    
 }

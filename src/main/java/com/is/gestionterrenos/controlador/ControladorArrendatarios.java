@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 
 public class ControladorArrendatarios {
-
+    
     public static void insertar() {
         ArrendatarioDAO.insertar(VistaArrendatarios.dniActual,VistaArrendatarios.nombreActual,Integer.parseInt(VistaArrendatarios.edadActual),VistaArrendatarios.sexoActual, new Date(System.currentTimeMillis()));
     }

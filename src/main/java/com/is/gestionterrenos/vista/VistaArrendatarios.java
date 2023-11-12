@@ -37,8 +37,6 @@ public class VistaArrendatarios {
         JScrollPane scrollPane = new JScrollPane(jList);
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        
-
         JPanel botonesPanel = new JPanel(new GridLayout(2, 1));
         JButton addButton = new JButton("Añadir");
         JButton actButton = new JButton("Actualizar");
@@ -46,20 +44,17 @@ public class VistaArrendatarios {
         JButton deleteButton = new JButton("Borrar");
 
          addButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 abrirVentanaAñadir();
             }
-
-            
          });
 
          actButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(jList.getSelectedValue()!=null){
-                    arrendatarioActual=jList.getSelectedValue();
+                    arrendatarioActual = jList.getSelectedValue();
                     abrirVentanaActualizar();
                 }
             }
@@ -69,7 +64,6 @@ public class VistaArrendatarios {
             @Override
             public void actionPerformed(ActionEvent e) {
                 abrirVentanaBuscar();
-                
             }
         });
 
@@ -77,7 +71,7 @@ public class VistaArrendatarios {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(jList.getSelectedValue()!=null){
-                    arrendatarioActual=jList.getSelectedValue();
+                    arrendatarioActual = jList.getSelectedValue();
                     ejecutarBorrado();
                 }
             }
@@ -141,7 +135,7 @@ public class VistaArrendatarios {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
-                 dniActual = dniField.getText();
+                dniActual = dniField.getText();
                 nombreActual = nombreField.getText();
                 edadActual = edadField.getText();
                 sexoActual = sexoField.getText();
