@@ -60,7 +60,6 @@ public class VistaTerrenos {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
                 abrirVentanaAñadir();
             }
 
@@ -153,7 +152,6 @@ public class VistaTerrenos {
                 limiteBaseTerreno = limiteBaseField.getText();
                 limiteAlturaTerreno = limiteAlturaField.getText();
                 
-                // TODO Auto-generated method stub
                 ControladorTerrenos.insertar();
                 ventanaAñadir.dispose();
                 actualizar(null);

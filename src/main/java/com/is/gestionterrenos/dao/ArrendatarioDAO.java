@@ -4,8 +4,6 @@ import com.is.gestionterrenos.modelo.Arrendatario;
 import java.util.ArrayList;
 import java.sql.*;
 
-//TODO:Ciclo 1
-
 public class ArrendatarioDAO {
     public static Connection conn;
 
@@ -133,7 +131,6 @@ public class ArrendatarioDAO {
                 arrendatarios.add(new Arrendatario(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getDate(6)));
             }
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return arrendatarios;
