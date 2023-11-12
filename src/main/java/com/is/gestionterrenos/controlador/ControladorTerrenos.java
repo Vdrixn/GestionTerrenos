@@ -19,11 +19,11 @@ public class ControladorTerrenos {
         
         TerrenoDAO.insertar(VistaTerrenos.nombreTerreno, VistaTerrenos.ubicacionTerreno, Integer.parseInt(VistaTerrenos.tamHectareasTerreno), 
                             VistaTerrenos.tipoTerreno, Integer.parseInt(VistaTerrenos.limiteBaseTerreno), 
-                            Integer.parseInt(VistaTerrenos.limiteAlturaTerreno), parsearFecha(VistaTerrenos.fechaTerreno));
+                            Integer.parseInt(VistaTerrenos.limiteAlturaTerreno), new Date(System.currentTimeMillis()));
     }
     
     public static void actualizarTerreno(String oldNombreTerreno, String nombre, String ubicacion, String tamHectareas,
-                                        String tipoTerreno, String limiteBase, String limiteAltura, String fecha) {
+                                        String tipoTerreno, String limiteBase, String limiteAltura) {
         // Extraer el ID del terreno de la cadena (suponiendo un formato específico)
         int idTerreno;
         int idIndex = oldNombreTerreno.indexOf("ID:") + 3; // Posición inicial del ID
@@ -73,19 +73,10 @@ public class ControladorTerrenos {
             limiteAltura = String.valueOf(terreno.getLimiteAltura());
         }
 
-        if (fecha.equals("")) {
-            if (terreno == null)
-                terreno = TerrenoDAO.buscarPorId(idTerreno);
-
-            // Convertir la fecha existente a un formato legible (puedes ajustar el formato
-            // según tus necesidades)
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            fecha = dateFormat.format(terreno.getFechaRegistro());
-        }
 
         // Convertir valores numéricos y actualizar el terreno
         TerrenoDAO.actualizar(idTerreno, nombre, ubicacion, Integer.parseInt(tamHectareas), tipoTerreno,
-                Integer.parseInt(limiteBase), Integer.parseInt(limiteAltura), parsearFecha(fecha));
+                Integer.parseInt(limiteBase), Integer.parseInt(limiteAltura), new Date(System.currentTimeMillis()));
     }
 
 

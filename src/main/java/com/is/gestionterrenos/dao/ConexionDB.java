@@ -1,6 +1,7 @@
 package com.is.gestionterrenos.dao;
 import java.sql.*;
 
+
 public class ConexionDB {
 
     public static Connection getConn() {
@@ -20,8 +21,6 @@ public class ConexionDB {
         }
         return null;
     }
-    public static void main(String[] args) {
-        getConn();
-    }
+    
     
 }
