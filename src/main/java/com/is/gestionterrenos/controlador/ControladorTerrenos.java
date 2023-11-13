@@ -27,8 +27,13 @@ public class ControladorTerrenos {
                                         String tipoTerreno, String limiteBase, String limiteAltura) {
         // Extraer el ID del terreno de la cadena (suponiendo un formato específico)
         int idTerreno;
-        int idIndex = oldNombreTerreno.indexOf("ID:") + 3; // Posición inicial del ID
-        idTerreno = Integer.parseInt(oldNombreTerreno.substring(idIndex, oldNombreTerreno.indexOf(" ", idIndex)));
+        int idIndex = oldNombreTerreno.indexOf("ID:") + 4; // Posición inicial del ID
+        idTerreno=Integer.parseInt(""+oldNombreTerreno.charAt(idIndex));
+        idIndex++;
+        while(Character.isDigit(oldNombreTerreno.charAt(idIndex))){
+            idTerreno=idTerreno*10+Integer.parseInt(""+oldNombreTerreno.charAt(idIndex));
+            idIndex++;
+        }
 
         // Variables para almacenar los datos existentes del terreno
         Terreno terreno = null;
