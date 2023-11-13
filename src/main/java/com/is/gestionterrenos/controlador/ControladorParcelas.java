@@ -32,7 +32,7 @@ public class ControladorParcelas {
         //Procedemos con el borrado
         ParcelaDAO.eliminar(idParcela);
     }
-    public static void actualizar(String strParcela, String Idterreno,String Ubi, String Limitebase, String limiteAltura){
+    public static void actualizar(String strParcela,String Ubi, String Limitebase, String limiteAltura){
         int idParcela;
         idParcela=Integer.parseInt(""+strParcela.charAt(12));
         int i=13;
@@ -41,10 +41,10 @@ public class ControladorParcelas {
                     i++;
         }
         Parcela parcela=null;
-        if(Idterreno.equals("")){
+        
             parcela=ParcelaDAO.buscarPorId(idParcela);
-            Idterreno=String.valueOf(parcela.getIdTerreno());
-        }
+            String Idterreno=String.valueOf(parcela.getIdTerreno());
+        
         if(Ubi.equals("")){
             if(parcela==null)
                 parcela=ParcelaDAO.buscarPorId(idParcela);

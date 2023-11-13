@@ -48,13 +48,15 @@ public class ParcelaDAO {
     public static void actualizar(int id,int idTerreno, String ubicacion, int limiteBase, int limiteAltura, Date fechaRegistro){
         try{
             conn=ConexionDB.getConn();
-            PreparedStatement pS=conn.prepareStatement("UPDATE parcelas SET id=?, ubicacion=?, limiteBase=?, limiteAltura=?, fechaRegistro=? WHERE id=?");
-            pS.setInt(1, idTerreno);
-            pS.setString(2, ubicacion);
-            pS.setInt(3, limiteBase);
-            pS.setInt(4, limiteAltura);
-            pS.setDate(5, fechaRegistro);
-            pS.setInt(6, id);
+            PreparedStatement pS=conn.prepareStatement("UPDATE parcelas SET ubicacion=?, limiteBase=?, limiteAltura=?, fechaRegistro=? WHERE id=?");
+           
+            pS.setString(1, ubicacion);
+            pS.setInt(2, limiteBase);
+            pS.setInt(3, limiteAltura);
+            pS.setDate(4, fechaRegistro);
+
+            pS.setInt(5, id);
+            
             pS.executeUpdate();
             pS.close();
             conn.close();

@@ -176,10 +176,6 @@ public class VistaParcelas {
 
         final JPanel panelAñadir = new JPanel(new GridLayout(8, 4));
 
-        panelAñadir.add(new JLabel("id del Terreno asociado:"));
-        final JTextField terrenoField = new JTextField();
-        panelAñadir.add(terrenoField);
-
         panelAñadir.add(new JLabel("ubicacion:"));
         final JTextField ubicacionField = new JTextField();
         panelAñadir.add(ubicacionField);
@@ -197,17 +193,12 @@ public class VistaParcelas {
             @Override
             public void actionPerformed(ActionEvent e) {
                   // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
-                IdTerrenoasociadoActual =  terrenoField.getText(); 
-                boolean IdterrenoValid = ControladorParcelas.ValidarIdTerreno(Integer.parseInt(IdTerrenoasociadoActual));
-                if (IdterrenoValid){
+                
+                
                 ubicacionActual = ubicacionField.getText();
                 limiteBaseActual = limiteBaseField.getText();
                 limiteAlturaActual = limiteAlturaField.getText();
-                ControladorParcelas.actualizar(ParcelaActual, IdTerrenoasociadoActual, ubicacionActual, limiteBaseActual, limiteAlturaActual);
-                }else{
-                    JOptionPane.showMessageDialog(ventanaActualizar, "El id del Terreno asociado no existe en la base de datos", "ErrorIdTerreno", JOptionPane.ERROR_MESSAGE);
-                    return; // Detener el proceso si el IDTerreno no es válido
-                }              
+                ControladorParcelas.actualizar(ParcelaActual, ubicacionActual, limiteBaseActual, limiteAlturaActual);           
                // Cerrar la ventana después de guardar
                 ventanaActualizar.dispose();
                 actualizar(null);
