@@ -76,6 +76,16 @@ public class VistaTerrenos {
             }
         });
 
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(jList.getSelectedValue()!=null){
+                    terrenoActual = jList.getSelectedValue();
+                    ejecutarBorrado();
+                }
+            }
+        });
+
 
         botonesPanel.add(addButton);
         botonesPanel.add(actButton);
@@ -229,6 +239,13 @@ public class VistaTerrenos {
         ventanaAñadir.setLocationRelativeTo(null); 
         ventanaAñadir.setIconImage(icono.getImage());
         ventanaAñadir.setVisible(true);    }
+
+
+
+        public  void ejecutarBorrado(){
+            ControladorTerrenos.borrar(terrenoActual);
+            actualizar(null);
+        }
 
 }
 
