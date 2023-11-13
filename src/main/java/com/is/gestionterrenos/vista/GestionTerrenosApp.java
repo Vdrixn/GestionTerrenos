@@ -61,7 +61,7 @@ public class GestionTerrenosApp {
                     //Comprobamos que vista está activa para borrarla y actualizar la interfaz
                     if(vistaTerrenActiva){
                         panel.remove(vistaTerrenos.getPanel());
-                        vistaArrenActiva = false;
+                        vistaTerrenActiva = false;
                     }
                     else if(vistaReciboActiva){
                         panel.remove(vistaRecibos.getPanel());
@@ -104,7 +104,7 @@ public class GestionTerrenosApp {
                     }
                     else if(vistaTerrenActiva){
                         panel.remove(vistaTerrenos.getPanel());
-                        vistaArrenActiva = false;
+                        vistaTerrenActiva = false;
                     }
                     else if(vistaReciboActiva){
                         panel.remove(vistaRecibos.getPanel());
@@ -123,7 +123,7 @@ public class GestionTerrenosApp {
                     }
                     else if(vistaTerrenActiva){
                         panel.remove(vistaTerrenos.getPanel());
-                        vistaArrenActiva = false;
+                        vistaTerrenActiva = false;
                     }
                     else if(vistaParcelaActiva){
                         panel.remove(vistaParcelas.getPanel());
@@ -139,6 +139,9 @@ public class GestionTerrenosApp {
                     // vistaArrendatarios.limpiar();
                     panel.remove(vistaArrendatarios.getPanel());
                     panel.remove(vistaTerrenos.getPanel());
+                    panel.remove(vistaParcelas.getPanel());
+                    panel.remove(vistaRecibos.getPanel());
+                    
                 }
 
             }
