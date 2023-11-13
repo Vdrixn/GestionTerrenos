@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import com.is.gestionterrenos.dao.ArrendatarioDAO;
 import com.is.gestionterrenos.dao.TerrenoDAO;
 import com.is.gestionterrenos.modelo.Terreno;
 import com.is.gestionterrenos.vista.VistaTerrenos;
@@ -77,6 +78,20 @@ public class ControladorTerrenos {
         // Convertir valores numéricos y actualizar el terreno
         TerrenoDAO.actualizar(idTerreno, nombre, ubicacion, Integer.parseInt(tamHectareas), tipoTerreno,
                 Integer.parseInt(limiteBase), Integer.parseInt(limiteAltura), new Date(System.currentTimeMillis()));
+    }
+
+    public static void borrar(String idTerreno){
+        //Sacamos el id del terreno, como todos tienen el mismo formato, podemos sacar el id en la misma posición. EMPIEZA EN POS 17
+        int idTerren;
+        idTerren=Integer.parseInt(""+idTerreno.charAt(14));
+        int i=15;
+        while(Character.isDigit(idTerreno.charAt(i))){
+            idTerren=idTerren*10+Integer.parseInt(""+idTerreno.charAt(i));
+            i++;
+        }
+
+        //Procedemos con el borrado
+        TerrenoDAO.eliminar(idTerren);
     }
 
 
