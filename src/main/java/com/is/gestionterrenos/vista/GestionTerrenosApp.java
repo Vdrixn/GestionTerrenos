@@ -45,7 +45,7 @@ public class GestionTerrenosApp {
         final JButton botonHome = new JButton("🏠");
         botonHome.setFont(new Font("Dialog", Font.BOLD, 20));
         botonHome.setForeground(Color.WHITE);
-        botonHome.setBackground(Color.decode("#ff8c00"));
+        botonHome.setBackground(Color.decode("#FAAE17"));
         botonHome.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         northPannel.add(botonHome, BorderLayout.WEST);
 
@@ -56,7 +56,7 @@ public class GestionTerrenosApp {
         botonRegistrarAlquiler.setPreferredSize(new Dimension(200, 80)); 
         botonRegistrarAlquiler.setFont(new Font("Arial", Font.BOLD, 16)); 
         botonRegistrarAlquiler.setForeground(Color.BLACK);
-        botonRegistrarAlquiler.setBackground(Color.decode("#ff8c00"));
+        botonRegistrarAlquiler.setBackground(Color.decode("#FAAE17"));
         botonRegistrarAlquiler.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         // Crear un Box para centrar el botón en la parte inferior
         Box box = Box.createHorizontalBox();
