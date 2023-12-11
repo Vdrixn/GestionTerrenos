@@ -58,11 +58,21 @@ public class GestionTerrenosApp {
         botonRegistrarAlquiler.setForeground(Color.BLACK);
         botonRegistrarAlquiler.setBackground(Color.decode("#FAAE17"));
         botonRegistrarAlquiler.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        // Crear un Box para centrar el botón en la parte inferior
-        Box box = Box.createHorizontalBox();
-        box.add(Box.createHorizontalGlue()); // Espacio a la izquierda
+
+        final JButton botonDarDeBajaAlquiler = new JButton("Dar de baja Alquiler");
+        botonDarDeBajaAlquiler.setPreferredSize(new Dimension(200, 80)); 
+        botonDarDeBajaAlquiler.setFont(new Font("Arial", Font.BOLD, 16)); 
+        botonDarDeBajaAlquiler.setForeground(Color.BLACK);
+        botonDarDeBajaAlquiler.setBackground(Color.decode("#FAAE17"));
+        botonDarDeBajaAlquiler.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+
+        Box box = Box.createVerticalBox();
+        box.add(Box.createVerticalGlue());
         box.add(botonRegistrarAlquiler);
-        box.add(Box.createHorizontalGlue()); // Espacio a la derecha
+        box.add(Box.createVerticalGlue());
+        box.add(Box.createVerticalStrut(10)); // Espacio vertical entre botones
+        box.add(botonDarDeBajaAlquiler);
+        box.add(Box.createVerticalGlue());
 
         homePannel.add(box,BorderLayout.CENTER);
 
@@ -98,6 +108,13 @@ public class GestionTerrenosApp {
         });
 
         botonRegistrarAlquiler.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO: realizar el registro de alquiler de manera "mas sencilla e intuitiva" que tener que añadir un recibo nuevo
+            }
+        });
+
+        botonDarDeBajaAlquiler.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO: realizar el registro de alquiler de manera "mas sencilla e intuitiva" que tener que añadir un recibo nuevo
