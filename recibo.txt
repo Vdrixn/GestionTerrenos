@@ -1,0 +1,7 @@
+ID Recibo: 4
+ID Arrendatario: 1
+ID Parcela: 2
+Fecha de emisión: 2023-12-12
+Importe: 500.0
+Irpf: 50.0
+Iva: 105.0

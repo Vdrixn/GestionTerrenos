@@ -11,7 +11,8 @@ public class ReciboDAO {
         int idRecibo=-1;
         try {
             conn = ConexionDB.getConn();
-            PreparedStatement pS = conn.prepareStatement("INSERT INTO Recibos (idArren, idParcela, fechaEmision, importe, iva, irpf, alquilado, pagado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement pS = conn.prepareStatement("INSERT INTO Recibos (idArren, idParcela, fechaEmision, "+
+            "importe, iva, irpf, alquilado, pagado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
             pS.setInt(1, idArren);
             pS.setInt(2, idParcela);
             pS.setDate(3, fechaEmision);
@@ -161,7 +162,7 @@ public class ReciboDAO {
     public static ArrayList<Recibo> listarTodos() {
         ArrayList<Recibo> recibos = new ArrayList<Recibo>();
         try {
-            conn = ConexionDB.getConn();
+            conn = ConexionDB.getConn();    
             PreparedStatement pS = conn.prepareStatement("SELECT * FROM Recibos");
             ResultSet rs = pS.executeQuery();
             while (rs.next()) {

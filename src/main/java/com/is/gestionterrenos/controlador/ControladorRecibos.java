@@ -4,6 +4,8 @@ import com.is.gestionterrenos.dao.ReciboDAO;
 import com.is.gestionterrenos.modelo.Recibo;
 import com.is.gestionterrenos.vista.VistaRecibos;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -12,8 +14,40 @@ public class ControladorRecibos {
     public static void insertar() { //TODO: gestionar mysql excepcion cuando se intenta añadir con un id no existente de arrendatario o de parcela
         }
 
-    public static int registrar(int idArrend,int idParcela,int importe, boolean pagado, boolean activo){
-        return ReciboDAO.insertar(idArrend,idParcela,new Date(System.currentTimeMillis()),(double)importe,(double)importe*0.10,(double)importe*0.21,pagado,activo);
+        public static void imprimir(String strRecibo){
+        int idRecibo = getIdRecibo(strRecibo);
+        Recibo reciboImprimir=ReciboDAO.buscarPorId(idRecibo);
+        try (PrintWriter out = new PrintWriter("recibo.txt")) {
+        out.println("ID Recibo: " + reciboImprimir.getId());
+        out.println("ID Arrendatario: " + reciboImprimir.getIdArren());
+        out.println("ID Parcela: " + reciboImprimir.getIdParcela());
+        out.println("Fecha de emision: " + reciboImprimir.getFechaEmision());
+        out.println("Importe: " + reciboImprimir.getImporte());
+        out.println("Irpf: " + reciboImprimir.getIrpf());
+        out.println("Iva: " + reciboImprimir.getIva());
+        } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+
+       }
+    public static int registrar(String stringArrend,String stringParcela,int importe, boolean pagado, boolean activo){
+        int idArrend;
+        idArrend=Integer.parseInt(""+stringArrend.charAt(18));
+        int i=19;
+        while(Character.isDigit(stringArrend.charAt(i))){
+            idArrend=idArrend*10+Integer.parseInt(""+stringArrend.charAt(i));
+            i++;
+        }
+
+        int idParcela;
+        idParcela=Integer.parseInt(""+stringParcela.charAt(12));
+        i=13;
+        while(Character.isDigit(stringParcela.charAt(i))){
+            idParcela=idParcela*10+Integer.parseInt(""+stringParcela.charAt(i));
+            i++;
+        }
+
+        return ReciboDAO.insertar(idArrend,idParcela,new Date(System.currentTimeMillis()),(double)importe,(double)importe*0.21,(double)importe*0.10,pagado,activo);
     }
 
     public static void actualizar(String oldRecibo, int idArren, int idParcela, double importe, double iva, double irpf){

@@ -35,18 +35,21 @@ public class VistaRecibos {
         panel.add(scrollPane, BorderLayout.CENTER);
 
         JPanel botonesPanel = new JPanel(new GridLayout(2, 2));
-        JButton addButton = new JButton("Añadir");
+        JButton imprButton = new JButton("Imprimir recibo");
         JButton actButton = new JButton("Actualizar");
         JButton buscarButton = new JButton("Buscar");
         JButton deleteButton = new JButton("Borrar");
 
         // Listeners para los botones
-        addButton.addActionListener(new ActionListener() {
+        imprButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                abrirVentanaAñadir();
+                if (jList.getSelectedValue() != null) {
+                    reciboActual = jList.getSelectedValue();
+                    imprimir();
+                }
             }
-        });
+        }); 
 
         actButton.addActionListener(new ActionListener() {
             @Override
@@ -75,7 +78,7 @@ public class VistaRecibos {
             }
         });
 
-        botonesPanel.add(addButton);
+        botonesPanel.add(imprButton);
         botonesPanel.add(actButton);
         botonesPanel.add(buscarButton);
         botonesPanel.add(deleteButton);
@@ -316,6 +319,10 @@ public class VistaRecibos {
         ventanaBuscar.setIconImage(icono.getImage());
         ventanaBuscar.setVisible(true);
     }
+
+    public void imprimir(){
+        ControladorRecibos.imprimir(reciboActual);
+        }
 
     public  void ejecutarBorrado(){
         ControladorRecibos.borrar(reciboActual);
