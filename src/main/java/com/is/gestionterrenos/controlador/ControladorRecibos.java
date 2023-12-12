@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ControladorRecibos {
 
     public static void insertar() { //TODO: gestionar mysql excepcion cuando se intenta añadir con un id no existente de arrendatario o de parcela
-        ReciboDAO.insertar(VistaRecibos.idReciboActual,VistaRecibos.idParcelaActual,new Date(System.currentTimeMillis()),VistaRecibos.importeActual,VistaRecibos.ivaActual,VistaRecibos.irpfActual);
+        ReciboDAO.insertar(VistaRecibos.idReciboActual,VistaRecibos.idParcelaActual,new Date(System.currentTimeMillis()),(double)VistaRecibos.importeActual,(double)VistaRecibos.importeActual*0.10,(double)VistaRecibos.importeActual*0.21);
     }
 
     public static void actualizar(String oldRecibo, int idArren, int idParcela, double importe, double iva, double irpf){
