@@ -66,13 +66,13 @@ public class GestionTerrenosApp {
         botonDarDeBajaAlquiler.setBackground(Color.decode("#FAAE17"));
         botonDarDeBajaAlquiler.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
-        Box box = Box.createVerticalBox();
-        box.add(Box.createVerticalGlue());
+        Box box = Box.createHorizontalBox();
+        box.add(Box.createHorizontalGlue());
         box.add(botonRegistrarAlquiler);
-        box.add(Box.createVerticalGlue());
-        box.add(Box.createVerticalStrut(10)); // Espacio vertical entre botones
+        box.add(Box.createHorizontalGlue());
+        box.add(Box.createHorizontalStrut(5)); // Espacio vertical entre botones
         box.add(botonDarDeBajaAlquiler);
-        box.add(Box.createVerticalGlue());
+        box.add(Box.createHorizontalGlue());
 
         homePannel.add(box,BorderLayout.CENTER);
 
