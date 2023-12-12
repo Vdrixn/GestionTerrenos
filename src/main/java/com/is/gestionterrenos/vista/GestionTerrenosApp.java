@@ -1,6 +1,7 @@
 package com.is.gestionterrenos.vista;
 import javax.swing.*;
 
+import com.is.gestionterrenos.controlador.ControladorTerrenos;
 import com.is.gestionterrenos.dao.ArrendatarioDAO;
 import com.is.gestionterrenos.dao.ConexionDB;
 
@@ -10,6 +11,12 @@ import java.awt.event.ActionListener;
 
 // Clase principal que contiene el JFrame principal
 public class GestionTerrenosApp {
+    public static JTextField nombreArrendatarioField = new JTextField();
+    public static JTextField ubicacionTerrenoField = new JTextField();
+    public static JTextField fechaInicioField = new JTextField();
+    public static JTextField duracionContratoField = new JTextField();
+    public static JFrame ventanaRegistroAlquiler = new JFrame("Registrar Alquiler");
+
     public static ImageIcon icono;
     public static boolean vistaArrenActiva = false;
     public static boolean vistaTerrenActiva = false;
@@ -66,13 +73,13 @@ public class GestionTerrenosApp {
         botonDarDeBajaAlquiler.setBackground(Color.decode("#FAAE17"));
         botonDarDeBajaAlquiler.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
-        Box box = Box.createHorizontalBox();
-        box.add(Box.createHorizontalGlue());
+        Box box = Box.createVerticalBox();
+        box.add(Box.createVerticalGlue());
         box.add(botonRegistrarAlquiler);
-        box.add(Box.createHorizontalGlue());
-        box.add(Box.createHorizontalStrut(5)); // Espacio vertical entre botones
+        box.add(Box.createVerticalGlue());
+        box.add(Box.createVerticalStrut(10)); // Espacio vertical entre botones
         box.add(botonDarDeBajaAlquiler);
-        box.add(Box.createHorizontalGlue());
+        box.add(Box.createVerticalGlue());
 
         homePannel.add(box,BorderLayout.CENTER);
 
@@ -110,9 +117,62 @@ public class GestionTerrenosApp {
         botonRegistrarAlquiler.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: realizar el registro de alquiler de manera "mas sencilla e intuitiva" que tener que añadir un recibo nuevo
+                // Crear un nuevo JFrame para la ventana de registro de alquiler
+                ventanaRegistroAlquiler.setSize(400, 300);
+                ventanaRegistroAlquiler.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+                // Crear un JPanel con un GridLayout
+                JPanel panelRegistroAlquiler = new JPanel(new GridLayout(6, 2));
+        
+                // Añadir componentes al panel
+                panelRegistroAlquiler.add(new JLabel("Nombre del arrendatario:"));
+                //JTextField nombreArrendatarioField = new JTextField();
+                panelRegistroAlquiler.add(nombreArrendatarioField);
+        
+                panelRegistroAlquiler.add(new JLabel("Ubicación del terreno:"));
+                //JTextField ubicacionTerrenoField = new JTextField();
+                panelRegistroAlquiler.add(ubicacionTerrenoField);
+        
+                panelRegistroAlquiler.add(new JLabel("Fecha de inicio (dd/mm/yyyy):"));
+                //JTextField fechaInicioField = new JTextField();
+                panelRegistroAlquiler.add(fechaInicioField);
+        
+                panelRegistroAlquiler.add(new JLabel("Duración del contrato (meses):"));
+                //JTextField duracionContratoField = new JTextField();
+                panelRegistroAlquiler.add(duracionContratoField);
+        
+                // Crear un botón de guardar
+                JButton guardarButton = new JButton("Guardar");
+                guardarButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Obtener los valores ingresados por el usuario
+                        String nombreArrendatario = nombreArrendatarioField.getText();
+                        String ubicacionTerreno = ubicacionTerrenoField.getText();
+                        String fechaInicio = fechaInicioField.getText();
+                        String duracionContrato = duracionContratoField.getText();
+        
+                        // TODO: Realizar el registro de alquiler con los datos obtenidos
+        
+                        // Cerrar la ventana de registro de alquiler
+                        ventanaRegistroAlquiler.dispose();
+                    }
+                });
+        
+                // Añadir componentes al panel de botones
+                JPanel panelBoton = new JPanel(new GridLayout(1, 1));
+                panelBoton.add(guardarButton);
+        
+                // Añadir paneles al JFrame
+                ventanaRegistroAlquiler.getContentPane().add(panelRegistroAlquiler, BorderLayout.CENTER);
+                ventanaRegistroAlquiler.getContentPane().add(panelBoton, BorderLayout.SOUTH);
+        
+                // Configurar la ubicación y hacer visible la ventana
+                ventanaRegistroAlquiler.setLocationRelativeTo(null);
+                ventanaRegistroAlquiler.setVisible(true);
             }
         });
+        
 
         botonDarDeBajaAlquiler.addActionListener(new ActionListener() {
             @Override
