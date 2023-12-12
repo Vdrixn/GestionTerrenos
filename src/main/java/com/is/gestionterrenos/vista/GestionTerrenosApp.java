@@ -101,7 +101,7 @@ public class GestionTerrenosApp {
                 // Limpiar todos los paneles
                 panel.remove(vistaArrendatarios.getPanel());
                 panel.remove(vistaTerrenos.getPanel());
-                panel.remove(vistaParcelas.getPanel());
+                panel.remove(vistaParcelas.getPanel());                
                 panel.remove(vistaRecibos.getPanel());
 
                 // Establecer la selección del JComboBox en "Seleccione una opción"

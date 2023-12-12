@@ -7,23 +7,40 @@ import java.sql.*;
 public class ReciboDAO {
     public static Connection conn;
 
-    public static void insertar(int idArren, int idParcela, Date fechaEmision, double importe, double iva, double irpf){
+    public static int insertar(int idArren, int idParcela, Date fechaEmision, double importe, double iva, double irpf, boolean pagado, boolean activo){
+        int idRecibo=-1;
         try {
             conn = ConexionDB.getConn();
-            PreparedStatement pS = conn.prepareStatement("INSERT INTO Recibos (idArren, idParcela, fechaEmision, importe, iva, irpf) VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement pS = conn.prepareStatement("INSERT INTO Recibos (idArren, idParcela, fechaEmision, importe, iva, irpf, alquilado, pagado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             pS.setInt(1, idArren);
             pS.setInt(2, idParcela);
             pS.setDate(3, fechaEmision);
             pS.setDouble(4, importe);
             pS.setDouble(5, iva);
             pS.setDouble(6, irpf);
+            if(activo)
+                pS.setInt(7,1);
+            else
+                pS.setInt(7,0);
+                
+            if(pagado)
+                pS.setInt(8, 1);
+            else
+                pS.setInt(8,0);
 
             pS.executeUpdate();
+
+            ResultSet generatedKeys = pS.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                idRecibo = generatedKeys.getInt(1); 
+            }
+            
             pS.close();
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return idRecibo;
     }
 
     public static void eliminar(int id){
