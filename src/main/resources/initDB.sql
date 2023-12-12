@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS Recibos (
     iva DECIMAL(5, 2) NOT NULL,
     irpf DECIMAL(5, 2) NOT NULL,
     alquilado TINYINT(1) not null,
+    pagado TINYINT(1) not null,
     FOREIGN KEY (idArren) REFERENCES Arrendatarios(id),
     FOREIGN KEY (idParcela) REFERENCES Parcelas(id)
 );
