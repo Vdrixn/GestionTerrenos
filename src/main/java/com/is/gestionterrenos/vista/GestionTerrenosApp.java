@@ -7,13 +7,18 @@ import com.is.gestionterrenos.controlador.ControladorRecibos;
 import com.is.gestionterrenos.controlador.ControladorTerrenos;
 import com.is.gestionterrenos.dao.ArrendatarioDAO;
 import com.is.gestionterrenos.dao.ConexionDB;
+import com.is.gestionterrenos.dao.ReciboDAO;
 import com.is.gestionterrenos.modelo.Arrendatario;
 import com.is.gestionterrenos.modelo.Parcela;
+import com.is.gestionterrenos.modelo.Recibo;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 // Clase principal que contiene el JFrame principal
 public class GestionTerrenosApp {
@@ -22,6 +27,11 @@ public class GestionTerrenosApp {
     public static JTextField fechaInicioField = new JTextField();
     public static JTextField duracionContratoField = new JTextField();
     public static JFrame ventanaRegistroAlquiler = new JFrame("Registrar Alquiler");
+    public static JFrame ventanaInforme = new JFrame("Generar Informe");
+    // Crear un JComboBox para que el usuario seleccione un arrendatario
+    public static DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+    public static JComboBox<String> comboBoxArrendatarios = new JComboBox<>(comboBoxModel);
+
 
     public static ImageIcon icono;
     public static boolean vistaArrenActiva = false;
@@ -30,6 +40,11 @@ public class GestionTerrenosApp {
     public static boolean vistaReciboActiva = false;
     private static String stringArrendatarioActual="";
     private static String stringParcelaActual="";
+    // Lista que almacena los arrendatarios cargados
+    private static ArrayList<Arrendatario> arrendatarios;
+
+    // Lista temporal para comparación
+    private static ArrayList<Arrendatario> arrendatariosAnteriores;
     
 
     public static void main(String[] args) {
@@ -129,6 +144,139 @@ public class GestionTerrenosApp {
         listaParc.setVisible(true);
         return 0;
     }
+
+    private static void mostrarVentanaGenerarInforme() {
+        // Almacena temporalmente la lista actual de arrendatarios antes de mostrar la ventana
+        // Almacena temporalmente la lista actual de arrendatarios antes de mostrar la ventana
+        // Obtener la lista actualizada de arrendatarios
+        ArrayList<Arrendatario> arrendatarios = (ArrayList<Arrendatario>) ControladorArrendatarios.listar();
+
+        ventanaInforme.setSize(400, 200);
+        ventanaInforme.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Crear un panel para la interfaz de usuario
+        JPanel panelInforme = new JPanel(new BorderLayout());
+
+        // Obtener la lista actualizada de arrendatarios
+        arrendatarios = ControladorArrendatarios.listar();
+
+        // Verificar si arrendatarios es null y, si es así, inicializarlo con una lista vacía
+        if (arrendatarios == null) {
+            arrendatarios = new ArrayList<>();
+        }
+
+        // Limpiar el modelo antes de llenarlo nuevamente
+        comboBoxModel.removeAllElements();
+
+        // Llenar el modelo con los nombres de los arrendatarios
+        for (Arrendatario arrendatario : arrendatarios) {
+            comboBoxModel.addElement(arrendatario.toString());
+        }
+
+        panelInforme.add(comboBoxArrendatarios, BorderLayout.CENTER);
+
+        JButton botonGenerar = new JButton("Generar Informe");
+        botonGenerar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Obtener el arrendatario seleccionado
+                String arrendatarioSeleccionado = (String) comboBoxArrendatarios.getSelectedItem();
+
+                if (arrendatarioSeleccionado != null) {
+                    // Aquí puedes agregar la lógica para generar el informe con el arrendatario seleccionado el ID del arrendatario seleccionado
+                int idArrendatario = obtenerIdArrendatario(arrendatarioSeleccionado);
+
+                // Obtener los recibos del arrendatario seleccionado
+                ArrayList<Recibo> recibos = ReciboDAO.buscarPorIdDeArrendatario(idArrendatario);
+
+                // Generar el informe en un archivo de texto
+                generarInforme(arrendatarioSeleccionado, recibos);
+
+                    // Recuerda cerrar la ventana después de completar la operación
+                    ventanaInforme.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(ventanaInforme, "Seleccione un arrendatario antes de generar el informe.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+        panelInforme.add(botonGenerar, BorderLayout.SOUTH);
+
+        ventanaInforme.getContentPane().add(panelInforme);
+        ventanaInforme.setLocationRelativeTo(null);
+        ventanaInforme.setVisible(true);
+    }
+
+    private static int obtenerIdArrendatario(String nombreArrendatario) {
+        int idArrendatario = -1;  // Valor por defecto si no se encuentra
+    
+        // Obtener la lista actualizada de arrendatarios
+        ArrayList<Arrendatario> arrendatarios = ControladorArrendatarios.listar();
+    
+        // Buscar el arrendatario por nombre y obtener su ID
+        for (Arrendatario arrendatario : arrendatarios) {
+            if (arrendatario.toString().equals(nombreArrendatario)) {
+                idArrendatario = arrendatario.getId();
+                break;
+            }
+        }
+    
+        return idArrendatario;
+    }
+private static void generarInforme(String nombreArrendatario, ArrayList<Recibo> recibos) {
+    try {
+        // Obtén el DNI del arrendatario desde la cadena generada
+        String dniArrendatario = extraerDNI(nombreArrendatario);
+
+        // Verifica si el DNI es válido
+        if (dniArrendatario != null) {
+            // Usa el DNI del arrendatario como nombre de archivo
+            String nombreArchivo = "Informe_" + dniArrendatario + ".txt";
+        // Crear un FileWriter
+        FileWriter writer = new FileWriter(nombreArchivo);
+
+        // Escribir información en el archivo
+        writer.write("Información del arrendatario: " + nombreArrendatario + "\n\n");
+
+        for (Recibo recibo : recibos) {
+            writer.write("ID Recibo: " + recibo.getId() + "\n");
+            writer.write("Fecha Emisión: " + recibo.getFechaEmision() + "\n");
+            writer.write("Importe: " + recibo.getImporte() + "\n\n");
+        }
+
+        // Cerrar el FileWriter
+        writer.close();
+        JOptionPane.showMessageDialog(null, "Informe creado con éxito.\nNombre del archivo: " + nombreArchivo, "Informe Creado", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(null, "No se pudo extraer el DNI del arrendatario.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+    JOptionPane.showMessageDialog(null, "Error al generar el informe.", "Error", JOptionPane.ERROR_MESSAGE);
+}
+}
+
+private static String extraerDNI(String arrendatarioInfo) {
+    // Encuentra la posición de "dni=" en la cadena
+    int inicioDNI = arrendatarioInfo.indexOf("dni=");
+
+    // Verifica si se encontró "dni=" en la cadena
+    if (inicioDNI != -1) {
+        // Encuentra la posición de "," después de "dni="
+        int finDNI = arrendatarioInfo.indexOf(",", inicioDNI);
+
+        // Verifica si se encontró "," después de "dni="
+        if (finDNI != -1) {
+            // Extrae la subcadena que representa el DNI
+            return arrendatarioInfo.substring(inicioDNI + 4, finDNI).trim();
+        }
+    }
+
+    // Devuelve null si no se pudo extraer el DNI
+    return null;
+}
+    
+    
 
     private static void createAndShowGUI() {
         final JFrame frame = new JFrame("Gestión de Terrenos");
@@ -427,6 +575,27 @@ public class GestionTerrenosApp {
         frame.setLocationRelativeTo(null);
         frame.setIconImage(icono.getImage());
         frame.setVisible(true);
+
+
+        final JButton botonGenerarInforme = new JButton("Generar Informe");
+        botonGenerarInforme.setPreferredSize(new Dimension(200, 80));
+        botonGenerarInforme.setFont(new Font("Arial", Font.BOLD, 16));
+        botonGenerarInforme.setForeground(Color.BLACK);
+        botonGenerarInforme.setBackground(Color.decode("#FAAE17"));
+        botonGenerarInforme.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+
+        botonGenerarInforme.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Aquí puedes agregar la lógica para abrir una ventana emergente y generar el informe
+                mostrarVentanaGenerarInforme();
+            }
+        });
+
+        box.add(Box.createHorizontalStrut(10));
+        box.add(botonGenerarInforme);
+        box.add(Box.createHorizontalGlue());
+
     }
 }
 
