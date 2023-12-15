@@ -96,6 +96,29 @@ public class ReciboDAO {
         return recibo;
     }
 
+    public static ArrayList<Recibo> buscarPorIdDeArrendatario(int idArrendatario) {
+        ArrayList<Recibo> recibos = new ArrayList<>();
+    
+        try {
+            conn = ConexionDB.getConn();
+            PreparedStatement pS = conn.prepareStatement("SELECT * FROM Recibos WHERE idArren = ?");
+            pS.setInt(1, idArrendatario);
+    
+            ResultSet rs = pS.executeQuery();
+            while (rs.next()) {
+                recibos.add(new Recibo(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4), rs.getDouble(5), rs.getDouble(6), rs.getDouble(7)));
+            }
+    
+            pS.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        return recibos;
+    }
+    
+
     public static ArrayList<Recibo> buscarRecibos(int idArren, int idParcela, double importe, double iva, double irpf) {
         ArrayList<Recibo> recibos = new ArrayList<Recibo>();
         try {
