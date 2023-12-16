@@ -16,10 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import com.is.gestionterrenos.controlador.ControladorArrendatarios;
 import com.is.gestionterrenos.controlador.ControladorTerrenos;
-import com.is.gestionterrenos.dao.TerrenoDAO;
-import com.is.gestionterrenos.modelo.Arrendatario;
 import com.is.gestionterrenos.modelo.Terreno;
 
 public class VistaTerrenos {

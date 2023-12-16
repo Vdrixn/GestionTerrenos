@@ -2,7 +2,6 @@ package com.is.gestionterrenos.controlador;
 
 import com.is.gestionterrenos.dao.ReciboDAO;
 import com.is.gestionterrenos.modelo.Recibo;
-import com.is.gestionterrenos.vista.VistaRecibos;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 
 public class ControladorRecibos {
 
-    public static void insertar() { //TODO: gestionar mysql excepcion cuando se intenta añadir con un id no existente de arrendatario o de parcela
+    public static void insertar() { 
         }
 
         public static void imprimir(String strRecibo){
@@ -38,7 +37,6 @@ public class ControladorRecibos {
             idArrend=idArrend*10+Integer.parseInt(""+stringArrend.charAt(i));
             i++;
         }
-
         int idParcela;
         idParcela=Integer.parseInt(""+stringParcela.charAt(12));
         i=13;
@@ -46,7 +44,6 @@ public class ControladorRecibos {
             idParcela=idParcela*10+Integer.parseInt(""+stringParcela.charAt(i));
             i++;
         }
-
         return ReciboDAO.insertar(idArrend,idParcela,new Date(System.currentTimeMillis()),(double)importe,(double)importe*0.21,(double)importe*0.10,pagado,activo);
     }
 
@@ -63,7 +60,6 @@ public class ControladorRecibos {
     }
 
     public static void actualizar(String oldRecibo, int idArren, int idParcela, double importe, double iva, double irpf){
-        //TODO: gestionar mysql excepcion cuando se intenta añadir con un id no existente de arrendatario o de parcela
         
         //Cuando un campo no ha sido rellenado, será un string vacio ""
         
@@ -97,9 +93,7 @@ public class ControladorRecibos {
 
     public static void borrar(String strRecibo){
         int idRecibo = getIdRecibo(strRecibo);
-        
-        //Procedemos con el borrado
-        ReciboDAO.eliminar(idRecibo);
+                ReciboDAO.eliminar(idRecibo);
     }
     
     public static ArrayList<Recibo> listar(){

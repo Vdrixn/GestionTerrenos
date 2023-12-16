@@ -3,7 +3,6 @@ package com.is.gestionterrenos.dao;
 import java.sql.*;
 
 import com.is.gestionterrenos.modelo.Parcela;
-import com.is.gestionterrenos.modelo.Terreno;
 import java.util.ArrayList;
 
 //TODO:Ciclo 1

@@ -5,7 +5,6 @@ import javax.swing.*;
 import com.is.gestionterrenos.controlador.ControladorArrendatarios;
 import com.is.gestionterrenos.controlador.ControladorParcelas;
 import com.is.gestionterrenos.controlador.ControladorRecibos;
-import com.is.gestionterrenos.controlador.ControladorTerrenos;
 import com.is.gestionterrenos.dao.ArrendatarioDAO;
 import com.is.gestionterrenos.dao.ConexionDB;
 import com.is.gestionterrenos.dao.ReciboDAO;
@@ -19,9 +18,7 @@ import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
-// Clase principal que contiene el JFrame principal
 public class GestionTerrenosApp {
     public static JTextField nombreArrendatarioField = new JTextField();
     public static JTextField ubicacionTerrenoField = new JTextField();
@@ -29,7 +26,6 @@ public class GestionTerrenosApp {
     public static JTextField duracionContratoField = new JTextField();
     public static JFrame ventanaRegistroAlquiler = new JFrame("Registrar Alquiler");
     public static JFrame ventanaInforme = new JFrame("Generar Informe");
-    // Crear un JComboBox para que el usuario seleccione un arrendatario
     public static DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
     public static JComboBox<String> comboBoxArrendatarios = new JComboBox<>(comboBoxModel);
 
@@ -41,20 +37,12 @@ public class GestionTerrenosApp {
     private static String stringArrendatarioActual = "";
     private static String stringParcelaActual = "";
     private static String stringReciboActual = "";
-    // Lista que almacena los arrendatarios cargados
-    private static ArrayList<Arrendatario> arrendatarios;
-
-    // Lista temporal para comparación
-    private static ArrayList<Arrendatario> arrendatariosAnteriores;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 icono = new ImageIcon("src/main/resources/icono.png");
-                // Esta línea inicializa la conexión a la base de datos y evita un retardo que
-                // se producía
-                // una vez iniciada la aplicación, al seleccionar una de las bases de datos.
                 ArrendatarioDAO.conn = ConexionDB.getConn();
                 createAndShowGUI();
             }
@@ -185,11 +173,7 @@ public class GestionTerrenosApp {
     }
 
     private static void mostrarVentanaGenerarInforme() {
-        // Almacena temporalmente la lista actual de arrendatarios antes de mostrar la
-        // ventana
-        // Almacena temporalmente la lista actual de arrendatarios antes de mostrar la
-        // ventana
-        // Obtener la lista actualizada de arrendatarios
+
         ArrayList<Arrendatario> arrendatarios = (ArrayList<Arrendatario>) ControladorArrendatarios.listar();
 
         ventanaInforme.setSize(400, 200);
@@ -225,8 +209,6 @@ public class GestionTerrenosApp {
                 String arrendatarioSeleccionado = (String) comboBoxArrendatarios.getSelectedItem();
 
                 if (arrendatarioSeleccionado != null) {
-                    // Aquí puedes agregar la lógica para generar el informe con el arrendatario
-                    // seleccionado el ID del arrendatario seleccionado
                     int idArrendatario = obtenerIdArrendatario(arrendatarioSeleccionado);
 
                     // Obtener los recibos del arrendatario seleccionado
@@ -234,8 +216,6 @@ public class GestionTerrenosApp {
 
                     // Generar el informe en un archivo de texto
                     generarInforme(arrendatarioSeleccionado, recibos);
-
-                    // Recuerda cerrar la ventana después de completar la operación
                     ventanaInforme.dispose();
                 } else {
                     JOptionPane.showMessageDialog(ventanaInforme,
@@ -251,68 +231,6 @@ public class GestionTerrenosApp {
         ventanaInforme.setLocationRelativeTo(null);
         ventanaInforme.setVisible(true);
 
-    }
-
-    private static void mostrarVentanaGenerarInformeTotal() {
-        // Obtener la lista actualizada de arrendatarios
-        ArrayList<Arrendatario> arrendatarios = ControladorArrendatarios.listar();
-
-        ventanaInforme.setSize(400, 200);
-        ventanaInforme.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        // Crear un panel para la interfaz de usuario
-        JPanel panelInforme = new JPanel(new BorderLayout());
-
-        // Verificar si arrendatarios es null y, si es así, inicializarlo con una lista
-        // vacía
-        if (arrendatarios == null) {
-            arrendatarios = new ArrayList<>();
-        }
-
-        // Limpiar el modelo antes de llenarlo nuevamente
-        comboBoxModel.removeAllElements();
-
-        // Llenar el modelo con los nombres de los arrendatarios
-        for (Arrendatario arrendatario : arrendatarios) {
-            comboBoxModel.addElement(arrendatario.toString());
-        }
-
-        panelInforme.add(comboBoxArrendatarios, BorderLayout.CENTER);
-
-        // JButton botonGenerarInformeTotal = new JButton("Generar Informe Total");
-        // botonGenerarInformeTotal.addActionListener(new ActionListener() {
-        // @Override
-        // public void actionPerformed(ActionEvent e) {
-        // // Aquí puedes agregar la lógica para generar el informe total
-        // String arrendatarioSeleccionado = (String)
-        // comboBoxArrendatarios.getSelectedItem();
-
-        // if (arrendatarioSeleccionado != null) {
-        // // Obtener el ID del arrendatario seleccionado
-        // int idArrendatario = obtenerIdArrendatario(arrendatarioSeleccionado);
-
-        // // Obtener la información de alquiler del arrendatario
-        // ArrayList<Recibo> recibos =
-        // ReciboDAO.buscarPorIdDeArrendatario(idArrendatario);
-
-        // // Generar el informe total en un archivo de texto
-        // generarInformeTotal(arrendatarioSeleccionado, recibos);
-
-        // // Cerrar la ventana después de completar la operación
-        // ventanaInforme.dispose();
-        // } else {
-        // JOptionPane.showMessageDialog(ventanaInforme, "Seleccione un arrendatario
-        // antes de generar el informe total.", "Advertencia",
-        // JOptionPane.WARNING_MESSAGE);
-        // }
-        // }
-        // });
-
-        // panelInforme.add(botonGenerarInformeTotal, BorderLayout.SOUTH);
-
-        // ventanaInforme.getContentPane().add(panelInforme);
-        // ventanaInforme.setLocationRelativeTo(null);
-        // ventanaInforme.setVisible(true);
     }
 
     private static int obtenerIdArrendatario(String nombreArrendatario) {
@@ -341,7 +259,6 @@ public class GestionTerrenosApp {
             if (dniArrendatario != null) {
                 // Usa el DNI del arrendatario como nombre de archivo
                 String nombreArchivo = "Informe_" + dniArrendatario + ".txt";
-                // Crear un FileWriter
                 FileWriter writer = new FileWriter(nombreArchivo);
 
                 // Escribir información en el archivo
@@ -353,7 +270,6 @@ public class GestionTerrenosApp {
                     writer.write("Importe: " + recibo.getImporte() + "\n\n");
                 }
 
-                // Cerrar el FileWriter
                 writer.close();
                 JOptionPane.showMessageDialog(null, "Informe creado con éxito.\nNombre del archivo: " + nombreArchivo,
                         "Informe Creado", JOptionPane.INFORMATION_MESSAGE);
@@ -393,25 +309,16 @@ public class GestionTerrenosApp {
         try {
             // Obtener la lista de arrendatarios
             ArrayList<Arrendatario> arrendatarios = ControladorArrendatarios.listar();
-
             // Verificar si hay arrendatarios
             if (arrendatarios != null && !arrendatarios.isEmpty()) {
-                // Nombre del archivo para el informe total
                 String nombreArchivo = "InformeTotal.txt";
-
-                // Crear un FileWriter
                 FileWriter writer = new FileWriter(nombreArchivo);
-
-                // Escribir encabezado
                 writer.write("Informe Total de Alquileres\n\n");
-
                 // Iterar sobre cada arrendatario
                 for (Arrendatario arrendatario : arrendatarios) {
                     writer.write("Arrendatario: " + arrendatario.getNombre() + "\n");
-
                     // Obtener los recibos del arrendatario
                     ArrayList<Recibo> recibos = ReciboDAO.buscarPorIdDeArrendatario(arrendatario.getId());
-
                     // Verificar si hay recibos
                     if (recibos != null && !recibos.isEmpty()) {
                         // Iterar sobre cada recibo del arrendatario
@@ -420,7 +327,6 @@ public class GestionTerrenosApp {
                             writer.write("Fecha Emisión: " + recibo.getFechaEmision() + "\n");
                             writer.write("Importe: " + recibo.getImporte() + "\n\n");
                         }
-
                         // Calcular y escribir la suma de los alquileres del arrendatario
                         double sumaAlquileres = 0;
                         for (Recibo recibo : recibos) {
@@ -431,7 +337,6 @@ public class GestionTerrenosApp {
                         writer.write("Este arrendatario no tiene recibos de alquiler.\n\n");
                     }
                 }
-
                 // Calcular y escribir la suma total de todos los alquileres
                 double sumaTotal = 0;
                 for (Arrendatario arrendatario : arrendatarios) {
@@ -442,12 +347,8 @@ public class GestionTerrenosApp {
                         }
                     }
                 }
-
                 writer.write("Suma Total de Todos los Alquileres: " + sumaTotal + "\n");
-
-                // Cerrar el FileWriter
                 writer.close();
-
                 JOptionPane.showMessageDialog(null,
                         "Informe total creado con éxito.\nNombre del archivo: " + nombreArchivo, "Informe Total Creado",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -511,7 +412,6 @@ public class GestionTerrenosApp {
 
         panel.add(northPannel, BorderLayout.NORTH);
         panel.add(homePannel, BorderLayout.CENTER);
-
         // Crear instancias de las vistas específicas
         final VistaArrendatarios vistaArrendatarios = new VistaArrendatarios();
         final VistaTerrenos vistaTerrenos = new VistaTerrenos();
@@ -529,11 +429,9 @@ public class GestionTerrenosApp {
                 panel.remove(vistaTerrenos.getPanel());
                 panel.remove(vistaParcelas.getPanel());
                 panel.remove(vistaRecibos.getPanel());
-
                 // Establecer la selección del JComboBox en "Seleccione una opción"
                 comboBox.setSelectedIndex(0);
                 panel.add(homePannel, BorderLayout.CENTER);
-
                 // Actualizar la interfaz gráfica
                 panel.revalidate();
                 panel.repaint();
@@ -569,7 +467,6 @@ public class GestionTerrenosApp {
 
                 JLabel parcelaLabel = new JLabel("Parcela");
                 JButton seleccionarParcelaButton = new JButton("Seleccionar");
-                final int idParcela = -1;
                 seleccionarParcelaButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -599,7 +496,6 @@ public class GestionTerrenosApp {
                 panelRegistroAlquiler.add(activoLabel);
                 panelRegistroAlquiler.add(activoCheckbox);
 
-                // Crear un botón de guardar
                 JButton guardarButton = new JButton("Registrar");
                 guardarButton.addActionListener(new ActionListener() {
                     @Override
@@ -621,7 +517,6 @@ public class GestionTerrenosApp {
                             }
                             stringArrendatarioActual = "";
                             stringParcelaActual = "";
-                            // Cerrar la ventana de registro de alquiler
                             ventanaRegistroAlquiler.dispose();
                         }
 
@@ -649,24 +544,18 @@ public class GestionTerrenosApp {
                 ventanaBajaAlquiler.setSize(500, 100);
                 ventanaRegistroAlquiler.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-                // Crear un JPanel con un GridLayout
                 JPanel panelDarBajaAlquiler = new JPanel(new GridLayout(1, 2, 10, 10));
 
-                // Elementos del panel
                 JLabel reciboLabel = new JLabel("Recibo");
                 JButton seleccionarReciboButton = new JButton("Seleccionar");
 
                 seleccionarReciboButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // Obtener y mostrar el listado de registros de arrendatarios
                         mostrarListadoRecibos();
                     }
 
                 });
-
-                // Aquí implementas la lógica para listar los recibos en un JTable o similar
-
                 JButton botonBaja = new JButton("Dar de Baja");
                 botonBaja.addActionListener(new ActionListener() {
                     @Override
@@ -685,13 +574,9 @@ public class GestionTerrenosApp {
                         stringReciboActual = "";
                     }
                 });
-
-                // Agregar elementos al panel
                 panelDarBajaAlquiler.add(reciboLabel);
                 panelDarBajaAlquiler.add(seleccionarReciboButton);
 
-                // Añade el botón y otros componentes a la ventana
-                // Añadir paneles al JFrame
                 ventanaBajaAlquiler.getContentPane().add(panelDarBajaAlquiler, BorderLayout.CENTER);
                 ventanaBajaAlquiler.add(botonBaja, BorderLayout.SOUTH);
 
@@ -728,7 +613,6 @@ public class GestionTerrenosApp {
                     vistaArrenActiva = true;
                 } else if ("Terrenos".equals(seleccion)) {
                     // Mostrar la vista de terrenos
-
                     // Comprobamos que vista está activa para borrarla y actualizar la interfaz
                     if (vistaArrenActiva) {
                         panel.remove(vistaArrendatarios.getPanel());
@@ -813,8 +697,6 @@ public class GestionTerrenosApp {
         botonGenerarInforme.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes agregar la lógica para abrir una ventana emergente y generar el
-                // informe
                 mostrarVentanaGenerarInforme();
             }
         });
@@ -823,7 +705,6 @@ public class GestionTerrenosApp {
         box.add(botonGenerarInforme);
         box.add(Box.createHorizontalGlue());
 
-        // Agregar el botón de Generar Informe Total al panel de botones
         final JButton botonGenerarInformeTotal = new JButton("Generar Informe Total");
         botonGenerarInformeTotal.setPreferredSize(new Dimension(200, 80));
         botonGenerarInformeTotal.setFont(new Font("Arial", Font.BOLD, 16));
@@ -834,18 +715,13 @@ public class GestionTerrenosApp {
         botonGenerarInformeTotal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para generar el informe total
                 generarInformeTotal();
             }
         });
 
-        // Agregar el botón de Generar Informe Total al panel de botones
         box.add(Box.createHorizontalStrut(10));
         box.add(botonGenerarInformeTotal);
         box.add(Box.createHorizontalGlue());
 
     }
 }
-
-// Clase VistaArrendatarios que contiene la lógica y la interfaz específica para
-// los arrendatarios

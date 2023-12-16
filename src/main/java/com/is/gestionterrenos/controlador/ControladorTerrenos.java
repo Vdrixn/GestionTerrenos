@@ -1,11 +1,8 @@
 package com.is.gestionterrenos.controlador;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import com.is.gestionterrenos.dao.ArrendatarioDAO;
 import com.is.gestionterrenos.dao.TerrenoDAO;
 import com.is.gestionterrenos.modelo.Terreno;
 import com.is.gestionterrenos.vista.VistaTerrenos;
@@ -34,10 +31,7 @@ public class ControladorTerrenos {
             idTerreno=idTerreno*10+Integer.parseInt(""+oldNombreTerreno.charAt(idIndex));
             idIndex++;
         }
-
-        // Variables para almacenar los datos existentes del terreno
         Terreno terreno = null;
-
         // Si algún campo está vacío, obtener los datos existentes del terreno
         if (nombre.equals("")) {
             terreno = TerrenoDAO.buscarPorId(idTerreno);
@@ -78,8 +72,6 @@ public class ControladorTerrenos {
 
             limiteAltura = String.valueOf(terreno.getLimiteAltura());
         }
-
-
         // Convertir valores numéricos y actualizar el terreno
         TerrenoDAO.actualizar(idTerreno, nombre, ubicacion, Integer.parseInt(tamHectareas), tipoTerreno,
                 Integer.parseInt(limiteBase), Integer.parseInt(limiteAltura), new Date(System.currentTimeMillis()));
@@ -94,38 +86,11 @@ public class ControladorTerrenos {
             idTerren=idTerren*10+Integer.parseInt(""+idTerreno.charAt(i));
             i++;
         }
-
-        //Procedemos con el borrado
         TerrenoDAO.eliminar(idTerren);
     }
-
-
 
     public static ArrayList<Terreno> listar(){
         return TerrenoDAO.listarTodos();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-    // Método para parsear la fecha (manejo de ParseException)
-    private static Date parsearFecha(String fecha) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            return new Date(dateFormat.parse(fecha).getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
 }
 

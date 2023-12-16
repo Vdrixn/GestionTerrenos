@@ -5,10 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.sql.Date;
 
 import com.is.gestionterrenos.controlador.ControladorRecibos;
-import com.is.gestionterrenos.modelo.Arrendatario;
 import com.is.gestionterrenos.modelo.Recibo;
 
 public class VistaRecibos {
@@ -40,7 +38,6 @@ public class VistaRecibos {
         JButton buscarButton = new JButton("Buscar");
         JButton deleteButton = new JButton("Borrar");
 
-        // Listeners para los botones
         imprButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,9 +87,7 @@ public class VistaRecibos {
     }
 
     public void actualizar(ArrayList<Recibo> nuevosRecibos) {
-        // Limpiar la lista actual
         listModel.clear();
-
         // SE LLAMA AL CONTROLADOR PARA OBTENER LOS ARRENDATARIOS
         ArrayList<Recibo> recibos;
         if(nuevosRecibos==null)
@@ -108,76 +103,6 @@ public class VistaRecibos {
         }
     }
 
-    private void abrirVentanaAñadir() {
-        final JFrame ventanaAñadir = new JFrame("Añadir Recibo");
-        ventanaAñadir.setSize(300, 200);
-        ventanaAñadir.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        final JPanel panelAñadir = new JPanel(new GridLayout(8, 4));
-
-        panelAñadir.add(new JLabel("ID Arrendatario:"));
-        final JTextField idArrenField = new JTextField();
-        panelAñadir.add(idArrenField);
-
-        panelAñadir.add(new JLabel("ID Parcela:"));
-        final JTextField idParcelaField = new JTextField();
-        panelAñadir.add(idParcelaField);
-
-        panelAñadir.add(new JLabel("Importe:"));
-        final JTextField importeField = new JTextField();
-        panelAñadir.add(importeField);
-
-        panelAñadir.add(new JLabel("IVA:"));
-        final JTextField ivaField = new JTextField();
-        panelAñadir.add(ivaField);
-
-        panelAñadir.add(new JLabel("IRPF:"));
-        final JTextField irpfField = new JTextField();
-        panelAñadir.add(irpfField);
-
-        JButton guardarButton = new JButton("Guardar");
-        guardarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
-
-                idReciboActual=0;
-                idParcelaActual=0;
-                importeActual=0;
-                ivaActual=0;
-                irpfActual=0;
-
-                if(!idArrenField.getText().equals(""))
-                    idReciboActual = Integer.parseInt(idArrenField.getText());
-                
-                if(!idParcelaField.getText().equals(""))
-                    idParcelaActual = Integer.parseInt(idParcelaField.getText());
-                if(!importeField.getText().equals(""))
-                    importeActual = Double.parseDouble(importeField.getText());
-                    
-                if(!ivaField.getText().equals(""))
-                    ivaActual = Double.parseDouble(ivaField.getText());
-                    
-                if(!irpfField.getText().equals(""))
-                    irpfActual = Double.parseDouble(irpfField.getText());
-
-                ControladorRecibos.insertar();
-                // Cerrar la ventana después de guardar
-                ventanaAñadir.dispose();
-                actualizar(null);
-            }
-        }); 
-
-        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
-        panelBoton.add(guardarButton);
-        
-
-        ventanaAñadir.getContentPane().add(panelAñadir);
-        ventanaAñadir.getContentPane().add(panelBoton,BorderLayout.SOUTH);
-        ventanaAñadir.setLocationRelativeTo(null); 
-        ventanaAñadir.setIconImage(icono.getImage());
-        ventanaAñadir.setVisible(true);
-    }
 
     private void abrirVentanaActualizar() {
         final JFrame ventanaActualizar = new JFrame("Actualizar Recibo");
@@ -210,7 +135,6 @@ public class VistaRecibos {
         guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
                 idReciboActual=0;
                 idParcelaActual=0;
                 importeActual=0;
@@ -233,7 +157,6 @@ public class VistaRecibos {
                 
 
                 ControladorRecibos.actualizar(reciboActual, idReciboActual,idParcelaActual,importeActual,ivaActual,irpfActual);
-                // Cerrar la ventana después de guardar
                 ventanaActualizar.dispose();
                 actualizar(null);
             }
@@ -281,7 +204,6 @@ public class VistaRecibos {
         guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
                 idReciboActual=0;
                 idParcelaActual=0;
                 importeActual=0;
@@ -303,7 +225,6 @@ public class VistaRecibos {
                     irpfActual = Double.parseDouble(irpfField.getText());
 
                 ArrayList<Recibo> recibos = ControladorRecibos.buscar(idReciboActual,idParcelaActual, importeActual,ivaActual,irpfActual,0);
-                // Cerrar la ventana después de guardar
                 ventanaBuscar.dispose();
                 actualizar(recibos);
             }

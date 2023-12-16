@@ -3,13 +3,10 @@ package com.is.gestionterrenos.controlador;
 import java.sql.Date;
 import java.util.ArrayList;
 
-import com.is.gestionterrenos.dao.ArrendatarioDAO;
 import com.is.gestionterrenos.dao.ParcelaDAO;
 import com.is.gestionterrenos.dao.TerrenoDAO;
-import com.is.gestionterrenos.modelo.Arrendatario;
 import com.is.gestionterrenos.modelo.Parcela;
 import com.is.gestionterrenos.modelo.Terreno;
-import com.is.gestionterrenos.vista.VistaArrendatarios;
 import com.is.gestionterrenos.vista.VistaParcelas;
 
 public class ControladorParcelas { 
@@ -46,21 +43,12 @@ public class ControladorParcelas {
             String Idterreno=String.valueOf(parcela.getIdTerreno());
         
         if(Ubi.equals("")){
-            if(parcela==null)
-                parcela=ParcelaDAO.buscarPorId(idParcela);
-
             Ubi=parcela.getUbicacion();
         }
         if(Limitebase.equals("")){
-            if(parcela==null)
-                parcela=ParcelaDAO.buscarPorId(idParcela);
-
             Limitebase=String.valueOf(parcela.getLimiteBase());
         }
         if(limiteAltura.equals("")){
-            if(parcela==null)
-                parcela=ParcelaDAO.buscarPorId(idParcela);
-
             limiteAltura=String.valueOf(parcela.getLimiteAltura());
         }
         ParcelaDAO.actualizar(idParcela,Integer.parseInt(Idterreno),Ubi,Integer.parseInt(Limitebase),Integer.parseInt(limiteAltura),new Date(System.currentTimeMillis()));

@@ -17,13 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import com.is.gestionterrenos.controlador.ControladorArrendatarios;
 import com.is.gestionterrenos.controlador.ControladorParcelas;
-import com.is.gestionterrenos.controlador.ControladorTerrenos;
-import com.is.gestionterrenos.dao.TerrenoDAO;
-import com.is.gestionterrenos.modelo.Arrendatario;
 import com.is.gestionterrenos.modelo.Parcela;
-import com.is.gestionterrenos.modelo.Terreno;
 
 public class VistaParcelas {
     private JPanel panel;
@@ -67,7 +62,6 @@ public class VistaParcelas {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
                 abrirVentanaAñadir();
             }
 
@@ -141,7 +135,6 @@ public class VistaParcelas {
         guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
                 IdTerrenoasociadoActual =  terrenoidField.getText(); 
                 boolean IdterrenoValid = ControladorParcelas.ValidarIdTerreno(Integer.parseInt(IdTerrenoasociadoActual));
                 if (IdterrenoValid){
@@ -153,7 +146,6 @@ public class VistaParcelas {
                     JOptionPane.showMessageDialog(ventanaAñadir, "El id del Terreno asociado no existe en la base de datos", "ErrorIdTerreno", JOptionPane.ERROR_MESSAGE);
                     return; // Detener el proceso si el IDTerreno no es válido
                 }              
-               // Cerrar la ventana después de guardar
                 ventanaAñadir.dispose();
                 actualizar(null);
             }
@@ -191,15 +183,11 @@ public class VistaParcelas {
         JButton guardarButton = new JButton("Guardar");
         guardarButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                  // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
-                
-                
+            public void actionPerformed(ActionEvent e) {                
                 ubicacionActual = ubicacionField.getText();
                 limiteBaseActual = limiteBaseField.getText();
                 limiteAlturaActual = limiteAlturaField.getText();
                 ControladorParcelas.actualizar(ParcelaActual, ubicacionActual, limiteBaseActual, limiteAlturaActual);           
-               // Cerrar la ventana después de guardar
                 ventanaActualizar.dispose();
                 actualizar(null);
             }
@@ -241,7 +229,6 @@ public class VistaParcelas {
          guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                  // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
                 IdTerrenoasociadoActual =  terrenoField.getText(); 
                 boolean IdterrenoValid = ControladorParcelas.ValidarIdTerreno(Integer.parseInt(IdTerrenoasociadoActual));
                 if (IdterrenoValid){
@@ -253,7 +240,6 @@ public class VistaParcelas {
                     JOptionPane.showMessageDialog(ventanaBuscar, "El id del Terreno asociado no existe en la base de datos", "ErrorIdTerreno", JOptionPane.ERROR_MESSAGE);
                     return; // Detener el proceso si el IDTerreno no es válido
                 }              
-               // Cerrar la ventana después de guardar
                 ventanaBuscar.dispose();
                 actualizar(null);
             }
@@ -274,9 +260,7 @@ public class VistaParcelas {
         actualizar(null);
     }
     public void actualizar(ArrayList<Parcela> givenparcelas) {
-        // Limpiar la lista actual
         listModel.clear();
-
         // SE LLAMA AL CONTROLADOR PARA OBTENEr las PArcelas
         ArrayList<Parcela> parcelas;
         if(givenparcelas==null)
