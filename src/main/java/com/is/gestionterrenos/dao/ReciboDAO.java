@@ -77,6 +77,23 @@ public class ReciboDAO {
         }
     }
 
+    public static int darDeBajaAlquiler(int id){
+        try {
+            conn = ConexionDB.getConn();
+            PreparedStatement pS = conn.prepareStatement("UPDATE Recibos SET alquilado = ? WHERE id = ?");
+            pS.setInt(1, 0);
+            pS.setInt(2, id);
+
+            pS.executeUpdate();
+            pS.close();
+            conn.close();
+            return id;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
     public static Recibo buscarPorId(int idRecibo){
         Recibo recibo = null;
         try {
@@ -119,7 +136,7 @@ public class ReciboDAO {
     }
     
 
-    public static ArrayList<Recibo> buscarRecibos(int idArren, int idParcela, double importe, double iva, double irpf) {
+    public static ArrayList<Recibo> buscarRecibos(int idArren, int idParcela, double importe, double iva, double irpf, int alquilado) {
         ArrayList<Recibo> recibos = new ArrayList<Recibo>();
         try {
             conn = ConexionDB.getConn();
@@ -130,6 +147,7 @@ public class ReciboDAO {
             boolean hayImporte = importe != 0.0;
             boolean hayIva = iva != 0.0;
             boolean hayIrpf = irpf != 0.0;
+            boolean estaAlquilado = alquilado != 0;
 
             if (hayIdArren) {
                 consulta += " AND idArren = ?";
@@ -149,6 +167,10 @@ public class ReciboDAO {
             if (hayIrpf) {
                 consulta += " AND irpf = ?";
             }
+            if(estaAlquilado){
+                consulta += " AND alquilado = ?";
+            }
+
 
             PreparedStatement pS = conn.prepareStatement(consulta);
             int i = 1;
@@ -170,6 +192,9 @@ public class ReciboDAO {
             }
             if (hayIrpf) {
                 pS.setDouble(i++, irpf);
+            }
+            if(estaAlquilado){
+                pS.setInt(i++, 1);
             }
 
             ResultSet rs = pS.executeQuery();

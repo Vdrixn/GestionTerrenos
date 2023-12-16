@@ -302,7 +302,7 @@ public class VistaRecibos {
                 if(!irpfField.getText().equals(""))
                     irpfActual = Double.parseDouble(irpfField.getText());
 
-                ArrayList<Recibo> recibos = ControladorRecibos.buscar(idReciboActual,idParcelaActual, importeActual,ivaActual,irpfActual);
+                ArrayList<Recibo> recibos = ControladorRecibos.buscar(idReciboActual,idParcelaActual, importeActual,ivaActual,irpfActual,0);
                 // Cerrar la ventana después de guardar
                 ventanaBuscar.dispose();
                 actualizar(recibos);
