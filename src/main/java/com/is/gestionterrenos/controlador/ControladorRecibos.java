@@ -50,6 +50,18 @@ public class ControladorRecibos {
         return ReciboDAO.insertar(idArrend,idParcela,new Date(System.currentTimeMillis()),(double)importe,(double)importe*0.21,(double)importe*0.10,pagado,activo);
     }
 
+    // Función darDeBajaAlq(int id) que llama a la funcion darDeBajaAlquiler en reciboDAO con el int id
+    public static int darDeBajaAlq(String stringRecibo) {
+        int idRecibo;
+        idRecibo=Integer.parseInt(""+stringRecibo.charAt(12));
+        int i=13;
+        while(Character.isDigit(stringRecibo.charAt(i))){
+            idRecibo=idRecibo*10+Integer.parseInt(""+stringRecibo.charAt(i));
+            i++;
+        }
+        return ReciboDAO.darDeBajaAlquiler(idRecibo);
+    }
+
     public static void actualizar(String oldRecibo, int idArren, int idParcela, double importe, double iva, double irpf){
         //TODO: gestionar mysql excepcion cuando se intenta añadir con un id no existente de arrendatario o de parcela
         
@@ -79,8 +91,8 @@ public class ControladorRecibos {
         ReciboDAO.actualizar(idRecibo, idArren, idParcela, importe, iva, irpf);
     }
 
-    public static ArrayList<Recibo> buscar(int idArren, int idParcela, double importe, double iva, double irpf){
-        return ReciboDAO.buscarRecibos(idArren, idParcela, importe, iva, irpf);
+    public static ArrayList<Recibo> buscar(int idArren, int idParcela, double importe, double iva, double irpf, int alquilado){
+        return ReciboDAO.buscarRecibos(idArren, idParcela, importe, iva, irpf, alquilado);
     }
 
     public static void borrar(String strRecibo){
