@@ -537,7 +537,10 @@ private static String extraerDNI(String arrendatarioInfo) {
                         if(stringReciboActual.equals("")){
                             JOptionPane.showMessageDialog(frame, "Seleccione un recibo.", "Error", JOptionPane.ERROR_MESSAGE);
                         }else{
-
+                            int idRecibo=ControladorRecibos.darDeBajaAlq(stringReciboActual);
+                            if(idRecibo!=-1){
+                                JOptionPane.showMessageDialog(frame, "¡Se ha dado de baja el recibo! ID de recibo: "+idRecibo, "Registro", JOptionPane.INFORMATION_MESSAGE);
+                            }
                         }
                         stringReciboActual="";
                     }
