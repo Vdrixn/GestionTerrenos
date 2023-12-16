@@ -40,6 +40,8 @@ public class GestionTerrenosApp {
     public static boolean vistaReciboActiva = false;
     private static String stringArrendatarioActual="";
     private static String stringParcelaActual="";
+    private static String stringReciboActual="";
+    private static Recibo reciboActual;
     // Lista que almacena los arrendatarios cargados
     private static ArrayList<Arrendatario> arrendatarios;
 
@@ -67,7 +69,7 @@ public class GestionTerrenosApp {
         listaArrend.setLayout(new FlowLayout());
         
         final JPanel panelA = new JPanel(new BorderLayout());
-        DefaultListModel<String> listModel=listModel = new DefaultListModel<>();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
         
         listModel.clear();
 
@@ -110,7 +112,7 @@ public class GestionTerrenosApp {
         listaParc.setLayout(new FlowLayout());
         
         final JPanel panelA = new JPanel(new BorderLayout());
-        DefaultListModel<String> listModel=listModel = new DefaultListModel<>();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
         
 
         // SE LLAMA AL CONTROLADOR PARA OBTENEr las PArcelas
@@ -142,6 +144,48 @@ public class GestionTerrenosApp {
         listaParc.revalidate();
         listaParc.setIconImage(icono.getImage());
         listaParc.setVisible(true);
+        return 0;
+    }
+
+    private static int mostrarListadoRecibos(){
+        final JFrame listaRecibo=new JFrame();
+        listaRecibo.setTitle("Seleccionar Arrendatario");
+        listaRecibo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        listaRecibo.setLayout(new FlowLayout());
+        
+        final JPanel panelA = new JPanel(new BorderLayout());
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        
+        listModel.clear();
+
+        // SE LLAMA AL CONTROLADOR PARA OBTENER LOS ARRENDATARIOS
+        ArrayList<Recibo> recibos=ControladorRecibos.buscar(0, 0, 0, 0, 0, 1);
+        
+        //arrendatarios=...
+        if (recibos != null) {
+            for (Recibo recibo : recibos) {
+                listModel.addElement(recibo.toString());
+            }
+        }
+        final JList<String> jList = new JList<>(listModel);
+        JScrollPane scrollPane = new JScrollPane(jList);
+        panelA.add(scrollPane);
+
+        JButton seleccionarButton = new JButton("Seleccionar");
+        seleccionarButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                stringReciboActual = jList.getSelectedValue();
+                listaRecibo.dispose();
+            }
+        });
+        panelA.add(seleccionarButton);
+        listaRecibo.add(scrollPane);
+        listaRecibo.add(seleccionarButton);
+        listaRecibo.pack();
+        listaRecibo.setLocationRelativeTo(null);
+        listaRecibo.revalidate();
+        listaRecibo.setIconImage(icono.getImage());
+        listaRecibo.setVisible(true);
         return 0;
     }
 
@@ -460,7 +504,56 @@ private static String extraerDNI(String arrendatarioInfo) {
         botonDarDeBajaAlquiler.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: realizar el registro de alquiler de manera "mas sencilla e intuitiva" que tener que añadir un recibo nuevo
+                JFrame ventanaBajaAlquiler = new JFrame("Dar de Baja Alquiler");
+                ventanaBajaAlquiler.setSize(500, 100);
+                ventanaRegistroAlquiler.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                // Crear un JPanel con un GridLayout
+                JPanel panelDarBajaAlquiler = new JPanel(new GridLayout(1, 2,10,10));
+
+                final JTextField importeField;
+                final JCheckBox pagadoCheckbox;
+                final JCheckBox activoCheckbox;
+        
+                // Elementos del panel
+                JLabel reciboLabel = new JLabel("Recibo");
+                JButton seleccionarReciboButton = new JButton("Seleccionar");
+                
+                seleccionarReciboButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Obtener y mostrar el listado de registros de arrendatarios
+                        mostrarListadoRecibos();
+                    }
+
+                });
+        
+                // Aquí implementas la lógica para listar los recibos en un JTable o similar
+        
+                JButton botonBaja = new JButton("Dar de Baja");
+                botonBaja.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(stringReciboActual.equals("")){
+                            JOptionPane.showMessageDialog(frame, "Seleccione un recibo.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }else{
+
+                        }
+                        stringReciboActual="";
+                    }
+                });
+
+                // Agregar elementos al panel
+                panelDarBajaAlquiler.add(reciboLabel);
+                panelDarBajaAlquiler.add(seleccionarReciboButton);
+        
+                // Añade el botón y otros componentes a la ventana
+                // Añadir paneles al JFrame
+                ventanaBajaAlquiler.getContentPane().add(panelDarBajaAlquiler, BorderLayout.CENTER);
+                ventanaBajaAlquiler.add(botonBaja, BorderLayout.SOUTH);
+
+                ventanaBajaAlquiler.setLocationRelativeTo(null);
+                ventanaBajaAlquiler.setVisible(true);
             }
         });
 
