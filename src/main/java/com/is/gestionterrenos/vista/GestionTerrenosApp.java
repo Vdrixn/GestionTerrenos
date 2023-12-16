@@ -1,4 +1,5 @@
 package com.is.gestionterrenos.vista;
+
 import javax.swing.*;
 
 import com.is.gestionterrenos.controlador.ControladorArrendatarios;
@@ -32,49 +33,48 @@ public class GestionTerrenosApp {
     public static DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
     public static JComboBox<String> comboBoxArrendatarios = new JComboBox<>(comboBoxModel);
 
-
     public static ImageIcon icono;
     public static boolean vistaArrenActiva = false;
     public static boolean vistaTerrenActiva = false;
     public static boolean vistaParcelaActiva = false;
     public static boolean vistaReciboActiva = false;
-    private static String stringArrendatarioActual="";
-    private static String stringParcelaActual="";
-    private static String stringReciboActual="";
+    private static String stringArrendatarioActual = "";
+    private static String stringParcelaActual = "";
+    private static String stringReciboActual = "";
     // Lista que almacena los arrendatarios cargados
     private static ArrayList<Arrendatario> arrendatarios;
 
     // Lista temporal para comparación
     private static ArrayList<Arrendatario> arrendatariosAnteriores;
-    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 icono = new ImageIcon("src/main/resources/icono.png");
-                //Esta línea inicializa la conexión a la base de datos y evita un retardo que se producía
-                //una vez iniciada la aplicación, al seleccionar una de las bases de datos.
-                ArrendatarioDAO.conn=ConexionDB.getConn();
+                // Esta línea inicializa la conexión a la base de datos y evita un retardo que
+                // se producía
+                // una vez iniciada la aplicación, al seleccionar una de las bases de datos.
+                ArrendatarioDAO.conn = ConexionDB.getConn();
                 createAndShowGUI();
             }
         });
     }
 
-    private static int mostrarListadoArrendatarios(){
-        final JFrame listaArrend=new JFrame();
+    private static int mostrarListadoArrendatarios() {
+        final JFrame listaArrend = new JFrame();
         listaArrend.setTitle("Seleccionar Arrendatario");
         listaArrend.setLayout(new FlowLayout());
-        
+
         final JPanel panelA = new JPanel(new BorderLayout());
-        DefaultListModel<String> listModel=listModel = new DefaultListModel<>();
-        
+        DefaultListModel<String> listModel = listModel = new DefaultListModel<>();
+
         listModel.clear();
 
         // SE LLAMA AL CONTROLADOR PARA OBTENER LOS ARRENDATARIOS
-        ArrayList<Arrendatario> arrendatarios=ControladorArrendatarios.listar();
-        
-        //arrendatarios=...
+        ArrayList<Arrendatario> arrendatarios = ControladorArrendatarios.listar();
+
+        // arrendatarios=...
         if (arrendatarios != null) {
             for (Arrendatario arrendatario : arrendatarios) {
                 listModel.addElement(arrendatario.toString());
@@ -103,19 +103,18 @@ public class GestionTerrenosApp {
         return 0;
     }
 
-    private static int mostrarListadoParcelas(){
-        final JFrame listaParc=new JFrame();
+    private static int mostrarListadoParcelas() {
+        final JFrame listaParc = new JFrame();
         listaParc.setTitle("Seleccionar Parcela");
         listaParc.setLayout(new FlowLayout());
-        
+
         final JPanel panelA = new JPanel(new BorderLayout());
-        DefaultListModel<String> listModel=listModel = new DefaultListModel<>();
-        
+        DefaultListModel<String> listModel = listModel = new DefaultListModel<>();
 
         // SE LLAMA AL CONTROLADOR PARA OBTENEr las PArcelas
-        ArrayList<Parcela> parcelas=ControladorParcelas.listar();
-        
-        //parcelas=...
+        ArrayList<Parcela> parcelas = ControladorParcelas.listar();
+
+        // parcelas=...
         if (parcelas != null) {
             for (Parcela parcela : parcelas) {
                 listModel.addElement(parcela.toString());
@@ -144,20 +143,20 @@ public class GestionTerrenosApp {
         return 0;
     }
 
-    private static int mostrarListadoRecibos(){
-        final JFrame listaRecibo=new JFrame();
+    private static int mostrarListadoRecibos() {
+        final JFrame listaRecibo = new JFrame();
         listaRecibo.setTitle("Seleccionar Recibo");
         listaRecibo.setLayout(new FlowLayout());
-        
+
         final JPanel panelA = new JPanel(new BorderLayout());
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        
+
         listModel.clear();
 
         // SE LLAMA AL CONTROLADOR PARA OBTENER LOS RECIBOS
-        ArrayList<Recibo> recibos=ControladorRecibos.buscar(0, 0, 0, 0, 0, 1);
-        
-        //recibos=...
+        ArrayList<Recibo> recibos = ControladorRecibos.buscar(0, 0, 0, 0, 0, 1);
+
+        // recibos=...
         if (recibos != null) {
             for (Recibo recibo : recibos) {
                 listModel.addElement(recibo.toString());
@@ -186,8 +185,10 @@ public class GestionTerrenosApp {
     }
 
     private static void mostrarVentanaGenerarInforme() {
-        // Almacena temporalmente la lista actual de arrendatarios antes de mostrar la ventana
-        // Almacena temporalmente la lista actual de arrendatarios antes de mostrar la ventana
+        // Almacena temporalmente la lista actual de arrendatarios antes de mostrar la
+        // ventana
+        // Almacena temporalmente la lista actual de arrendatarios antes de mostrar la
+        // ventana
         // Obtener la lista actualizada de arrendatarios
         ArrayList<Arrendatario> arrendatarios = (ArrayList<Arrendatario>) ControladorArrendatarios.listar();
 
@@ -200,7 +201,8 @@ public class GestionTerrenosApp {
         // Obtener la lista actualizada de arrendatarios
         arrendatarios = ControladorArrendatarios.listar();
 
-        // Verificar si arrendatarios es null y, si es así, inicializarlo con una lista vacía
+        // Verificar si arrendatarios es null y, si es así, inicializarlo con una lista
+        // vacía
         if (arrendatarios == null) {
             arrendatarios = new ArrayList<>();
         }
@@ -223,19 +225,22 @@ public class GestionTerrenosApp {
                 String arrendatarioSeleccionado = (String) comboBoxArrendatarios.getSelectedItem();
 
                 if (arrendatarioSeleccionado != null) {
-                    // Aquí puedes agregar la lógica para generar el informe con el arrendatario seleccionado el ID del arrendatario seleccionado
-                int idArrendatario = obtenerIdArrendatario(arrendatarioSeleccionado);
+                    // Aquí puedes agregar la lógica para generar el informe con el arrendatario
+                    // seleccionado el ID del arrendatario seleccionado
+                    int idArrendatario = obtenerIdArrendatario(arrendatarioSeleccionado);
 
-                // Obtener los recibos del arrendatario seleccionado
-                ArrayList<Recibo> recibos = ReciboDAO.buscarPorIdDeArrendatario(idArrendatario);
+                    // Obtener los recibos del arrendatario seleccionado
+                    ArrayList<Recibo> recibos = ReciboDAO.buscarPorIdDeArrendatario(idArrendatario);
 
-                // Generar el informe en un archivo de texto
-                generarInforme(arrendatarioSeleccionado, recibos);
+                    // Generar el informe en un archivo de texto
+                    generarInforme(arrendatarioSeleccionado, recibos);
 
                     // Recuerda cerrar la ventana después de completar la operación
                     ventanaInforme.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(ventanaInforme, "Seleccione un arrendatario antes de generar el informe.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(ventanaInforme,
+                            "Seleccione un arrendatario antes de generar el informe.", "Advertencia",
+                            JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
@@ -246,7 +251,6 @@ public class GestionTerrenosApp {
         ventanaInforme.setLocationRelativeTo(null);
         ventanaInforme.setVisible(true);
 
-        
     }
 
     private static void mostrarVentanaGenerarInformeTotal() {
@@ -259,7 +263,8 @@ public class GestionTerrenosApp {
         // Crear un panel para la interfaz de usuario
         JPanel panelInforme = new JPanel(new BorderLayout());
 
-        // Verificar si arrendatarios es null y, si es así, inicializarlo con una lista vacía
+        // Verificar si arrendatarios es null y, si es así, inicializarlo con una lista
+        // vacía
         if (arrendatarios == null) {
             arrendatarios = new ArrayList<>();
         }
@@ -276,27 +281,31 @@ public class GestionTerrenosApp {
 
         // JButton botonGenerarInformeTotal = new JButton("Generar Informe Total");
         // botonGenerarInformeTotal.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         // Aquí puedes agregar la lógica para generar el informe total
-        //         String arrendatarioSeleccionado = (String) comboBoxArrendatarios.getSelectedItem();
+        // @Override
+        // public void actionPerformed(ActionEvent e) {
+        // // Aquí puedes agregar la lógica para generar el informe total
+        // String arrendatarioSeleccionado = (String)
+        // comboBoxArrendatarios.getSelectedItem();
 
-        //         if (arrendatarioSeleccionado != null) {
-        //             // Obtener el ID del arrendatario seleccionado
-        //             int idArrendatario = obtenerIdArrendatario(arrendatarioSeleccionado);
+        // if (arrendatarioSeleccionado != null) {
+        // // Obtener el ID del arrendatario seleccionado
+        // int idArrendatario = obtenerIdArrendatario(arrendatarioSeleccionado);
 
-        //             // Obtener la información de alquiler del arrendatario
-        //             ArrayList<Recibo> recibos = ReciboDAO.buscarPorIdDeArrendatario(idArrendatario);
+        // // Obtener la información de alquiler del arrendatario
+        // ArrayList<Recibo> recibos =
+        // ReciboDAO.buscarPorIdDeArrendatario(idArrendatario);
 
-        //             // Generar el informe total en un archivo de texto
-        //             generarInformeTotal(arrendatarioSeleccionado, recibos);
+        // // Generar el informe total en un archivo de texto
+        // generarInformeTotal(arrendatarioSeleccionado, recibos);
 
-        //             // Cerrar la ventana después de completar la operación
-        //             ventanaInforme.dispose();
-        //         } else {
-        //             JOptionPane.showMessageDialog(ventanaInforme, "Seleccione un arrendatario antes de generar el informe total.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        //         }
-        //     }
+        // // Cerrar la ventana después de completar la operación
+        // ventanaInforme.dispose();
+        // } else {
+        // JOptionPane.showMessageDialog(ventanaInforme, "Seleccione un arrendatario
+        // antes de generar el informe total.", "Advertencia",
+        // JOptionPane.WARNING_MESSAGE);
+        // }
+        // }
         // });
 
         // panelInforme.add(botonGenerarInformeTotal, BorderLayout.SOUTH);
@@ -306,13 +315,12 @@ public class GestionTerrenosApp {
         // ventanaInforme.setVisible(true);
     }
 
-
     private static int obtenerIdArrendatario(String nombreArrendatario) {
-        int idArrendatario = -1;  // Valor por defecto si no se encuentra
-    
+        int idArrendatario = -1; // Valor por defecto si no se encuentra
+
         // Obtener la lista actualizada de arrendatarios
         ArrayList<Arrendatario> arrendatarios = ControladorArrendatarios.listar();
-    
+
         // Buscar el arrendatario por nombre y obtener su ID
         for (Arrendatario arrendatario : arrendatarios) {
             if (arrendatario.toString().equals(nombreArrendatario)) {
@@ -320,133 +328,139 @@ public class GestionTerrenosApp {
                 break;
             }
         }
-    
+
         return idArrendatario;
     }
-private static void generarInforme(String nombreArrendatario, ArrayList<Recibo> recibos) {
-    try {
-        // Obtén el DNI del arrendatario desde la cadena generada
-        String dniArrendatario = extraerDNI(nombreArrendatario);
 
-        // Verifica si el DNI es válido
-        if (dniArrendatario != null) {
-            // Usa el DNI del arrendatario como nombre de archivo
-            String nombreArchivo = "Informe_" + dniArrendatario + ".txt";
-        // Crear un FileWriter
-        FileWriter writer = new FileWriter(nombreArchivo);
+    private static void generarInforme(String nombreArrendatario, ArrayList<Recibo> recibos) {
+        try {
+            // Obtén el DNI del arrendatario desde la cadena generada
+            String dniArrendatario = extraerDNI(nombreArrendatario);
 
-        // Escribir información en el archivo
-        writer.write("Información del arrendatario: " + nombreArrendatario + "\n\n");
+            // Verifica si el DNI es válido
+            if (dniArrendatario != null) {
+                // Usa el DNI del arrendatario como nombre de archivo
+                String nombreArchivo = "Informe_" + dniArrendatario + ".txt";
+                // Crear un FileWriter
+                FileWriter writer = new FileWriter(nombreArchivo);
 
-        for (Recibo recibo : recibos) {
-            writer.write("ID Recibo: " + recibo.getId() + "\n");
-            writer.write("Fecha Emisión: " + recibo.getFechaEmision() + "\n");
-            writer.write("Importe: " + recibo.getImporte() + "\n\n");
-        }
+                // Escribir información en el archivo
+                writer.write("Información del arrendatario: " + nombreArrendatario + "\n\n");
 
-        // Cerrar el FileWriter
-        writer.close();
-        JOptionPane.showMessageDialog(null, "Informe creado con éxito.\nNombre del archivo: " + nombreArchivo, "Informe Creado", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        JOptionPane.showMessageDialog(null, "No se pudo extraer el DNI del arrendatario.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-} catch (IOException e) {
-    e.printStackTrace();
-    JOptionPane.showMessageDialog(null, "Error al generar el informe.", "Error", JOptionPane.ERROR_MESSAGE);
-}
-}
-
-private static String extraerDNI(String arrendatarioInfo) {
-    // Encuentra la posición de "dni=" en la cadena
-    int inicioDNI = arrendatarioInfo.indexOf("dni=");
-
-    // Verifica si se encontró "dni=" en la cadena
-    if (inicioDNI != -1) {
-        // Encuentra la posición de "," después de "dni="
-        int finDNI = arrendatarioInfo.indexOf(",", inicioDNI);
-
-        // Verifica si se encontró "," después de "dni="
-        if (finDNI != -1) {
-            // Extrae la subcadena que representa el DNI
-            return arrendatarioInfo.substring(inicioDNI + 4, finDNI).trim();
-        }
-    }
-
-    // Devuelve null si no se pudo extraer el DNI
-    return null;
-}
-    
-
-// ...
-
-private static void generarInformeTotal() {
-    try {
-        // Obtener la lista de arrendatarios
-        ArrayList<Arrendatario> arrendatarios = ControladorArrendatarios.listar();
-
-        // Verificar si hay arrendatarios
-        if (arrendatarios != null && !arrendatarios.isEmpty()) {
-            // Nombre del archivo para el informe total
-            String nombreArchivo = "InformeTotal.txt";
-
-            // Crear un FileWriter
-            FileWriter writer = new FileWriter(nombreArchivo);
-
-            // Escribir encabezado
-            writer.write("Informe Total de Alquileres\n\n");
-
-            // Iterar sobre cada arrendatario
-            for (Arrendatario arrendatario : arrendatarios) {
-                writer.write("Arrendatario: " + arrendatario.getNombre() + "\n");
-
-                // Obtener los recibos del arrendatario
-                ArrayList<Recibo> recibos = ReciboDAO.buscarPorIdDeArrendatario(arrendatario.getId());
-
-                // Verificar si hay recibos
-                if (recibos != null && !recibos.isEmpty()) {
-                    // Iterar sobre cada recibo del arrendatario
-                    for (Recibo recibo : recibos) {
-                        writer.write("ID Recibo: " + recibo.getId() + "\n");
-                        writer.write("Fecha Emisión: " + recibo.getFechaEmision() + "\n");
-                        writer.write("Importe: " + recibo.getImporte() + "\n\n");
-                    }
-
-                    // Calcular y escribir la suma de los alquileres del arrendatario
-                    double sumaAlquileres = 0;
-                    for (Recibo recibo : recibos) {
-                        sumaAlquileres += recibo.getImporte();
-                    }
-                    writer.write("Suma Total Alquileres: " + sumaAlquileres + "\n\n");
-                } else {
-                    writer.write("Este arrendatario no tiene recibos de alquiler.\n\n");
+                for (Recibo recibo : recibos) {
+                    writer.write("ID Recibo: " + recibo.getId() + "\n");
+                    writer.write("Fecha Emisión: " + recibo.getFechaEmision() + "\n");
+                    writer.write("Importe: " + recibo.getImporte() + "\n\n");
                 }
-            }
 
-            // Calcular y escribir la suma total de todos los alquileres
-            double sumaTotal = 0;
-            for (Arrendatario arrendatario : arrendatarios) {
-                ArrayList<Recibo> recibos = ReciboDAO.buscarPorIdDeArrendatario(arrendatario.getId());
-                if (recibos != null) {
-                    for (Recibo recibo : recibos) {
-                        sumaTotal += recibo.getImporte();
+                // Cerrar el FileWriter
+                writer.close();
+                JOptionPane.showMessageDialog(null, "Informe creado con éxito.\nNombre del archivo: " + nombreArchivo,
+                        "Informe Creado", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo extraer el DNI del arrendatario.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al generar el informe.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private static String extraerDNI(String arrendatarioInfo) {
+        // Encuentra la posición de "dni=" en la cadena
+        int inicioDNI = arrendatarioInfo.indexOf("dni=");
+
+        // Verifica si se encontró "dni=" en la cadena
+        if (inicioDNI != -1) {
+            // Encuentra la posición de "," después de "dni="
+            int finDNI = arrendatarioInfo.indexOf(",", inicioDNI);
+
+            // Verifica si se encontró "," después de "dni="
+            if (finDNI != -1) {
+                // Extrae la subcadena que representa el DNI
+                return arrendatarioInfo.substring(inicioDNI + 4, finDNI).trim();
+            }
+        }
+
+        // Devuelve null si no se pudo extraer el DNI
+        return null;
+    }
+
+    // ...
+
+    private static void generarInformeTotal() {
+        try {
+            // Obtener la lista de arrendatarios
+            ArrayList<Arrendatario> arrendatarios = ControladorArrendatarios.listar();
+
+            // Verificar si hay arrendatarios
+            if (arrendatarios != null && !arrendatarios.isEmpty()) {
+                // Nombre del archivo para el informe total
+                String nombreArchivo = "InformeTotal.txt";
+
+                // Crear un FileWriter
+                FileWriter writer = new FileWriter(nombreArchivo);
+
+                // Escribir encabezado
+                writer.write("Informe Total de Alquileres\n\n");
+
+                // Iterar sobre cada arrendatario
+                for (Arrendatario arrendatario : arrendatarios) {
+                    writer.write("Arrendatario: " + arrendatario.getNombre() + "\n");
+
+                    // Obtener los recibos del arrendatario
+                    ArrayList<Recibo> recibos = ReciboDAO.buscarPorIdDeArrendatario(arrendatario.getId());
+
+                    // Verificar si hay recibos
+                    if (recibos != null && !recibos.isEmpty()) {
+                        // Iterar sobre cada recibo del arrendatario
+                        for (Recibo recibo : recibos) {
+                            writer.write("ID Recibo: " + recibo.getId() + "\n");
+                            writer.write("Fecha Emisión: " + recibo.getFechaEmision() + "\n");
+                            writer.write("Importe: " + recibo.getImporte() + "\n\n");
+                        }
+
+                        // Calcular y escribir la suma de los alquileres del arrendatario
+                        double sumaAlquileres = 0;
+                        for (Recibo recibo : recibos) {
+                            sumaAlquileres += recibo.getImporte();
+                        }
+                        writer.write("Suma Total Alquileres: " + sumaAlquileres + "\n\n");
+                    } else {
+                        writer.write("Este arrendatario no tiene recibos de alquiler.\n\n");
                     }
                 }
+
+                // Calcular y escribir la suma total de todos los alquileres
+                double sumaTotal = 0;
+                for (Arrendatario arrendatario : arrendatarios) {
+                    ArrayList<Recibo> recibos = ReciboDAO.buscarPorIdDeArrendatario(arrendatario.getId());
+                    if (recibos != null) {
+                        for (Recibo recibo : recibos) {
+                            sumaTotal += recibo.getImporte();
+                        }
+                    }
+                }
+
+                writer.write("Suma Total de Todos los Alquileres: " + sumaTotal + "\n");
+
+                // Cerrar el FileWriter
+                writer.close();
+
+                JOptionPane.showMessageDialog(null,
+                        "Informe total creado con éxito.\nNombre del archivo: " + nombreArchivo, "Informe Total Creado",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay arrendatarios para generar el informe total.",
+                        "Información", JOptionPane.INFORMATION_MESSAGE);
             }
-
-            writer.write("Suma Total de Todos los Alquileres: " + sumaTotal + "\n");
-
-            // Cerrar el FileWriter
-            writer.close();
-
-            JOptionPane.showMessageDialog(null, "Informe total creado con éxito.\nNombre del archivo: " + nombreArchivo, "Informe Total Creado", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "No hay arrendatarios para generar el informe total.", "Información", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al generar el informe total.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error al generar el informe total.", "Error", JOptionPane.ERROR_MESSAGE);
     }
-}    
 
     private static void createAndShowGUI() {
         final JFrame frame = new JFrame("Gestión de Terrenos");
@@ -456,10 +470,10 @@ private static void generarInformeTotal() {
         final JPanel panel = new JPanel(new BorderLayout());
         frame.getContentPane().add(panel);
 
-        String[] opciones = {"Seleccione una opción","Arrendatarios", "Terrenos", "Parcelas", "Recibos"};
-        
-        JPanel northPannel=new JPanel(new BorderLayout());
-        final JPanel homePannel=new JPanel(new BorderLayout());
+        String[] opciones = { "Seleccione una opción", "Arrendatarios", "Terrenos", "Parcelas", "Recibos" };
+
+        JPanel northPannel = new JPanel(new BorderLayout());
+        final JPanel homePannel = new JPanel(new BorderLayout());
 
         final JButton botonHome = new JButton("🏠");
         botonHome.setFont(new Font("Dialog", Font.BOLD, 20));
@@ -479,8 +493,8 @@ private static void generarInformeTotal() {
         botonRegistrarAlquiler.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
         final JButton botonDarDeBajaAlquiler = new JButton("Dar de baja Alquiler");
-        botonDarDeBajaAlquiler.setPreferredSize(new Dimension(200, 80)); 
-        botonDarDeBajaAlquiler.setFont(new Font("Arial", Font.BOLD, 16)); 
+        botonDarDeBajaAlquiler.setPreferredSize(new Dimension(200, 80));
+        botonDarDeBajaAlquiler.setFont(new Font("Arial", Font.BOLD, 16));
         botonDarDeBajaAlquiler.setForeground(Color.BLACK);
         botonDarDeBajaAlquiler.setBackground(Color.decode("#FAAE17"));
         botonDarDeBajaAlquiler.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -493,10 +507,10 @@ private static void generarInformeTotal() {
         box.add(botonDarDeBajaAlquiler);
         box.add(Box.createHorizontalGlue());
 
-        homePannel.add(box,BorderLayout.CENTER);
+        homePannel.add(box, BorderLayout.CENTER);
 
-        panel.add(northPannel,BorderLayout.NORTH);
-        panel.add(homePannel,BorderLayout.CENTER);
+        panel.add(northPannel, BorderLayout.NORTH);
+        panel.add(homePannel, BorderLayout.CENTER);
 
         // Crear instancias de las vistas específicas
         final VistaArrendatarios vistaArrendatarios = new VistaArrendatarios();
@@ -506,19 +520,19 @@ private static void generarInformeTotal() {
         botonHome.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                vistaReciboActiva=false;
-                        vistaArrenActiva=false;
-                        vistaTerrenActiva = false;
-                        vistaParcelaActiva = false;
+                vistaReciboActiva = false;
+                vistaArrenActiva = false;
+                vistaTerrenActiva = false;
+                vistaParcelaActiva = false;
                 // Limpiar todos los paneles
                 panel.remove(vistaArrendatarios.getPanel());
                 panel.remove(vistaTerrenos.getPanel());
-                panel.remove(vistaParcelas.getPanel());                
+                panel.remove(vistaParcelas.getPanel());
                 panel.remove(vistaRecibos.getPanel());
 
                 // Establecer la selección del JComboBox en "Seleccione una opción"
                 comboBox.setSelectedIndex(0);
-                panel.add(homePannel,BorderLayout.CENTER);
+                panel.add(homePannel, BorderLayout.CENTER);
 
                 // Actualizar la interfaz gráfica
                 panel.revalidate();
@@ -532,18 +546,18 @@ private static void generarInformeTotal() {
                 // Crear un nuevo JFrame para la ventana de registro de alquiler
                 ventanaRegistroAlquiler.setSize(400, 300);
                 ventanaRegistroAlquiler.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+
                 // Crear un JPanel con un GridLayout
-                JPanel panelRegistroAlquiler = new JPanel(new GridLayout(5, 2,10,10));
+                JPanel panelRegistroAlquiler = new JPanel(new GridLayout(5, 2, 10, 10));
 
                 final JTextField importeField;
                 final JCheckBox pagadoCheckbox;
                 final JCheckBox activoCheckbox;
-        
+
                 // Elementos del panel
                 JLabel arrendatarioLabel = new JLabel("Arrendatario");
                 JButton seleccionarArrendatarioButton = new JButton("Seleccionar");
-                
+
                 seleccionarArrendatarioButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -555,7 +569,7 @@ private static void generarInformeTotal() {
 
                 JLabel parcelaLabel = new JLabel("Parcela");
                 JButton seleccionarParcelaButton = new JButton("Seleccionar");
-                final int idParcela=-1;
+                final int idParcela = -1;
                 seleccionarParcelaButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -569,11 +583,10 @@ private static void generarInformeTotal() {
 
                 JLabel pagadoLabel = new JLabel("Pagado");
                 pagadoCheckbox = new JCheckBox();
-                
 
                 JLabel activoLabel = new JLabel("Activo");
                 activoCheckbox = new JCheckBox();
-                
+
                 // Agregar elementos al panel
                 panelRegistroAlquiler.add(arrendatarioLabel);
                 panelRegistroAlquiler.add(seleccionarArrendatarioButton);
@@ -581,51 +594,53 @@ private static void generarInformeTotal() {
                 panelRegistroAlquiler.add(seleccionarParcelaButton);
                 panelRegistroAlquiler.add(importeLabel);
                 panelRegistroAlquiler.add(importeField);
-               panelRegistroAlquiler. add(pagadoLabel);
+                panelRegistroAlquiler.add(pagadoLabel);
                 panelRegistroAlquiler.add(pagadoCheckbox);
-               panelRegistroAlquiler.add(activoLabel);
-               panelRegistroAlquiler. add(activoCheckbox);
-        
+                panelRegistroAlquiler.add(activoLabel);
+                panelRegistroAlquiler.add(activoCheckbox);
+
                 // Crear un botón de guardar
                 JButton guardarButton = new JButton("Registrar");
                 guardarButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // Obtener los valores ingresados por el usuario
-                        if(stringArrendatarioActual.equals("") || stringParcelaActual.equals("") || importeField.getText().equals("")){
-                            JOptionPane.showMessageDialog(frame, "Seleccione arrendatario, parcela e importe.", "Error", JOptionPane.ERROR_MESSAGE);
-                        }else{
+                        if (stringArrendatarioActual.equals("") || stringParcelaActual.equals("")
+                                || importeField.getText().equals("")) {
+                            JOptionPane.showMessageDialog(frame, "Seleccione arrendatario, parcela e importe.", "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                        } else {
                             boolean estaPagado = pagadoCheckbox.isSelected();
                             boolean estaActivo = activoCheckbox.isSelected();
-            
-                        
-                            int idRecibo=ControladorRecibos.registrar(stringArrendatarioActual, stringParcelaActual, Integer.parseInt(importeField.getText()), estaPagado, estaActivo);
-                            if(idRecibo!=-1){
-                                JOptionPane.showMessageDialog(frame, "¡Registro realizado! ID de recibo: "+idRecibo, "Registro", JOptionPane.INFORMATION_MESSAGE);
+
+                            int idRecibo = ControladorRecibos.registrar(stringArrendatarioActual, stringParcelaActual,
+                                    Integer.parseInt(importeField.getText()), estaPagado, estaActivo);
+                            if (idRecibo != -1) {
+                                JOptionPane.showMessageDialog(frame, "¡Registro realizado! ID de recibo: " + idRecibo,
+                                        "Registro", JOptionPane.INFORMATION_MESSAGE);
                             }
-                            stringArrendatarioActual="";
-                            stringParcelaActual="";                       
+                            stringArrendatarioActual = "";
+                            stringParcelaActual = "";
                             // Cerrar la ventana de registro de alquiler
                             ventanaRegistroAlquiler.dispose();
                         }
-                        
+
                     }
                 });
-        
+
                 // Añadir componentes al panel de botones
                 JPanel panelBoton = new JPanel(new GridLayout(1, 1));
                 panelBoton.add(guardarButton);
-        
+
                 // Añadir paneles al JFrame
                 ventanaRegistroAlquiler.getContentPane().add(panelRegistroAlquiler, BorderLayout.CENTER);
                 ventanaRegistroAlquiler.getContentPane().add(panelBoton, BorderLayout.SOUTH);
-        
+
                 // Configurar la ubicación y hacer visible la ventana
                 ventanaRegistroAlquiler.setLocationRelativeTo(null);
                 ventanaRegistroAlquiler.setVisible(true);
             }
         });
-        
 
         botonDarDeBajaAlquiler.addActionListener(new ActionListener() {
             @Override
@@ -635,12 +650,12 @@ private static void generarInformeTotal() {
                 ventanaRegistroAlquiler.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
                 // Crear un JPanel con un GridLayout
-                JPanel panelDarBajaAlquiler = new JPanel(new GridLayout(1, 2,10,10));
-        
+                JPanel panelDarBajaAlquiler = new JPanel(new GridLayout(1, 2, 10, 10));
+
                 // Elementos del panel
                 JLabel reciboLabel = new JLabel("Recibo");
                 JButton seleccionarReciboButton = new JButton("Seleccionar");
-                
+
                 seleccionarReciboButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -649,29 +664,32 @@ private static void generarInformeTotal() {
                     }
 
                 });
-        
+
                 // Aquí implementas la lógica para listar los recibos en un JTable o similar
-        
+
                 JButton botonBaja = new JButton("Dar de Baja");
                 botonBaja.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if(stringReciboActual.equals("")){
-                            JOptionPane.showMessageDialog(frame, "Seleccione un recibo.", "Error", JOptionPane.ERROR_MESSAGE);
-                        }else{
-                            int idRecibo=ControladorRecibos.darDeBajaAlq(stringReciboActual);
-                            if(idRecibo!=-1){
-                                JOptionPane.showMessageDialog(frame, "¡Se ha dado de baja el recibo! ID de recibo: "+idRecibo, "Registro", JOptionPane.INFORMATION_MESSAGE);
+                        if (stringReciboActual.equals("")) {
+                            JOptionPane.showMessageDialog(frame, "Seleccione un recibo.", "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            int idRecibo = ControladorRecibos.darDeBajaAlq(stringReciboActual);
+                            if (idRecibo != -1) {
+                                JOptionPane.showMessageDialog(frame,
+                                        "¡Se ha dado de baja el recibo! ID de recibo: " + idRecibo, "Registro",
+                                        JOptionPane.INFORMATION_MESSAGE);
                             }
                         }
-                        stringReciboActual="";
+                        stringReciboActual = "";
                     }
                 });
 
                 // Agregar elementos al panel
                 panelDarBajaAlquiler.add(reciboLabel);
                 panelDarBajaAlquiler.add(seleccionarReciboButton);
-        
+
                 // Añade el botón y otros componentes a la ventana
                 // Añadir paneles al JFrame
                 ventanaBajaAlquiler.getContentPane().add(panelDarBajaAlquiler, BorderLayout.CENTER);
@@ -690,19 +708,17 @@ private static void generarInformeTotal() {
                 // Verificar la selección y actualizar la vista correspondiente
                 if ("Arrendatarios".equals(seleccion)) {
                     // Mostrar la vista de arrendatarios
-                    //Comprobamos que vista está activa para borrarla y actualizar la interfaz
-                    if(vistaTerrenActiva){
+                    // Comprobamos que vista está activa para borrarla y actualizar la interfaz
+                    if (vistaTerrenActiva) {
                         panel.remove(vistaTerrenos.getPanel());
                         vistaTerrenActiva = false;
-                    }
-                    else if(vistaReciboActiva){
+                    } else if (vistaReciboActiva) {
                         panel.remove(vistaRecibos.getPanel());
                         vistaReciboActiva = false;
-                    }
-                    else if(vistaParcelaActiva){
+                    } else if (vistaParcelaActiva) {
                         panel.remove(vistaParcelas.getPanel());
                         vistaParcelaActiva = false;
-                    }else{
+                    } else {
                         panel.remove(homePannel);
                     }
 
@@ -713,78 +729,71 @@ private static void generarInformeTotal() {
                 } else if ("Terrenos".equals(seleccion)) {
                     // Mostrar la vista de terrenos
 
-                    //Comprobamos que vista está activa para borrarla y actualizar la interfaz
-                    if(vistaArrenActiva){
+                    // Comprobamos que vista está activa para borrarla y actualizar la interfaz
+                    if (vistaArrenActiva) {
                         panel.remove(vistaArrendatarios.getPanel());
                         vistaArrenActiva = false;
-                    }
-                    else if(vistaReciboActiva){
+                    } else if (vistaReciboActiva) {
                         panel.remove(vistaRecibos.getPanel());
                         vistaReciboActiva = false;
-                    }
-                    else if(vistaParcelaActiva){
+                    } else if (vistaParcelaActiva) {
                         panel.remove(vistaParcelas.getPanel());
                         vistaParcelaActiva = false;
-                    }else{
-                        
+                    } else {
+
                         panel.remove(homePannel);
                     }
                     panel.add(vistaTerrenos.getPanel(), BorderLayout.CENTER);
                     vistaTerrenos.actualizar(null);
                     frame.revalidate();
                     vistaTerrenActiva = true;
-                } else if("Parcelas".equals(seleccion)){
-                    //mostrar vista parcelas 
-                     if(vistaArrenActiva){
+                } else if ("Parcelas".equals(seleccion)) {
+                    // mostrar vista parcelas
+                    if (vistaArrenActiva) {
                         panel.remove(vistaArrendatarios.getPanel());
                         vistaArrenActiva = false;
-                    }
-                    else if(vistaTerrenActiva){
+                    } else if (vistaTerrenActiva) {
                         panel.remove(vistaTerrenos.getPanel());
                         vistaTerrenActiva = false;
-                    }
-                    else if(vistaReciboActiva){
+                    } else if (vistaReciboActiva) {
                         panel.remove(vistaRecibos.getPanel());
                         vistaReciboActiva = false;
-                    }else{
-                        
+                    } else {
+
                         panel.remove(homePannel);
                     }
                     panel.add(vistaParcelas.getPanel(), BorderLayout.CENTER);
                     vistaParcelas.actualizar(null);
                     frame.revalidate();
-                    vistaParcelaActiva= true;
+                    vistaParcelaActiva = true;
 
-                }else if("Recibos".equals(seleccion)){
-                    //mostrar vista parcelas 
-                     if(vistaArrenActiva){
+                } else if ("Recibos".equals(seleccion)) {
+                    // mostrar vista parcelas
+                    if (vistaArrenActiva) {
                         panel.remove(vistaArrendatarios.getPanel());
                         vistaArrenActiva = false;
-                    }
-                    else if(vistaTerrenActiva){
+                    } else if (vistaTerrenActiva) {
                         panel.remove(vistaTerrenos.getPanel());
                         vistaTerrenActiva = false;
-                    }
-                    else if(vistaParcelaActiva){
+                    } else if (vistaParcelaActiva) {
                         panel.remove(vistaParcelas.getPanel());
                         vistaParcelaActiva = false;
-                    }else{
-                        
+                    } else {
+
                         panel.remove(homePannel);
                     }
                     panel.add(vistaRecibos.getPanel(), BorderLayout.CENTER);
                     vistaRecibos.actualizar(null);
                     frame.revalidate();
-                    vistaReciboActiva= true;
-                }
-                else {
+                    vistaReciboActiva = true;
+                } else {
                     // Limpiar la vista si no es la opción de arrendatarios o terrenos
                     // vistaArrendatarios.limpiar();
                     panel.remove(vistaArrendatarios.getPanel());
                     panel.remove(vistaTerrenos.getPanel());
                     panel.remove(vistaParcelas.getPanel());
                     panel.remove(vistaRecibos.getPanel());
-                    
+
                 }
 
             }
@@ -793,7 +802,6 @@ private static void generarInformeTotal() {
         frame.setLocationRelativeTo(null);
         frame.setIconImage(icono.getImage());
         frame.setVisible(true);
-
 
         final JButton botonGenerarInforme = new JButton("Generar Informe");
         botonGenerarInforme.setPreferredSize(new Dimension(200, 80));
@@ -805,7 +813,8 @@ private static void generarInformeTotal() {
         botonGenerarInforme.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes agregar la lógica para abrir una ventana emergente y generar el informe
+                // Aquí puedes agregar la lógica para abrir una ventana emergente y generar el
+                // informe
                 mostrarVentanaGenerarInforme();
             }
         });
@@ -821,7 +830,7 @@ private static void generarInformeTotal() {
         botonGenerarInformeTotal.setForeground(Color.BLACK);
         botonGenerarInformeTotal.setBackground(Color.decode("#FAAE17"));
         botonGenerarInformeTotal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-    
+
         botonGenerarInformeTotal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -829,13 +838,14 @@ private static void generarInformeTotal() {
                 generarInformeTotal();
             }
         });
-    
+
         // Agregar el botón de Generar Informe Total al panel de botones
         box.add(Box.createHorizontalStrut(10));
         box.add(botonGenerarInformeTotal);
-        box.add(Box.createHorizontalGlue());   
+        box.add(Box.createHorizontalGlue());
 
     }
 }
 
-// Clase VistaArrendatarios que contiene la lógica y la interfaz específica para los arrendatarios
+// Clase VistaArrendatarios que contiene la lógica y la interfaz específica para
+// los arrendatarios
