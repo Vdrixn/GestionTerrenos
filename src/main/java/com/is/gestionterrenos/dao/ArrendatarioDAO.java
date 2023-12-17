@@ -8,7 +8,7 @@ public class ArrendatarioDAO {
     public static Connection conn;
 
 
-    public static void insertar(String dni, String nombre, int edad, String sexo, Date fechaRegistro){
+    public static int insertar(String dni, String nombre, int edad, String sexo, Date fechaRegistro){
         try{
             conn=ConexionDB.getConn();
             PreparedStatement pS=conn.prepareStatement("INSERT INTO Arrendatarios (dni,nombre,edad,sexo,fechaRegistro) VALUES (?,?,?,?,?)");
@@ -21,14 +21,16 @@ public class ArrendatarioDAO {
             pS.executeUpdate();
             pS.close();
             conn.close();
+            return 1;
         }catch(SQLException e){
             e.printStackTrace();
+            return 0;
         }        
 
     
     }
 
-    public static void eliminar(int id){
+    public static int eliminar(int id){
      try{
             conn=ConexionDB.getConn();
             PreparedStatement pS=conn.prepareStatement("DELETE FROM Arrendatarios WHERE id=?");
@@ -36,13 +38,15 @@ public class ArrendatarioDAO {
             pS.executeUpdate();
             pS.close();
             conn.close();
+            return 1;
         }catch(SQLException e){
             e.printStackTrace();
+            return 0;
         }    
     }
 
 
-    public static void actualizar(int id, String dni, String nombre, int edad, String sexo, Date fechaRegistro){
+    public static int actualizar(int id, String dni, String nombre, int edad, String sexo, Date fechaRegistro){
         try{
             conn=ConexionDB.getConn();
             PreparedStatement pS=conn.prepareStatement("UPDATE Arrendatarios SET dni=?, nombre=?, edad=?, sexo=?, fechaRegistro=? WHERE id=?");
@@ -57,8 +61,10 @@ public class ArrendatarioDAO {
             pS.executeUpdate();
             pS.close();
             conn.close();
+            return 1;
         }catch(SQLException e){
             e.printStackTrace();
+            return 0;
         }        
 
     }

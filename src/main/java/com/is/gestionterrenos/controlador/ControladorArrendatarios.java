@@ -9,11 +9,11 @@ import java.util.ArrayList;
 
 public class ControladorArrendatarios {
     
-    public static void insertar() {
-        ArrendatarioDAO.insertar(VistaArrendatarios.dniActual,VistaArrendatarios.nombreActual,Integer.parseInt(VistaArrendatarios.edadActual),VistaArrendatarios.sexoActual, new Date(System.currentTimeMillis()));
+    public static int insertar() {
+        return ArrendatarioDAO.insertar(VistaArrendatarios.dniActual,VistaArrendatarios.nombreActual,Integer.parseInt(VistaArrendatarios.edadActual),VistaArrendatarios.sexoActual, new Date(System.currentTimeMillis()));
     }
 
-    public static void actualizar(String oldArrendatario,String dni, String nombre, String edad, String sexo){
+    public static int actualizar(String oldArrendatario,String dni, String nombre, String edad, String sexo){
         //Cuando un campo no ha sido rellenado, será un string vacio ""
         
         //Primero vamos a sacar el id del arrendatario, como todos tienen el mismo formato, podemos sacar el id en la misma posición. EMPIEZA EN POS 17
@@ -50,7 +50,7 @@ public class ControladorArrendatarios {
 
             sexo=arrendatario.getSexo();
         }
-        ArrendatarioDAO.actualizar(idArrend,dni,nombre,Integer.parseInt(edad),sexo,new Date(System.currentTimeMillis()));
+        return ArrendatarioDAO.actualizar(idArrend,dni,nombre,Integer.parseInt(edad),sexo,new Date(System.currentTimeMillis()));
     }
 
     public static ArrayList<Arrendatario> buscar(String dni, String nombre, String edad, String sexo){
@@ -59,7 +59,7 @@ public class ControladorArrendatarios {
         return ArrendatarioDAO.buscarArrendatarios(dni,nombre,Integer.parseInt(edad),sexo);
     }
 
-    public static void borrar(String strArrendatario){
+    public static int borrar(String strArrendatario){
         //Sacamos el id del arrendatario, como todos tienen el mismo formato, podemos sacar el id en la misma posición. EMPIEZA EN POS 17
         int idArrend;
         idArrend=Integer.parseInt(""+strArrendatario.charAt(18));
@@ -70,7 +70,7 @@ public class ControladorArrendatarios {
         }
 
         //Procedemos con el borrado
-        ArrendatarioDAO.eliminar(idArrend);
+        return ArrendatarioDAO.eliminar(idArrend);
     }
     
     public static ArrayList<Arrendatario> listar(){
