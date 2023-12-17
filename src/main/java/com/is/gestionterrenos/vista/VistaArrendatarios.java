@@ -130,9 +130,19 @@ public class VistaArrendatarios {
             public void actionPerformed(ActionEvent e) {
                 // Aquí puedes obtener los datos ingresados y realizar la lógica de guardado
                 dniActual = dniField.getText();
+                if (!dniActual.matches("\\d{8}[a-zA-Z]") && !dniActual.equals("")) { //O el campo está vacío, o esta en formato correcto
+
+                    JOptionPane.showMessageDialog(ventanaAñadir, "DNI inválido. Debe contener 8 numeros y 1 letra.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Detener el proceso si el DNI no es válido
+                }
                 nombreActual = nombreField.getText();
                 edadActual = edadField.getText();
                 sexoActual = sexoField.getText();
+                if (!sexoActual.matches("[MFO]") && !sexoActual.equals("")) { //O el campo está vacío, o esta en formato correcto
+
+                    JOptionPane.showMessageDialog(ventanaAñadir, "Género inválido. Debe ser 'M', 'F' o 'O'.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Detener el proceso si el DNI no es válido
+                }
 
                 ControladorArrendatarios.insertar();
                 // Cerrar la ventana después de guardar
