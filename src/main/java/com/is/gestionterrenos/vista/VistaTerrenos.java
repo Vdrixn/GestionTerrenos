@@ -35,7 +35,6 @@ public class VistaTerrenos {
 
     public static String terrenoActual;
 
-
     public VistaTerrenos() {
         panel = new JPanel(new BorderLayout());
 
@@ -45,7 +44,6 @@ public class VistaTerrenos {
         panel.add(scrollPane, BorderLayout.CENTER);
 
         icono = new ImageIcon("src/main/resources/icono.png");
-        
 
         JPanel botonesPanel = new JPanel(new GridLayout(2, 1));
         JButton addButton = new JButton("Añadir");
@@ -53,21 +51,20 @@ public class VistaTerrenos {
         JButton buscarButton = new JButton("Buscar");
         JButton deleteButton = new JButton("Borrar");
 
-         addButton.addActionListener(new ActionListener() {
+        addButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 abrirVentanaAñadir();
             }
 
-            
-         });
+        });
 
-         actButton.addActionListener(new ActionListener() {
+        actButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(jList.getSelectedValue()!=null){
-                    terrenoActual=jList.getSelectedValue();
+                if (jList.getSelectedValue() != null) {
+                    terrenoActual = jList.getSelectedValue();
                     abrirVentanaActualizar();
                 }
             }
@@ -76,13 +73,12 @@ public class VistaTerrenos {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(jList.getSelectedValue()!=null){
+                if (jList.getSelectedValue() != null) {
                     terrenoActual = jList.getSelectedValue();
                     ejecutarBorrado();
                 }
             }
         });
-
 
         botonesPanel.add(addButton);
         botonesPanel.add(actButton);
@@ -95,28 +91,26 @@ public class VistaTerrenos {
         return panel;
     }
 
-
     public void actualizar(ArrayList<Terreno> givenArrens) {
         // Limpiar la lista actual
         listModel.clear();
 
         // SE LLAMA AL CONTROLADOR PARA OBTENER LOS ARRENDATARIOS
         ArrayList<Terreno> terrenos;
-        if(givenArrens==null)
-            terrenos=ControladorTerrenos.listar();
+        if (givenArrens == null)
+            terrenos = ControladorTerrenos.listar();
         else
-            terrenos=givenArrens;
+            terrenos = givenArrens;
 
-        //arrendatarios=...
+        // arrendatarios=...
         if (terrenos != null) {
             for (Terreno terreno : terrenos) {
                 listModel.addElement(terreno.toString());
             }
         }
     }
-        
 
-    public void abrirVentanaAñadir(){
+    public void abrirVentanaAñadir() {
 
         final JFrame ventanaAñadir = new JFrame("Añadir Terreno");
         ventanaAñadir.setSize(300, 200);
@@ -158,21 +152,20 @@ public class VistaTerrenos {
                 tipoTerreno = tipoTerrenoField.getText();
                 limiteBaseTerreno = limiteBaseField.getText();
                 limiteAlturaTerreno = limiteAlturaField.getText();
-                
+
                 ControladorTerrenos.insertar();
                 ventanaAñadir.dispose();
                 actualizar(null);
             }
         });
-        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
+        final JPanel panelBoton = new JPanel(new GridLayout(1, 1));
         panelBoton.add(guardarButton);
-        
 
         ventanaAñadir.getContentPane().add(panelAñadir);
-        ventanaAñadir.getContentPane().add(panelBoton,BorderLayout.SOUTH);
-        ventanaAñadir.setLocationRelativeTo(null); 
+        ventanaAñadir.getContentPane().add(panelBoton, BorderLayout.SOUTH);
+        ventanaAñadir.setLocationRelativeTo(null);
         ventanaAñadir.setIconImage(icono.getImage());
-        ventanaAñadir.setVisible(true);        
+        ventanaAñadir.setVisible(true);
     }
 
     public void abrirVentanaActualizar() {
@@ -206,7 +199,6 @@ public class VistaTerrenos {
         final JTextField limiteAlturaField = new JTextField();
         panelAñadir.add(limiteAlturaField);
 
-
         JButton guardarButton = new JButton("Guardar");
         guardarButton.addActionListener(new ActionListener() {
             @Override
@@ -219,30 +211,28 @@ public class VistaTerrenos {
                 limiteBaseTerreno = limiteBaseField.getText();
                 limiteAlturaTerreno = limiteAlturaField.getText();
 
-                ControladorTerrenos.actualizarTerreno(terrenoActual, nombreTerreno, ubicacionTerreno, tamHectareasTerreno, tipoTerreno, 
-                                                limiteBaseTerreno, limiteAlturaTerreno);
+                ControladorTerrenos.actualizarTerreno(terrenoActual, nombreTerreno, ubicacionTerreno,
+                        tamHectareasTerreno, tipoTerreno,
+                        limiteBaseTerreno, limiteAlturaTerreno);
                 // Cerrar la ventana después de guardar
                 ventanaAñadir.dispose();
                 actualizar(null);
             }
         });
 
-        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
+        final JPanel panelBoton = new JPanel(new GridLayout(1, 1));
         panelBoton.add(guardarButton);
-        
 
         ventanaAñadir.getContentPane().add(panelAñadir);
-        ventanaAñadir.getContentPane().add(panelBoton,BorderLayout.SOUTH);
-        ventanaAñadir.setLocationRelativeTo(null); 
+        ventanaAñadir.getContentPane().add(panelBoton, BorderLayout.SOUTH);
+        ventanaAñadir.setLocationRelativeTo(null);
         ventanaAñadir.setIconImage(icono.getImage());
-        ventanaAñadir.setVisible(true);    }
+        ventanaAñadir.setVisible(true);
+    }
 
-
-
-        public  void ejecutarBorrado(){
-            ControladorTerrenos.borrar(terrenoActual);
-            actualizar(null);
-        }
+    public void ejecutarBorrado() {
+        ControladorTerrenos.borrar(terrenoActual);
+        actualizar(null);
+    }
 
 }
-

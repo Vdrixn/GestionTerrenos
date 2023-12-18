@@ -10,25 +10,24 @@ import java.util.ArrayList;
 
 public class ControladorRecibos {
 
-    public static void insertar() { 
-        }
-
-        public static void imprimir(String strRecibo){
+    public static int imprimir(String strRecibo){
         int idRecibo = getIdRecibo(strRecibo);
         Recibo reciboImprimir=ReciboDAO.buscarPorId(idRecibo);
         try (PrintWriter out = new PrintWriter("recibo.txt")) {
-        out.println("ID Recibo: " + reciboImprimir.getId());
-        out.println("ID Arrendatario: " + reciboImprimir.getIdArren());
-        out.println("ID Parcela: " + reciboImprimir.getIdParcela());
-        out.println("Fecha de emision: " + reciboImprimir.getFechaEmision());
-        out.println("Importe: " + reciboImprimir.getImporte());
-        out.println("Irpf: " + reciboImprimir.getIrpf());
-        out.println("Iva: " + reciboImprimir.getIva());
+            out.println("ID Recibo: " + reciboImprimir.getId());
+            out.println("ID Arrendatario: " + reciboImprimir.getIdArren());
+            out.println("ID Parcela: " + reciboImprimir.getIdParcela());
+            out.println("Fecha de emision: " + reciboImprimir.getFechaEmision());
+            out.println("Importe: " + reciboImprimir.getImporte());
+            out.println("Irpf: " + reciboImprimir.getIrpf());
+            out.println("Iva: " + reciboImprimir.getIva());
+            return 1;
         } catch (FileNotFoundException e) {
-        e.printStackTrace();
-    }
+            e.printStackTrace();
+            return 0;
+        }
+    }   
 
-       }
     public static int registrar(String stringArrend,String stringParcela,int importe, boolean pagado, boolean activo){
         int idArrend;
         idArrend=Integer.parseInt(""+stringArrend.charAt(18));
@@ -59,7 +58,7 @@ public class ControladorRecibos {
         return ReciboDAO.darDeBajaAlquiler(idRecibo);
     }
 
-    public static void actualizar(String oldRecibo, int idArren, int idParcela, double importe, double iva, double irpf){
+    public static int actualizar(String oldRecibo, int idArren, int idParcela, double importe, double iva, double irpf){
         
         //Cuando un campo no ha sido rellenado, será un string vacio ""
         
@@ -84,16 +83,16 @@ public class ControladorRecibos {
         if(irpf==0){
             irpf=recibo.getIrpf();
         }
-        ReciboDAO.actualizar(idRecibo, idArren, idParcela, importe, iva, irpf);
+        return ReciboDAO.actualizar(idRecibo, idArren, idParcela, importe, iva, irpf);
     }
 
     public static ArrayList<Recibo> buscar(int idArren, int idParcela, double importe, double iva, double irpf, int alquilado){
         return ReciboDAO.buscarRecibos(idArren, idParcela, importe, iva, irpf, alquilado);
     }
 
-    public static void borrar(String strRecibo){
+    public static int borrar(String strRecibo){
         int idRecibo = getIdRecibo(strRecibo);
-                ReciboDAO.eliminar(idRecibo);
+        return ReciboDAO.eliminar(idRecibo);
     }
     
     public static ArrayList<Recibo> listar(){

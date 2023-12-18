@@ -46,7 +46,7 @@ public class VistaRecibos {
                     imprimir();
                 }
             }
-        }); 
+        });
 
         actButton.addActionListener(new ActionListener() {
             @Override
@@ -90,19 +90,18 @@ public class VistaRecibos {
         listModel.clear();
         // SE LLAMA AL CONTROLADOR PARA OBTENER LOS ARRENDATARIOS
         ArrayList<Recibo> recibos;
-        if(nuevosRecibos==null)
-            recibos=ControladorRecibos.listar();
+        if (nuevosRecibos == null)
+            recibos = ControladorRecibos.listar();
         else
-            recibos=nuevosRecibos;
-        
-        //recibos=...
+            recibos = nuevosRecibos;
+
+        // recibos=...
         if (recibos != null) {
             for (Recibo recibo : recibos) {
                 listModel.addElement(recibo.toString());
             }
         }
     }
-
 
     private void abrirVentanaActualizar() {
         final JFrame ventanaActualizar = new JFrame("Actualizar Recibo");
@@ -135,45 +134,44 @@ public class VistaRecibos {
         guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                idReciboActual=0;
-                idParcelaActual=0;
-                importeActual=0;
-                ivaActual=0;
-                irpfActual=0;
+                idReciboActual = 0;
+                idParcelaActual = 0;
+                importeActual = 0;
+                ivaActual = 0;
+                irpfActual = 0;
 
-                if(!idArrenField.getText().equals(""))
+                if (!idArrenField.getText().equals(""))
                     idReciboActual = Integer.parseInt(idArrenField.getText());
-                
-                if(!idParcelaField.getText().equals(""))
-                    idParcelaActual = Integer.parseInt(idParcelaField.getText());
-                if(!importeField.getText().equals(""))
-                    importeActual = Double.parseDouble(importeField.getText());
-                    
-                if(!ivaField.getText().equals(""))
-                    ivaActual = Double.parseDouble(ivaField.getText());
-                    
-                if(!irpfField.getText().equals(""))
-                    irpfActual = Double.parseDouble(irpfField.getText());
-                
 
-                ControladorRecibos.actualizar(reciboActual, idReciboActual,idParcelaActual,importeActual,ivaActual,irpfActual);
+                if (!idParcelaField.getText().equals(""))
+                    idParcelaActual = Integer.parseInt(idParcelaField.getText());
+                if (!importeField.getText().equals(""))
+                    importeActual = Double.parseDouble(importeField.getText());
+
+                if (!ivaField.getText().equals(""))
+                    ivaActual = Double.parseDouble(ivaField.getText());
+
+                if (!irpfField.getText().equals(""))
+                    irpfActual = Double.parseDouble(irpfField.getText());
+
+                ControladorRecibos.actualizar(reciboActual, idReciboActual, idParcelaActual, importeActual, ivaActual,
+                        irpfActual);
                 ventanaActualizar.dispose();
                 actualizar(null);
             }
         });
 
-        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
+        final JPanel panelBoton = new JPanel(new GridLayout(1, 1));
         panelBoton.add(guardarButton);
-        
 
         ventanaActualizar.getContentPane().add(panelAñadir);
-        ventanaActualizar.getContentPane().add(panelBoton,BorderLayout.SOUTH);
-        ventanaActualizar.setLocationRelativeTo(null); 
+        ventanaActualizar.getContentPane().add(panelBoton, BorderLayout.SOUTH);
+        ventanaActualizar.setLocationRelativeTo(null);
         ventanaActualizar.setIconImage(icono.getImage());
         ventanaActualizar.setVisible(true);
     }
 
-    public void abrirVentanaBuscar(){
+    public void abrirVentanaBuscar() {
         final JFrame ventanaBuscar = new JFrame("Buscar Recibos");
         ventanaBuscar.setSize(300, 200);
         ventanaBuscar.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -204,48 +202,48 @@ public class VistaRecibos {
         guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                idReciboActual=0;
-                idParcelaActual=0;
-                importeActual=0;
-                ivaActual=0;
-                irpfActual=0;
+                idReciboActual = 0;
+                idParcelaActual = 0;
+                importeActual = 0;
+                ivaActual = 0;
+                irpfActual = 0;
 
-                if(!idArrenField.getText().equals(""))
+                if (!idArrenField.getText().equals(""))
                     idReciboActual = Integer.parseInt(idArrenField.getText());
-                
-                if(!idParcelaField.getText().equals(""))
+
+                if (!idParcelaField.getText().equals(""))
                     idParcelaActual = Integer.parseInt(idParcelaField.getText());
-                if(!importeField.getText().equals(""))
+                if (!importeField.getText().equals(""))
                     importeActual = Double.parseDouble(importeField.getText());
-                    
-                if(!ivaField.getText().equals(""))
+
+                if (!ivaField.getText().equals(""))
                     ivaActual = Double.parseDouble(ivaField.getText());
-                    
-                if(!irpfField.getText().equals(""))
+
+                if (!irpfField.getText().equals(""))
                     irpfActual = Double.parseDouble(irpfField.getText());
 
-                ArrayList<Recibo> recibos = ControladorRecibos.buscar(idReciboActual,idParcelaActual, importeActual,ivaActual,irpfActual,0);
+                ArrayList<Recibo> recibos = ControladorRecibos.buscar(idReciboActual, idParcelaActual, importeActual,
+                        ivaActual, irpfActual, 0);
                 ventanaBuscar.dispose();
                 actualizar(recibos);
             }
         });
 
-        final JPanel panelBoton = new JPanel(new GridLayout(1,1));
+        final JPanel panelBoton = new JPanel(new GridLayout(1, 1));
         panelBoton.add(guardarButton);
-        
 
         ventanaBuscar.getContentPane().add(panelAñadir);
-        ventanaBuscar.getContentPane().add(panelBoton,BorderLayout.SOUTH);
-        ventanaBuscar.setLocationRelativeTo(null); 
+        ventanaBuscar.getContentPane().add(panelBoton, BorderLayout.SOUTH);
+        ventanaBuscar.setLocationRelativeTo(null);
         ventanaBuscar.setIconImage(icono.getImage());
         ventanaBuscar.setVisible(true);
     }
 
-    public void imprimir(){
+    public void imprimir() {
         ControladorRecibos.imprimir(reciboActual);
-        }
+    }
 
-    public  void ejecutarBorrado(){
+    public void ejecutarBorrado() {
         ControladorRecibos.borrar(reciboActual);
         actualizar(null);
     }

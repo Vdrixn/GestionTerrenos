@@ -18,93 +18,80 @@ public class CArrenTest {
 
     @BeforeAll
     public static void setUp() {
+        // Restablecer la base de datos antes de cada prueba
         ConexionDB.resetDatabase();
     }
 
     @Test
     @Order(1)
-    @DisplayName("Insertar Arrendatario")
+    @DisplayName("Test para insertar Arrendatario")
     public void testInsertar() {
-        // Assume VistaArrendatarios has static fields/methods for input
-        // Set dummy data for insertion
+        // Configuración de los datos del arrendatario para la prueba de inserción
         VistaArrendatarios.dniActual = "12345678X";
         VistaArrendatarios.nombreActual = "Test Name";
         VistaArrendatarios.edadActual = "30";
         VistaArrendatarios.sexoActual = "M";
 
-        // Assert that the insertion was successful
-        assertEquals(1, ControladorArrendatarios.insertar());
+        // Verificar si el arrendatario se ha insertado correctamente
+        assertEquals(1, ControladorArrendatarios.insertar(), "La inserción del arrendatario debería ser exitosa");
     }
 
     @Test
     @Order(2)
-    @DisplayName("Buscar Arrendatario")
+    @DisplayName("Test para buscar Arrendatario")
     public void testBuscar() {
-        // Set search criteria
+        // Configurar criterios de búsqueda para la prueba
         String dni = "12345678X";
         String nombre = "";
         String edad = "";
         String sexo = "";
 
-        // Perform the search
-        ArrayList<Arrendatario> result = ControladorArrendatarios.buscar(dni, nombre, edad, sexo);
-
-        assertEquals(1,result.size());
-        // assertTrue(result.contains(expectedTenant));
+        // Realizar la búsqueda y verificar los resultados
+        ArrayList<Arrendatario> resultado = ControladorArrendatarios.buscar(dni, nombre, edad, sexo);
+        assertEquals(1, resultado.size(), "Debería encontrar al menos un arrendatario con los criterios dados");
     }
 
     @Test
     @Order(3)
-    @DisplayName("Actualizar Arrendatario")
+    @DisplayName("Test para actualizar Arrendatario")
     public void testActualizar() {
-        // Insert a dummy tenant for deletion
-        // Assume the tenant's ID is known or retrieved
+        // Configuración de datos para la prueba de actualización
         String dni = "12345678X";
-        String nombre = "";
-        String edad = "";
-        String sexo = "";
-        ArrayList<Arrendatario> result = ControladorArrendatarios.buscar(dni, nombre, edad, sexo);
+        String nombre = "Updated Name";
+        String edad = "35";
+        String sexo = "F";
 
-        Arrendatario arren = result.get(0);
+        // Obtener el arrendatario a actualizar
+        ArrayList<Arrendatario> resultado = ControladorArrendatarios.buscar(dni, "", "", "");
+        Arrendatario arren = resultado.get(0);
         String oldArrendatario = arren.toString();
-        
-        // Create a dummy tenant for testing the update
-        dni = "12345678X";
-        nombre = "Updated Name";
-        edad = "35";
-        sexo = "F";
 
-        // Perform the update
-        // Assume the update was successful
-        assertEquals(1, ControladorArrendatarios.actualizar(oldArrendatario, dni, nombre, edad, sexo));
+        // Realizar la actualización y verificar
+        assertEquals(1, ControladorArrendatarios.actualizar(oldArrendatario, dni, nombre, edad, sexo), "La actualización del arrendatario debería ser exitosa");
     }
 
     @Test
     @Order(4)
+    @DisplayName("Test para borrar Arrendatario")
     public void testBorrar() {
-        // Insert a dummy tenant for deletion
-        // Assume the tenant's ID is known or retrieved
+        // Configuración de datos para la prueba de borrado
         String dni = "12345678X";
-        String nombre = "";
-        String edad = "";
-        String sexo = "";
-        ArrayList<Arrendatario> result = ControladorArrendatarios.buscar(dni, nombre, edad, sexo);
 
-        Arrendatario arren = result.get(0);
+        // Obtener el arrendatario a borrar
+        ArrayList<Arrendatario> resultado = ControladorArrendatarios.buscar(dni, "", "", "");
+        Arrendatario arren = resultado.get(0);
         String strArrendatario = arren.toString();
-    
-        // Perform the deletion
 
-        // Assert that the deletion was successful
-        assertEquals(1, ControladorArrendatarios.borrar(strArrendatario));
+        // Realizar el borrado y verificar
+        assertEquals(1, ControladorArrendatarios.borrar(strArrendatario), "El borrado del arrendatario debería ser exitoso");
     }
 
     @Test
-    @Order(3)
+    @Order(5)
+    @DisplayName("Test para listar Arrendatarios")
     public void testListar() {
-        
-        ArrayList<Arrendatario>  arrendatarios = ControladorArrendatarios.listar();
-
-        assertNotNull(arrendatarios);
+        // Listar los arrendatarios y verificar si se obtiene una lista no nula
+        ArrayList<Arrendatario> arrendatarios = ControladorArrendatarios.listar();
+        assertNotNull(arrendatarios, "La lista de arrendatarios no debería ser nula");
     }
 }
